@@ -8,6 +8,16 @@ This is (2) the API. The API is the data application programming interface of wo
 
 The workout API accepts data sent from the app and is deployed by a custom-built auto deploy application.
 
+# Nginx setup
+
+All API request should be rounted through **/wo/api/index.php**. To achieve this, place the following in your nginx config file.
+
+```
+location /wo/api {
+    try_files $uri $uri/ /wo/api/index.php?query_string;
+}
+```
+
 # API
 
 This API communicates in JSON.
@@ -131,9 +141,11 @@ Use this to update a workout as it's happening or to correct old workout data.
 
 #### Response
 
+```
 {
     "status": "ok"
 }
+```
 
 ### /wo/api/{user_id}/finish
 
