@@ -10,7 +10,7 @@ The workout API accepts data sent from the app and is deployed by a custom-built
 
 # Nginx setup
 
-All API request should be rounted through **/wo/api/index.php**. To achieve this, place the following in your nginx config file.
+All API request should be rounted through `/wo/api/index.php`. To achieve this, place the following in your nginx config file.
 
 ```
 location /wo/api {
@@ -20,28 +20,52 @@ location /wo/api {
 
 # API
 
-This API communicates in JSON.
+This API communicates in JSON and attepts to respond in a RESTful way.
 
-## GET
+### Status codes
 
-### /wo/api/{user_id}/program
+Code | Message
+---- | -------
+200  | GET, PUT, or PATCH OK
+201  | POST OK
+204  | DELETE OK
+400  | Bad request
+401  | Unauthorized user
+403  | Forbidden resource
+404  | Not found
 
-#### Response
+### Failed response message
+
+A failed status code will attept to return a message.
 
 ```
 {
-    "program_id": "66",
+    "message": "User not found."
+}
+```
+
+## GET
+
+### /wo/api/{userId}/program
+
+#### Response
+
+Success code: 200
+
+```
+{
+    "programId": "66",
     "length": "6",
     "program": [
         {
-            "program_id": "0",
-            "exercise_id": "3",
+            "programId": "0",
+            "exerciseId": "3",
             "title": "Pull Ups",
-            "reps": {
-                "length": 2,
-                "default_amount": 5,
-                "last_amount": 7,
-                "rec_amount": 8
+            "details": {
+                "sets": 2,
+                "defaultReps": 5,
+                "lastReps": 7,
+                "recommendedReps": 8
             }
         },
         ...
@@ -49,44 +73,39 @@ This API communicates in JSON.
 }
 ```
 
-## POST
-
 ### /wo/api/authenticate
+
+Authenticate user.
 
 #### Request
 
 ```
 {
-    "pub_key": "key_value",
+    "email": "admin@localhost",
+    "password": "password"
 }
 ```
 
 #### Response
 
-Success
+Success code: 200
 
 ```
 {
     "user_id": "22"
+    // TODO
 }
 ```
 
-Failure
+## POST
 
-```
-{
-    "status": "fail",
-    "message": "Failure message."
-}
-```
-
-### /wo/api/{user_id}/start
+### /wo/api/{userId}/start
 
 Start a new workout.
 
 #### Request
 
-The program sent should be the response from **/wo/api/{user_id}/program**.
+The `program` data sent should be from the `/wo/api/{userId}/program` GET request.
 
 ```
 {
@@ -99,16 +118,13 @@ The program sent should be the response from **/wo/api/{user_id}/program**.
 
 #### Response
 
-```
-{
-    "status": "ok",
-    "workout_id": "22"
-}
-```
+Success code: 201
+
+## PATCH
 
 ### /wo/api/{user_id}/update
 
-Use this to update a workout as it's happening or to correct old workout data.
+Use this to update a workout as it's happening or to correct existing workout data.
 
 #### Request
 
@@ -141,13 +157,12 @@ Use this to update a workout as it's happening or to correct old workout data.
 
 #### Response
 
-```
-{
-    "status": "ok"
-}
-```
+Success code: 200
 
-### /wo/api/{user_id}/finish
+### /wo/api/{userId}/complete
+
+
+#### Request
 
 ```
 {
@@ -155,4 +170,8 @@ Use this to update a workout as it's happening or to correct old workout data.
         "notes": "Workout notes."
 }
 ```
+
+#### Response
+
+Success code: 200
 
