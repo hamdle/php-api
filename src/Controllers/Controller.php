@@ -13,7 +13,8 @@ class Controller
         $this->method = $method;
     }
 
-    public function respond()
+    // Sends a JSON Response from a Controller.
+    public function response()
     {
         $class = __NAMESPACE__."\\".$this->class;
         $method = $this->method;
