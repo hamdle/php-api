@@ -44,9 +44,13 @@ A failed status code will attept to return a message.
 }
 ```
 
-## GET
+## Programs
 
-### /wo/api/{userId}/program
+Programs define a single workout routine. A program is a collection of the exercises, the order to perform the exercises, the number of sets for each exercise, and number of reps for each set.
+
+### GET /wo/api/{userId}/programs/new
+
+Create a new program for the next workout. This will generate recommendations based on previous workouts.
 
 #### Response
 
@@ -73,35 +77,16 @@ Success code: 200
 }
 ```
 
-### /wo/api/authenticate
+#### TODO
 
-Authenticate user.
+1. GET /wo/api/{userId}/programs
+2. GET /wo/api/{userId}/programs/{programId}
 
-#### Request
+## WORKOUTS
 
-```
-{
-    "email": "admin@localhost",
-    "password": "password"
-}
-```
+### POST /wo/api/{userId}/workouts
 
-#### Response
-
-Success code: 200
-
-```
-{
-    "user_id": "22"
-    // TODO
-}
-```
-
-## POST
-
-### /wo/api/{userId}/start
-
-Start a new workout.
+Create a new workout. The workout data can be incomplete and filled in via PATCH later.
 
 #### Request
 
@@ -120,9 +105,7 @@ The `program` data sent should be from the `/wo/api/{userId}/program` GET reques
 
 Success code: 201
 
-## PATCH
-
-### /wo/api/{user_id}/update
+### PATCH /wo/api/{userId}/workouts
 
 Use this to update a workout as it's happening or to correct existing workout data.
 
@@ -130,10 +113,12 @@ Use this to update a workout as it's happening or to correct existing workout da
 
 ```
 {
-    "workout_id": "22",
+    "workoutId": "22",
+    "timestamp": "1970-01-01 23:00:00",
+    "notes": "Workout notes."
     "exercise": [
         {
-            "exercise_id": "3",
+            "exerciseId": "3",
             "title": "Chin Ups",
             "length": "2",
             "reps": [
@@ -142,7 +127,7 @@ Use this to update a workout as it's happening or to correct existing workout da
             ]
         },
         {
-            "exercise_id": "0",
+            "exerciseId": "0",
             "title": "Push Ups",
             "length": "3",
             "reps": [
@@ -150,7 +135,8 @@ Use this to update a workout as it's happening or to correct existing workout da
                 "5",
                 "5"
             ]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -159,19 +145,69 @@ Use this to update a workout as it's happening or to correct existing workout da
 
 Success code: 200
 
-### /wo/api/{userId}/complete
+#### TODO
 
+1. PUT /wo/api/{userId}/workouts/{workoutId}
+2. GET /wo/api/{userId}/workouts
+2. GET /wo/api/{userId}/workouts/{workoutId}
+
+## User
+
+#### TODO
+
+### POST /wo/api/logout
+
+Log user out of application.
 
 #### Request
 
 ```
 {
-        "timestamp": "",
-        "notes": "Workout notes."
+    "token": "token"
 }
 ```
 
 #### Response
 
 Success code: 200
+
+### GET /wo/api/user
+
+Get logged in user info.
+
+#### Request
+
+```
+{
+    "token": "token"
+}
+```
+
+#### Response
+
+Success code: 200
+
+### POST /wo/api/authenticate
+
+Authenticate user.
+
+#### Request
+
+```
+{
+    "email": "admin@localhost",
+    "password": "password"
+}
+```
+
+#### Response
+
+Success code: 200
+
+```
+{
+    "userId": "22",
+    "token": "token"
+}
+```
 
