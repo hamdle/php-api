@@ -3,6 +3,7 @@ namespace Http;
 
 use Http\Request;
 use Http\Response;
+use Controllers\Controller;
 use Utils\ErrorLog;
 
 class Api
@@ -11,11 +12,9 @@ class Api
 
     public function run()
     {
-        ErrorLog::print($this->endpoints);
-
         $request = Request::get();
         $controller = $this->getController($request);
-        $this->respond($controller);
+        $controller->respond();
     }
 
     public function endpoint($uri, $controller) 
@@ -25,7 +24,15 @@ class Api
 
     private function getController($request)
     {
-        return 'AuthController.post';
+        // Get parts from the request
+        // Find out which endpoint matches the parts
+        // Return the endpoint
+        $value = $this->endpoints['authenticate'];
+        $parts = explode('.', $value);
+        $class= $parts[0];
+        $method = $parts[1];
+
+        return new Controller($class, $method);
     }
 
     private function respond($controller)
