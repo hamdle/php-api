@@ -77,6 +77,10 @@ Success code: 200
 }
 ```
 
+### GET /wo/api/{userId}/programs/new/shuffle
+
+This will generate a program using `/wo/api/{userId}/programs/new` but perform a second step and shuffle the exercises in an appropriate way.
+
 #### TODO
 
 1. GET /wo/api/{userId}/programs
