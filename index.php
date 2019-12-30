@@ -1,22 +1,13 @@
 <?php
-require_once __DIR__.'/src/Utils/ErrorLog.php';
+require_once __DIR__.'/src/Http/Api.php';
 
-use Utils\ErrorLog;
+use Http\Api;
 
-ErrorLog::print($_SERVER['REQUEST_METHOD'], "METHOD###");
-ErrorLog::print($_SERVER['REQUEST_URI'], "URI###");
-ErrorLog::print($_POST, "POST###");
-ErrorLog::print(json_decode(file_get_contents('php://input'), true), "FILE###");
+$api = new Api();
 
-function send_test_response() {
-    $data = [
-        'Eric' => 'Marty'
-    ];
-    header('Content-Type: application/json');
-    http_response_code(200);
-    echo json_encode($data);
-}
+// Add API endpoints
+// $api->endpoint('/authenticate', 'AuthController.post');
+// $api->endpoint('/{userId}/programs/new', 'ProgramController.get');
 
-send_test_response();
+$api->run();
 
-?>
