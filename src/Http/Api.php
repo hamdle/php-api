@@ -10,7 +10,7 @@ class Api
 
     public function run()
     {
-        //ErrorLog::print($this->endpoints);
+        ErrorLog::print($this->endpoints);
 
         $request = Request::get();
         $controller = $this->getController($request);
