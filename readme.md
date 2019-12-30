@@ -83,10 +83,10 @@ This will generate a program using `/wo/api/{userId}/programs/new` but perform a
 
 #### TODO
 
-1. GET /wo/api/{userId}/programs
-2. GET /wo/api/{userId}/programs/{programId}
+1. GET `/wo/api/{userId}/programs`
+2. GET `/wo/api/{userId}/programs/{programId}`
 
-## WORKOUTS
+## Workouts
 
 ### POST /wo/api/{userId}/workouts
 
@@ -151,13 +151,11 @@ Success code: 200
 
 #### TODO
 
-1. PUT /wo/api/{userId}/workouts/{workoutId}
-2. GET /wo/api/{userId}/workouts
-2. GET /wo/api/{userId}/workouts/{workoutId}
+1. PUT `/wo/api/{userId}/workouts/{workoutId}`
+2. GET `/wo/api/{userId}/workouts`
+2. GET `/wo/api/{userId}/workouts/{workoutId}`
 
 ## User
-
-#### TODO
 
 ### POST /wo/api/logout
 
@@ -206,7 +204,7 @@ Authenticate user.
 
 #### Response
 
-Success code: 200
+Success code: 201
 
 ```
 {
