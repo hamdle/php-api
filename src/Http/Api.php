@@ -2,6 +2,7 @@
 namespace Http;
 
 use Http\Request;
+use Http\Response;
 use Utils\ErrorLog;
 
 class Api
@@ -29,15 +30,20 @@ class Api
 
     private function respond($controller)
     {
+        // TODO
+        // 1. Invoke the controller
+        // 2. Send error Response if controller invoke fails
+ 
         if ($controller == 'AuthController.post')
         {
-            // Response example
             $data = [
                 'Eric' => 'Marty'
             ];
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode($data);
+            $response = new Response();
+            $response->send(Response::HTTP_200_OK, $data);
+            //header('Content-Type: application/json');
+            //http_response_code(200);
+            //echo json_encode($data);
         }
     }
 }
