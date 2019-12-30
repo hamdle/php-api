@@ -14,7 +14,10 @@ function var_error_log($object = null, $tag = '') {
     error_log($contents);
 }
 
-var_error_log($_SERVER['REQUEST_METHOD'], "REQUEST------");
+var_error_log($_SERVER['REQUEST_METHOD'], "METHOD###");
+var_error_log($_SERVER['REQUEST_URI'], "URI###");
+var_error_log($_POST, "POST###");
+var_error_log(json_decode(file_get_contents('php://input'), true), "FILE###");
 
 function send_test_response() {
     $data = [
