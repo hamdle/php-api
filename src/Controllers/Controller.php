@@ -11,9 +11,10 @@ class Controller
     {
         $this->class = $class;
         $this->method = $method;
+        $this->args = $args;
     }
 
-    // Sends a JSON Response from a Controller.
+    // Send a JSON Response from a Controller.
     public function response()
     {
         $class = __NAMESPACE__."\\".$this->class;

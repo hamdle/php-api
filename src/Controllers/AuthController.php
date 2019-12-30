@@ -2,7 +2,6 @@
 namespace Controllers;
 
 use Http\Response;
-use Controllers\ControllerInterface;
 
 class AuthController implements ControllerInterface
 {

@@ -1,10 +1,7 @@
 <?php
 namespace Http;
 
-use Http\Request;
-use Http\Response;
 use Controllers\Controller;
-use Utils\ErrorLog;
 
 class Api
 {
