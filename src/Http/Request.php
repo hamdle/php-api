@@ -24,6 +24,7 @@ class Request {
 
     public function getPathParts()
     {
+        // TODO Make this better. Use a for loop and in_array to filter out the items.
         $parts = explode('/', $this->getPath());
 
         // Remove uri elements that are not part of the API request.
@@ -35,6 +36,7 @@ class Request {
                 {
                     return 0;
                 }
+                // TODO Make this use a static array of uri elements to be removed.
                 if ($item == 'wo')
                 {
                     return 0;

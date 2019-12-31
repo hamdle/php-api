@@ -24,6 +24,7 @@ class Api
 
     private function getController($request)
     {
+        // TODO (2) make it better.
         $endpoints = $this->quickFilterEndpoints($request);
         ErrorLog::print($endpoints, 'ENDPOINTS###');
         if (empty($endpoints))
@@ -32,21 +33,13 @@ class Api
         }
 
         $requestParts = $request->getPathParts();
-        ErrorLog::print($requestParts, 'REQUEST_PARTS###');
         $match = true;
+        $uriArgs = [];
         foreach ($endpoints as $key => $value)
         {
             $match = true;
+            $uriArgs = [];
             $keyParts = explode('/', $key);
-            ErrorLog::print($keyParts, 'KEY_PARTS###');
-            /*if ($key == $requestParts[0])
-            {
-                $parts = explode('.', $value);
-                $class= $parts[0];
-                $method = $parts[1];
-
-                return new Controller($class, $method);
-            }*/
 
             for ($n = 0; $n < count($requestParts); $n++)
             {
@@ -58,6 +51,11 @@ class Api
                 {
                     $match = false;
                 }
+                else
+                {
+                    $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
+                    $uriArgs[$argKey] = intval($requestParts[$n]);
+                }
             }
             if ($match)
             {
@@ -65,7 +63,7 @@ class Api
                 $class= $parts[0];
                 $method = $parts[1];
 
-                return new Controller($class, $method);
+                return new Controller($class, $method, $uriArgs);
             }
         }
 
