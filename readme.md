@@ -48,7 +48,7 @@ A failed status code will attept to return a message.
 
 Programs define a single workout routine. A program is a collection of the exercises, the order to perform the exercises, the number of sets for each exercise, and number of reps for each set.
 
-### GET /wo/api/{userId}/programs/new
+### GET /{userId}/programs/new
 
 Create a new program for the next workout. This will generate recommendations based on previous workouts.
 
@@ -77,24 +77,24 @@ Success code: 200
 }
 ```
 
-### GET /wo/api/{userId}/programs/new/shuffle
+### GET /{userId}/programs/new/shuffle
 
-This will generate a program using `/wo/api/{userId}/programs/new` but perform a second step and shuffle the exercises in an appropriate way.
+This will generate a program using `/{userId}/programs/new` but perform a second step and shuffle the exercises in an appropriate way.
 
 #### TODO
 
-1. GET `/wo/api/{userId}/programs`
-2. GET `/wo/api/{userId}/programs/{programId}`
+1. GET `/{userId}/programs`
+2. GET `/{userId}/programs/{programId}`
 
 ## Workouts
 
-### POST /wo/api/{userId}/workouts
+### POST /{userId}/workouts
 
 Create a new workout. The workout data can be incomplete and filled in via PATCH later.
 
 #### Request
 
-The `program` data sent should be from the `/wo/api/{userId}/program` GET request.
+The `program` data sent should be from the `/{userId}/program` GET request.
 
 ```
 {
@@ -109,7 +109,7 @@ The `program` data sent should be from the `/wo/api/{userId}/program` GET reques
 
 Success code: 201
 
-### PATCH /wo/api/{userId}/workouts
+### PATCH /{userId}/workouts
 
 Use this to update a workout as it's happening or to correct existing workout data.
 
@@ -151,13 +151,13 @@ Success code: 200
 
 #### TODO
 
-1. PUT `/wo/api/{userId}/workouts/{workoutId}`
-2. GET `/wo/api/{userId}/workouts`
-2. GET `/wo/api/{userId}/workouts/{workoutId}`
+1. PUT `/{userId}/workouts/{workoutId}`
+2. GET `/{userId}/workouts`
+2. GET `/{userId}/workouts/{workoutId}`
 
 ## User
 
-### POST /wo/api/logout
+### POST /logout
 
 Log user out of application.
 
@@ -173,7 +173,7 @@ Log user out of application.
 
 Success code: 200
 
-### GET /wo/api/user
+### GET /user
 
 Get logged in user info.
 
@@ -189,7 +189,7 @@ Get logged in user info.
 
 Success code: 200
 
-### POST /wo/api/authenticate
+### POST /authenticate
 
 Authenticate user.
 
