@@ -13,7 +13,7 @@ class AuthController implements ControllerInterface
     public function post($args = [])
     {
         $data = [
-            'Eric' => 'Marty'
+            'user' => 'admin@localhost'
         ];
 
         $response = new Response();
