@@ -15,22 +15,25 @@ class Router
     public function getController($request)
     {
         // TODO (2) make it better.
+
+        // Filter out requests that have no potential endpoint.
         $endpoints = $this->quickFilterEndpoints($request);
-        ErrorLog::print($endpoints, 'ENDPOINTS###');
         if (empty($endpoints))
         {
             return new Controller('ErrorController', 'get');
         }
 
+        // Now, try to match the request parts with the endpoint parts.
         $requestParts = $request->getPathParts();
         $match = true;
         $uriArgs = [];
+        // Run through each endpoint.
         foreach ($endpoints as $key => $value)
         {
             $match = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
-
+            // Test to see if every uri part matches every endpoint part.
             for ($n = 0; $n < count($requestParts); $n++)
             {
                 if ($requestParts[$n] == $keyParts[$n])
