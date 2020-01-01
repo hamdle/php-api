@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Http\Response;
+use Database\MySQL;
 
 class AuthController implements ControllerInterface
 {
@@ -12,6 +13,11 @@ class AuthController implements ControllerInterface
 
     public function post($args = [])
     {
+        $mysql = new MySQL();
+        $mysql->connect();
+        $mysql->query();
+        $mysql->close();
+         
         $data = [
             'user' => 'admin@localhost'
         ];
