@@ -3,7 +3,7 @@ namespace Utils;
 
 use Exception;
 
-class EnvLoader
+class Env
 {
     protected $envPath;
 

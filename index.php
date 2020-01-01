@@ -2,9 +2,9 @@
 require __DIR__.'/src/autoload.php';
 
 use Http\Api;
-use Utils\EnvLoader;
+use Utils\Env;
 
-$env = new EnvLoader();
+$env = new Env();
 $env->load();
 
 $api = new Api();
