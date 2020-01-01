@@ -13,10 +13,13 @@ class AuthController implements ControllerInterface
 
     public function post($args = [])
     {
-        $mysql = new MySQL();
-        $mysql->connect();
-        $mysql->query();
-        $mysql->close();
+        $results = MySQL::run('select * from users');
+        \Utils\ErrorLog::print($results);
+
+        //$mysql = new MySQL();
+        //$mysql->connect();
+        //$mysql->query();
+        //$mysql->close();
          
         $data = [
             'user' => 'admin@localhost'

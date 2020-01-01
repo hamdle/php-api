@@ -5,41 +5,52 @@ use mysqli;
 
 class MySQL
 {
-    protected $mysqli;
+    protected static $mysql = null;
 
-    public function connect()
+    protected static function connect()
     {
-        $this->mysqli = new mysqli(
-            $_ENV['DB_HOST'],
-            $_ENV['DB_USER'],
-            $_ENV['DB_PASS'],
-            $_ENV['DB_NAME']
-        );
-
-        if ($this->mysqli->connect_errno)
+        if (is_null(self::$mysql))
         {
-            echo 'Database connection failed.';
-            die();
+            self::$mysql = new mysqli(
+                $_ENV['DB_HOST'],
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS'],
+                $_ENV['DB_NAME']
+            );
+
+            if (self::$mysql->connect_errno)
+            {
+                echo 'Database connection failed.';
+                die();
+            }
         }
+
+        return self::$mysql;
     }
 
-    public function query()
+    public static function run($query)
     {
-        $query = "select email from users";
+        $db = self::connect();
 
-        if ($results = $this->mysqli->query($query))
+        $rows = [];
+        if ($results = $db->query($query))
         {
             while ($row = $results->fetch_assoc())
             {
-                \Utils\ErrorLog::print($row);
+                $rows[] = $row;
             }
 
             $results->free();
         }
+
+        return $rows;
     }
 
-    public function close()
+    public static function close()
     {
-        $this->mysqli->close();
+        if (!is_null(self::$mysql))
+        {
+            self::$mysql->close();
+        }
     }
 }
