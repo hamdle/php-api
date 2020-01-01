@@ -17,10 +17,9 @@ DROP TABLE IF EXISTS `exercises`;
 CREATE TABLE `exercises` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(128),
-    `default_sets` INT(10) unsigned DEFAULT 0,
-    `default_reps` INT(10) unsigned DEFAULT 0,
-    `sets_timer` INT(10) unsigned DEFAULT 0,
-    `reps_timer` INT(10) unsigned DEFAULT 0,
+    `default_sets` INT(1) unsigned DEFAULT 0,
+    `default_reps` INT(1) unsigned DEFAULT 0,
+    `wait_time` INT(2) unsigned DEFAULT 0,
     `category` ENUM('bmb', 'core') DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
@@ -44,8 +43,8 @@ CREATE TABLE `entries` (
     `exercises_id` int(10) unsigned NOT NULL,
     `workout_id` int(10) unsigned NOT NULL,
     `user_id` int(10) unsigned NOT NULL,
-    `sets` int(10) unsigned DEFAULT 0,
-    `reps` int(10) unsigned DEFAULT 0,
+    `sets` int(1) unsigned DEFAULT 0,
+    `reps` int(1) unsigned DEFAULT 0,
     `feedback` ENUM('up', 'down', 'none') DEFAULT 'none',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
@@ -54,6 +53,6 @@ DROP TABLE IF EXISTS `reps`;
 CREATE TABLE `reps` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
     `entries_id` int(10) unsigned NOT NULL,
-    `amount` int(10) unsigned DEFAULT 0,
+    `amount` int(1) unsigned DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
