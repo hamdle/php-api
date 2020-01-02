@@ -8,7 +8,11 @@ class Users extends Query
 {
     protected const USER_TABLE = 'users';
 
-    // @return \Models\User
+    /**
+     * Return a single User object from an id.
+     * @param $id - a user id
+     * @return \Models\User
+     */
     public function get($id, $table = self::USER_TABLE)
     {
         $queryResults = parent::get($id, $table);
