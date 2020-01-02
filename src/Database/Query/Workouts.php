@@ -3,7 +3,10 @@ namespace Database\Query;
 
 use Database\Query;
 
-class Entries extends Query
+class Workouts extends Query
 {
-    // TODO
+    public function new()
+    {
+
+    }
 }

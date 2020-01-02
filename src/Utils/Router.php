@@ -55,8 +55,11 @@ class Router
                 $parts = explode('.', $value);
                 $class= $parts[0];
                 $method = $parts[1];
+                $args = [];
+                $args['uri'] = $uriArgs;
+                $args['data'] = $request->getData();
 
-                return new Controller($class, $method, $uriArgs);
+                return new Controller($class, $method, $args);
             }
         }
 

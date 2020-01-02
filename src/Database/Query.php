@@ -8,33 +8,32 @@ class Query implements QueryInterface
         return MySQL::run($query);
     }
 
-    public function filter_by($table, $args)
+    public function filter_by($args, $table)
+    {
+        $query = $this->buildFilterBy($args, $table);
+        return MySQL::run($query);
+    }
+
+    public function get($id, $table)
+    {
+        $query = "select * from {$table} where id = {$id}";
+        return MySQL::run($query);
+    }
+
+    public function add($args, $table)
     {
         // TODO
     }
 
-    public function get($table, $args)
+    public function update($args, $table)
     {
         // TODO
     }
 
-    public function set($table, $args)
+    private function buildFilterBy($args, $table)
     {
-        // TODO
-    }
-
-    public function add($table, $args)
-    {
-        // TODO
-    }
-
-    public function update($table, $args)
-    {
-        // TODO
-    }
-
-    public function replace($table, $args)
-    {
-        // TODO
+        $query = "select * from {$table}";
+        // TODO Add where clause to filter by $args.
+        return $query;
     }
 }

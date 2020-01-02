@@ -2,7 +2,7 @@
 namespace Controllers;
 
 use Http\Response;
-use Database\Query;
+use Database\Query\Users;
 
 class AuthController implements ControllerInterface
 {
@@ -13,18 +13,11 @@ class AuthController implements ControllerInterface
 
     public function post($args = [])
     {
-        $sql = 'select * from users';
-        $query = new Query();
-        $results = $query->run($sql);
-        \Utils\ErrorLog::print($results);
+        $users = new Users();
+        $user = $users->get($args['data']['id']);
 
-        //$mysql = new MySQL();
-        //$mysql->connect();
-        //$mysql->query();
-        //$mysql->close();
-         
         $data = [
-            'user' => 'admin@localhost'
+            'user' => $user->email
         ];
 
         $response = new Response();

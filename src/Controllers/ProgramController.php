@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Http\Response;
+use Database\Query\Workouts;
 
 class ProgramController implements ControllerInterface
 {
