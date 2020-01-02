@@ -1,8 +1,15 @@
 <?php
 
+require_once __DIR__.'/Utils/Env.php';
+
+use Utils\Env;
+
 class Autoload {
     public static function register()
     {
+        $env = new Env();
+        $env->load();
+
         spl_autoload_register('Autoload::loadFile');
     }
 
