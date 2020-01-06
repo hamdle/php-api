@@ -2,14 +2,22 @@
 namespace Controllers;
 
 use Http\Response;
+use Database\Query\Users;
 use Database\Query\Workouts;
 
-class ProgramController implements ControllerInterface
+class WorkoutController implements ControllerInterface
 {
     public function get($args = [])
     {
+        $users = new Users();
+        $user = $users->get(1);
+
+        $workouts = new Workouts();
+        $workout = $workouts->new(1);
+
         $data = [
-            'program' => '<ul><li>Push ups</li><li>Chin ups</li></ul>'
+            'user' => $user->email,
+            'workout_html' => $workout->html()
         ];
 
         $response = new Response();
