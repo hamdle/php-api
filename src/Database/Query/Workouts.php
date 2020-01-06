@@ -2,6 +2,7 @@
 namespace Database\Query;
 
 use Database\Query;
+use Database\Query\Exercises;
 use Models\Workout;
 
 class Workouts extends Query
@@ -10,6 +11,10 @@ class Workouts extends Query
 
     public function new($user_id)
     {
+        $exercises = new Exercises();
+        $allExercises = $exercises->all();
+        \Utils\ErrorLog::print($allExercises);
+
         $sampleWorkout = [
             'id' => -1,
             'user_id' => $user_id,
