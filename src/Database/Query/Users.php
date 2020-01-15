@@ -19,4 +19,11 @@ class Users extends Query
         $user = new User($queryResults[0]);
         return $user;
     }
+
+    public function filter_by($id, $table = SELF::USER_TABLE)
+    {
+        $queryResults = parent::filter_by($id, $table);
+        $user = new User($queryResults[0]);
+        return $user;
+    }
 }

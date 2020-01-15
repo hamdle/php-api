@@ -13,12 +13,16 @@ class AuthController implements ControllerInterface
 
     public function post($args = [])
     {
-        $users = new Users();
-        $user = $users->get($args['data']['id']);
+        //$users = new Users();
+        //$user = $users->filter_by($args['post']);
 
-        $data = [
-            'user' => $user->email
-        ];
+        //$data = [
+        //    'user' => $user->email
+        //];
+
+        $data = ['hello' => 'world'];
+
+        \Utils\ErrorLog::print($args);
 
         $response = new Response();
         $response->send(Response::HTTP_200_OK, $data);

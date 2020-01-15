@@ -58,6 +58,7 @@ class Router
                 $args = [];
                 $args['uri'] = $uriArgs;
                 $args['data'] = $request->getData();
+                $args['post'] = $request->getPost();
 
                 return new Controller($class, $method, $args);
             }
