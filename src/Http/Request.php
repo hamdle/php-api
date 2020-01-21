@@ -37,10 +37,6 @@ class Request {
                     return 0;
                 }
                 // TODO Make this use a static array of uri elements to be removed.
-                if ($item == 'wo')
-                {
-                    return 0;
-                }
                 if ($item == 'api')
                 {
                     return 0;
