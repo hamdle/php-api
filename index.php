@@ -7,6 +7,7 @@ $api = new Api();
 
 $api->endpoint('login', 'AuthController.post');
 $api->endpoint('{userId}/workouts/new', 'WorkoutController.get');
+$api->endpoint('exercises', 'ExerciseController.get');
 
 $api->run();
 
