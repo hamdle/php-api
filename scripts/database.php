@@ -3,7 +3,8 @@
 $commands = [
     'schema' => 'ReloadDatabaseSchema',
     'data' => 'ImportTestData',
-    'reload' => 'ReloadAndImport'
+    'reload' => 'ReloadAndImport',
+    'help' => 'Help'
 ];
 
 class DatabaseCommand
@@ -53,4 +54,13 @@ function ReloadAndImport()
 {
     ReloadDatabaseSchema();
     ImportTestData();
+}
+
+function Help()
+{
+    echo "\nCommands:\n\n";
+    echo "schema\t\t- Reload database schema\n";
+    echo "data\t\t- Reimport database test data\n";
+    echo "reload\t\t- Reload schema and reimport test data\n";
+    echo "\nUsage: php database.php reload\n";
 }
