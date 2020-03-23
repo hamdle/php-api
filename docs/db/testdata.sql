@@ -9,6 +9,9 @@ insert into users (email, password) values ('user1@localhost.co', md5('testpass'
 /* exercises */
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
+('Warm Up', 1, 1, 0, 'warm');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
 ('Pull Ups', 2, 5, 60, 'pull');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
