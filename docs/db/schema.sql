@@ -20,7 +20,7 @@ CREATE TABLE `exercises` (
     `default_sets` INT(1) unsigned DEFAULT 0,
     `default_reps` INT(1) unsigned DEFAULT 0,
     `wait_time` INT(2) unsigned DEFAULT 0,
-    `category` ENUM('bmb', 'core') DEFAULT NULL,
+    `category` ENUM('pull', 'push', 'legs', 'core') DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -32,7 +32,7 @@ CREATE TABLE `workouts` (
     `start` DATETIME NULL,
     `end` DATETIME NULL,
     `notes` VARCHAR(1024),
-    `feel` ENUM('weak', 'good', 'strong') DEFAULT 'good',
+    `feel` ENUM('weak', 'average', 'strong') DEFAULT 'average',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -53,6 +53,6 @@ DROP TABLE IF EXISTS `reps`;
 CREATE TABLE `reps` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
     `entries_id` int(10) unsigned NOT NULL,
-    `amount` int(1) unsigned DEFAULT 0,
+    `amount` varchar(8),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

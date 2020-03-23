@@ -9,25 +9,40 @@ insert into users (email, password) values ('user1@localhost.co', md5('testpass'
 /* exercises */
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Pull Ups', 2, 5, 60, 'bmb');
+('Pull Ups', 2, 5, 60, 'pull');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Chin Up', 2, 5, 60, 'bmb');
+('Chin Up', 2, 5, 60, 'pull');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Dips', 3, 5, 60, 'bmb');
+('Dips', 3, 5, 60, 'push');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Push Ups', 3, 5, 60, 'bmb');
+('Push Ups', 3, 5, 60, 'push');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
 ('Leg Raises', 3, 5, 60, 'core');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Cobraz', 3, 40, 30, 'core');
+('Cobra', 3, 40, 30, 'core');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Pistol Squats', 4, 5, 60, 'bmb');
+('Pistol Squats', 4, 5, 60, 'legs');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
+('Inverted Rows', 4, 5, 60, 'core');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
+('Lunges', 4, 5, 60, 'legs');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
+('Plyo Burpees', 4, 5, 60, 'legs');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
+('Planks', 3, 5, 60, 'core');
+insert into exercises 
+(title, default_sets, default_reps, wait_time, category) values 
+('Hollow Body', 3, 5, 60, 'core');
 
 /* entries */
 insert into entries 
@@ -73,13 +88,13 @@ insert into entries
 /* workouts */
 insert into workouts 
 (user_id, start, end, notes, feel) values 
-(2, '2019-01-01 00:00:00', '2019-01-01 00:34:00', 'Com Truise - Persuasion System', 'good');
+(2, '2019-01-01 00:00:00', '2019-01-01 00:34:00', 'Com Truise - Persuasion System', 'average');
 insert into workouts 
 (user_id, start, end, notes, feel) values 
-(2, '2019-02-11 01:00:00', '2019-02-11 01:36:02', 'Hammerhedd - Essence of Iron', 'good');
+(2, '2019-02-11 01:00:00', '2019-02-11 01:36:02', 'Hammerhedd - Essence of Iron', 'average');
 insert into workouts 
 (user_id, start, end, notes, feel) values 
-(0, '2019-03-01 12:40:40', '2019-01-01 13:22:03', 'Cate le Bon - Crab Day', 'good');
+(0, '2019-03-01 12:40:40', '2019-01-01 13:22:03', 'Cate le Bon - Crab Day', 'average');
 insert into workouts 
 (user_id, start, end, notes, feel) values 
 (3, '2019-09-09 21:04:44', '2019-09-09 21:34:55', 'Spotify new releases playlist', 'weak');
@@ -91,18 +106,18 @@ insert into workouts
 (3, '2019-11-16 22:13:04', '2019-11-16 22:55:40', '', 'strong');
 
 /* reps */
-insert into reps (entries_id, amount) values (1, 6);
-insert into reps (entries_id, amount) values (1, 6);
-insert into reps (entries_id, amount) values (1, 6);
-insert into reps (entries_id, amount) values (2, 5);
-insert into reps (entries_id, amount) values (2, 5);
-insert into reps (entries_id, amount) values (3, 7);
-insert into reps (entries_id, amount) values (3, 7);
-insert into reps (entries_id, amount) values (4, 6);
-insert into reps (entries_id, amount) values (4, 6);
-insert into reps (entries_id, amount) values (4, 6);
-insert into reps (entries_id, amount) values (6, 11);
-insert into reps (entries_id, amount) values (6, 11);
-insert into reps (entries_id, amount) values (6, 12);
-insert into reps (entries_id, amount) values (7, 10);
-insert into reps (entries_id, amount) values (7, 10);
+insert into reps (entries_id, amount) values (1, '6');
+insert into reps (entries_id, amount) values (1, '4+2');
+insert into reps (entries_id, amount) values (1, '6');
+insert into reps (entries_id, amount) values (2, '5');
+insert into reps (entries_id, amount) values (2, '5');
+insert into reps (entries_id, amount) values (3, '7+1');
+insert into reps (entries_id, amount) values (3, '7');
+insert into reps (entries_id, amount) values (4, '6');
+insert into reps (entries_id, amount) values (4, '6');
+insert into reps (entries_id, amount) values (4, '6');
+insert into reps (entries_id, amount) values (6, '11');
+insert into reps (entries_id, amount) values (6, '11');
+insert into reps (entries_id, amount) values (6, '12');
+insert into reps (entries_id, amount) values (7, '10+2');
+insert into reps (entries_id, amount) values (7, '10');
