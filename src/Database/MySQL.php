@@ -35,6 +35,9 @@ class MySQL
         $rows = [];
         if ($results = $db->query($query))
         {
+            if (is_bool($results)) {
+                return [];
+            }
             while ($row = $results->fetch_assoc())
             {
                 $rows[] = $row;

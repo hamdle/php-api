@@ -22,7 +22,19 @@ class Query implements QueryInterface
 
     public function add($args, $table)
     {
-        // TODO
+        $query = "insert into {$table} (";
+        $values = "";
+
+        foreach ($args as $key => $value) {
+            $query .= "`{$key}`,"; 
+            $values .= "'{$value}',";
+        }
+        $query = substr($query, 0, -1);
+        $values = substr($values, 0, -1);
+
+        $query .= ") values ({$values})";
+
+        return MySQL::run($query);
     }
 
     public function update($args, $table)

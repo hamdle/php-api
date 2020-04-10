@@ -1,6 +1,8 @@
 <?php
 namespace Models;
 
+use Database\Query\Sessions;
+
 class User
 {
     use \Utils\Attributes;
@@ -19,9 +21,16 @@ class User
     }
 
     public function cookie() {
-        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
-        $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+        $sessions = new Sessions();
+        $session = $sessions->filter_by($this->id);
 
-        return [$key => $value];
+        if ($session == null) {
+            $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
+            $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+            $newSession = $sessions->save($this->id, $key, $value);
+            return [$newSession->key => $newSession->value];
+        }
+
+        return [$session->key => $session->value];
     }
 }

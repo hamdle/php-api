@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 
-class Entry
+class Session
 {
     use \Utils\Attributes;
     /**
