@@ -15,10 +15,16 @@ class Response
     const HTTP_403_FORBIDDEN = 403;
     const HTTP_404_NOT_FOUND = 404;
 
-    public function send($code, $data)
+    public function cookie($key, $value, $time) {
+        setcookie($key, $value, $time);
+    }
+
+    public function send($code, $data = null)
     {
         header(self::JSON_CONTENT_TYPE);
         http_response_code($code);
-        echo json_encode($data);
+        if (!is_null($data)) {
+            echo json_encode($data);
+        }
     }
 }

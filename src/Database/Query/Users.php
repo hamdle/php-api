@@ -20,10 +20,17 @@ class Users extends Query
         return $user;
     }
 
-    public function filter_by($id, $table = SELF::USER_TABLE)
+    /** 
+     * Query the users table, return a User object or null.
+     * @param map is a key, value array.
+     * @return \Models\User
+     */
+    public function filter_by($map, $table = SELF::USER_TABLE)
     {
-        $queryResults = parent::filter_by($id, $table);
-        $user = new User($queryResults[0]);
-        return $user;
+        $queryResults = parent::filter_by($map, $table);
+        if ($queryResults == null) {
+            return null;
+        }
+        return new User($queryResults[0]);
     }
 }

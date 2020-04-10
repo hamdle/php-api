@@ -13,19 +13,25 @@ class AuthController implements ControllerInterface
 
     public function post($args = [])
     {
-        //$users = new Users();
-        //$user = $users->filter_by($args['post']);
+        $filteredArgs = array_map(function($item) {
+                if (!is_null($item) && array_key_exists('password', $item)) {
+                    $item['password'] = md5($item['password']);
+                }
+                return $item;
+            },
+            $args
+        );
+        $users = new Users();
+        $user = $users->filter_by($filteredArgs['post']);
 
-        //$data = [
-        //    'user' => $user->email
-        //];
-
-        $data = ['hello' => 'world'];
-
-        \Utils\ErrorLog::print($args);
-
-        $response = new Response();
-        $response->send(Response::HTTP_200_OK, $data);
+        if ($user == null) {
+            $response = new Response();
+            $response->send(Response::HTTP_401_UNAUTHORIZED);
+        } else {
+            $response = new Response();
+            $response->cookie('user', $user->email, strtotime('+30 days'));
+            $response->send(Response::HTTP_200_OK);
+        }
     }
 
     public function put($args = [])

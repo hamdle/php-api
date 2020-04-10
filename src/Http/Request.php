@@ -70,4 +70,8 @@ class Request {
     {
         return $_POST;
     }
+
+    public function getCookie() {
+        return $_COOKIE;
+    }
 }

@@ -33,7 +33,23 @@ class Query implements QueryInterface
     private function buildFilterBy($args, $table)
     {
         $query = "select * from {$table}";
-        // TODO Add where clause to filter by $args.
+
+        if (count($args) > 0) {
+            $query .= " where";
+        }
+
+        $count = 1;
+        foreach ($args as $key => $value) {
+            if (count($args) === 1) {
+                $query .= " {$key} = '{$value}'";
+            } else if ($count < count($args)) {
+                $query .= " {$key} = '{$value}' and";
+            } else {
+                $query .= " {$key} = '{$value}'";
+            }
+            $count++;
+        }
+
         return $query;
     }
 }

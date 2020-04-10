@@ -1,8 +1,7 @@
 use wo_db;
 
 /* users */
-insert into users (email, password) values ('test@ericmarty.com', md5('password123'));
-insert into users (email, password) values ('admin@localhost.com', md5('password123'));
+insert into users (email, password) values ('admin@localhost.com', md5('admin'));
 insert into users (email, password) values ('eric@testmail.dev', md5('password456'));
 insert into users (email, password) values ('user1@localhost.co', md5('testpass'));
 
