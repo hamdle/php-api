@@ -17,4 +17,11 @@ class User
     {
         $this->attributes = $attributes;
     }
+
+    public function cookie() {
+        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
+        $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+
+        return [$key => $value];
+    }
 }

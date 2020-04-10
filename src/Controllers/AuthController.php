@@ -29,7 +29,7 @@ class AuthController implements ControllerInterface
             $response->send(Response::HTTP_401_UNAUTHORIZED);
         } else {
             $response = new Response();
-            $response->cookie('user', $user->email, strtotime('+30 days'));
+            $response->cookie($user->cookie());
             $response->send(Response::HTTP_200_OK);
         }
     }

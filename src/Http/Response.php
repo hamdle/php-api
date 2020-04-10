@@ -15,8 +15,14 @@ class Response
     const HTTP_403_FORBIDDEN = 403;
     const HTTP_404_NOT_FOUND = 404;
 
-    public function cookie($key, $value, $time) {
-        setcookie($key, $value, $time);
+    /**
+     * Set cookie.
+     * @param map - key => value pair to map to the cookie.
+     */
+    public function cookie($map) {
+        foreach ($map as $key => $value) {
+            setcookie($key, $value, strtotime('+30 days'));
+        }
     }
 
     public function send($code, $data = null)
