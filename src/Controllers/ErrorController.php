@@ -33,6 +33,6 @@ class ErrorController implements ControllerInterface
     private function errorResponse()
     {
         $response = new Response();
-        $response->send(Response::HTTP_404_NOT_FOUND, []);
+        return $response->send(Response::HTTP_404_NOT_FOUND, []);
     }
 }

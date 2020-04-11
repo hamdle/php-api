@@ -11,4 +11,9 @@ class Exercises extends Query
     {
         return parent::filter_by([], self::EXERCISE_TABLE);
     }
+
+    public function add($args, $table = self::EXERCISE_TABLE)
+    {
+        parent::add($args, $table);
+    }
 }

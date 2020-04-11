@@ -25,7 +25,7 @@ class Users extends Query
      * @param map is a key, value array.
      * @return \Models\User
      */
-    public function filter_by($map, $table = SELF::USER_TABLE)
+    public function filter_by($map, $table = self::USER_TABLE)
     {
         $queryResults = parent::filter_by($map, $table);
         if ($queryResults == null) {

@@ -28,4 +28,9 @@ class Workouts extends Query
 
         return $workout;
     }
+
+    public function add($args, $table = self::WORKOUT_TABLE)
+    {
+        parent::add($args, $table);
+    }
 }

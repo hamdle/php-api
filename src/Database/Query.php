@@ -53,14 +53,16 @@ class Query implements QueryInterface
         $count = 1;
         foreach ($args as $key => $value) {
             if (count($args) === 1) {
-                $query .= " {$key} = '{$value}'";
+                $query .= " `{$key}` = '{$value}'";
             } else if ($count < count($args)) {
-                $query .= " {$key} = '{$value}' and";
+                $query .= " `{$key}` = '{$value}' and";
             } else {
-                $query .= " {$key} = '{$value}'";
+                $query .= " `{$key}` = '{$value}'";
             }
             $count++;
         }
+        \Utils\ErrorLog::print($query);
+
 
         return $query;
     }

@@ -5,10 +5,12 @@ class ErrorLog {
 
     public static function print($object = null, $tag = '')
     {
+        /*
         if ($object == null)
         {
             $object = "null";   // be explicit for print_r
         }
+         */
 
         $content = '';
 

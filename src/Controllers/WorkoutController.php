@@ -4,6 +4,8 @@ namespace Controllers;
 use Http\Response;
 use Database\Query\Users;
 use Database\Query\Workouts;
+use Database\Query\Exercises;
+use Database\Query\Sessions;
 
 class WorkoutController implements ControllerInterface
 {
@@ -21,12 +23,30 @@ class WorkoutController implements ControllerInterface
         ];
 
         $response = new Response();
-        $response->send(Response::HTTP_200_OK, $data);
+        return $response->send(Response::HTTP_200_OK, $data);
     }
 
     public function post($args = [])
     {
-        // TODO
+        $sessions = new Sessions();
+        
+        if ($sessions->verify() == true) {
+            $workouts = new Workouts();
+            $workoutArgs = [];
+            //$workouts->add($workoutArgs);
+
+            $exercises = new Exercises();
+            $exerciseArgs = [];
+            foreach ($exerciseArgs as $exercise) {
+               //$exercises->add($exercise); 
+            }
+
+            $response = new Response();
+            return $response->send(Response::HTTP_200_OK);
+        }
+
+        $response = new Response();
+        return $response->send(Response::HTTP_401_UNAUTHORIZED);
     }
 
     public function put($args = [])

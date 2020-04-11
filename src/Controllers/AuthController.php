@@ -26,11 +26,11 @@ class AuthController implements ControllerInterface
 
         if ($user == null) {
             $response = new Response();
-            $response->send(Response::HTTP_401_UNAUTHORIZED);
+            return $response->send(Response::HTTP_401_UNAUTHORIZED);
         } else {
             $response = new Response();
             $response->cookie($user->cookie());
-            $response->send(Response::HTTP_200_OK);
+            return $response->send(Response::HTTP_200_OK);
         }
     }
 

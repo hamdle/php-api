@@ -29,7 +29,7 @@ class Response
     {
         header(self::JSON_CONTENT_TYPE);
         http_response_code($code);
-        if (!is_null($data)) {
+        if (!($data == null)) {
             echo json_encode($data);
         }
     }

@@ -12,7 +12,7 @@ class ExerciseController implements ControllerInterface
         $all = $exercises->all();
 
         $response = new Response();
-        $response->send(Response::HTTP_200_OK, $all);
+        return $response->send(Response::HTTP_200_OK, $all);
     }
 
     public function post($args = [])
