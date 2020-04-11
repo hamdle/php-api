@@ -22,13 +22,14 @@ class User
 
     public function cookie() {
         $sessions = new Sessions();
-        $session = $sessions->filter_by(['user_id', $this->user_id]);
+        $session = $sessions->filter_by(['user_id' => $this->id]);
 
         if ($session == null) {
             $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
             $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+            // TODO: This needs to verify it got a return and save return the key, value pair.
             $newSession = $sessions->save($this->id, $key, $value);
-            return [$newSession->key => $newSession->value];
+            return [$key => $value];
         }
 
         return [$session->key => $session->value];
