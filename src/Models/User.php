@@ -22,7 +22,7 @@ class User
 
     public function cookie() {
         $sessions = new Sessions();
-        $session = $sessions->filter_by(['user_id', $this->id]);
+        $session = $sessions->filter_by(['user_id', $this->user_id]);
 
         if ($session == null) {
             $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
