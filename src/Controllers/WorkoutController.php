@@ -16,6 +16,7 @@ class WorkoutController implements ControllerInterface
 
     public function post($args = [])
     {
+        $response = new Response();
         $sessions = new Sessions();
         $data_args = $args['data'];
 
@@ -32,6 +33,9 @@ class WorkoutController implements ControllerInterface
             // TODO: Filter 'feel' properly.
             $data_args['feel'] = 'average';
             $workout_id = $workouts->add($workouts->filter_args($data_args));
+            if ($workout_id == null) {
+                return $response->send(Response::HTTP_400_BAD_REQUEST, 'There was a database error creating the workout.');
+            }
 
             $entries_args = $data_args['entries'];
 
@@ -42,20 +46,24 @@ class WorkoutController implements ControllerInterface
                 // TODO: Filter 'feedback' properly.
                 $entries_args[$index]['feedback'] = 'none';
                 $entries_id = $entries->add($entries->filter_args($entries_args[$index]));
+                if ($entries_id == null) {
+                    return $response->send(Response::HTTP_400_BAD_REQUEST, 'There was a database error creating an exercise entry.');
+                }
 
                 $reps_args = $entries_args[$index]['reps'];
                 foreach ($reps_args as $rep) {
                     // Save reps to database.
                     $rep['entries_id'] = $entries_id;
-                    $reps->add($reps->filter_args($rep));
+                    $reps_id = $reps->add($reps->filter_args($rep));
+                    if ($reps_id == null) {
+                        return $response->send(Response::HTTP_400_BAD_REQUEST, 'There was a database error creating a rep.');
+                    }
                 }
             }
 
-            $response = new Response();
-            return $response->send(Response::HTTP_200_OK);
+            return $response->send(Response::HTTP_200_OK, 'Workout saved sucessfully.');
         }
 
-        $response = new Response();
         return $response->send(Response::HTTP_401_UNAUTHORIZED);
     }
 
