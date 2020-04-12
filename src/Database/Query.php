@@ -61,8 +61,7 @@ class Query implements QueryInterface
             }
             $count++;
         }
-        \Utils\ErrorLog::print($query);
-
+        //\Utils\ErrorLog::print($query);
 
         return $query;
     }

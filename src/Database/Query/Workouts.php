@@ -33,4 +33,9 @@ class Workouts extends Query
     {
         parent::add($args, $table);
     }
+
+    public function filter_args($args)
+    {
+        return $args;
+    }
 }

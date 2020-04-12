@@ -5,5 +5,15 @@ use Database\Query;
 
 class Entries extends Query
 {
-    // TODO
+    protected const ENTRIES_TABLE = 'entries';
+
+    public function add($args, $table = self::ENTRIES_TABLE)
+    {
+        parent::add($args, $table);
+    }
+
+    public function filter_args($args)
+    {
+        return $args;
+    }
 }

@@ -4,8 +4,9 @@ namespace Controllers;
 use Http\Response;
 use Database\Query\Users;
 use Database\Query\Workouts;
-use Database\Query\Exercises;
+use Database\Query\Reps;
 use Database\Query\Sessions;
+use Database\Query\Entries;
 
 class WorkoutController implements ControllerInterface
 {
@@ -28,18 +29,17 @@ class WorkoutController implements ControllerInterface
 
     public function post($args = [])
     {
-        // TODO: Save workout and exercise data.
         $sessions = new Sessions();
         
         if ($sessions->verify() == true) {
             $workouts = new Workouts();
-            $workoutArgs = [];
-            //$workouts->add($workoutArgs);
+            $workouts->add($workouts->filter_args($args['data']));
 
-            $exercises = new Exercises();
-            $exerciseArgs = [];
-            foreach ($exerciseArgs as $exercise) {
-               //$exercises->add($exercise); 
+            $entries = new Entries();
+            $reps = new Reps();
+            for ($index = 0; $index < count($args['exercises']); $index++) {
+                $entries->add($entries->filter_args($args['exercises'][$index]));
+                $reps->add($reps->filter_args($args['exercises'][$index]));
             }
 
             $response = new Response();
