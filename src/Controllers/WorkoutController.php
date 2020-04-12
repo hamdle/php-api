@@ -37,9 +37,9 @@ class WorkoutController implements ControllerInterface
 
             $entries = new Entries();
             $reps = new Reps();
-            for ($index = 0; $index < count($args['exercises']); $index++) {
-                $entries->add($entries->filter_args($args['exercises'][$index]));
-                $reps->add($reps->filter_args($args['exercises'][$index]));
+            for ($index = 0; $index < count($args['entries']); $index++) {
+                $entries->add($entries->filter_args($args['entries'][$index]));
+                $reps->add($reps->filter_args($args['entries'][$index]['reps']));
             }
 
             $response = new Response();
