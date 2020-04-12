@@ -28,7 +28,7 @@ insert into exercises
 ('Leg Raises', 3, 5, 60, 'core');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
-('Cobra', 3, 40, 30, 'core');
+('Cobras', 3, 40, 30, 'core');
 insert into exercises 
 (title, default_sets, default_reps, wait_time, category) values 
 ('Pistol Squats', 4, 5, 60, 'legs');

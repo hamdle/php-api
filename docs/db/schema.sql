@@ -53,7 +53,6 @@ CREATE TABLE `entries` (
     `workout_id` int(10) unsigned NOT NULL,
     `user_id` int(10) unsigned NOT NULL,
     `sets` int(1) unsigned DEFAULT 0,
-    `reps` int(1) unsigned DEFAULT 0,
     `feedback` ENUM('up', 'down', 'none') DEFAULT 'none',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
