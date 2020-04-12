@@ -39,7 +39,7 @@ class WorkoutController implements ControllerInterface
                 // Save entries to database.
                 $entries_args[$index]['user_id'] = $user->id;
                 $entries_args[$index]['workout_id'] = $workout_id;
-                // TODO: Filter '' properly.
+                // TODO: Filter 'feedback' properly.
                 $entries_args[$index]['feedback'] = 'none';
                 $entries_id = $entries->add($entries->filter_args($entries_args[$index]));
 

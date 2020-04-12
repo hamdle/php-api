@@ -33,7 +33,6 @@ class Query implements QueryInterface
         $values = substr($values, 0, -1);
 
         $query .= ") values ({$values})";
-        \Utils\ErrorLog::print($query, 'query');
 
         return MySQL::run($query);
     }
@@ -62,7 +61,6 @@ class Query implements QueryInterface
             }
             $count++;
         }
-        //\Utils\ErrorLog::print($query);
 
         return $query;
     }
