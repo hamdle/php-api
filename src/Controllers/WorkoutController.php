@@ -37,15 +37,16 @@ class WorkoutController implements ControllerInterface
 
             for ($index = 0; $index < count($entries_args); $index++) {
                 // Save entries to database.
-                // TODO: Add workout_id.
                 $entries_args[$index]['user_id'] = $user->id;
                 $entries_args[$index]['workout_id'] = $workout_id;
-                $entries->add($entries->filter_args($entries_args[$index]));
+                // TODO: Filter '' properly.
+                $entries_args[$index]['feedback'] = 'none';
+                $entries_id = $entries->add($entries->filter_args($entries_args[$index]));
 
                 $reps_args = $entries_args[$index]['reps'];
                 foreach ($reps_args as $rep) {
                     // Save reps to database.
-                    // TODO: Add entries_id.
+                    $rep['entries_id'] = $entries_id;
                     $reps->add($reps->filter_args($rep));
                 }
             }
