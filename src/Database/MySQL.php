@@ -40,7 +40,6 @@ class MySQL
         $rows = [];
         if ($results = $db->query($query))
         {
-            \Utils\ErrorLog::print($db->insert_id, 'insert_id');
             if (is_bool($results)) {
                 if ($results) {
                     return $db->insert_id;
