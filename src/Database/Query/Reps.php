@@ -9,11 +9,16 @@ class Reps extends Query
 
     public function add($args, $table = self::REPS_TABLE)
     {
-        parent::add($args, $table);
+        \Utils\ErrorLog::print($args, $table);
+        //parent::add($args, $table);
     }
 
     public function filter_args($args)
     {
-        return $args;
+        $filtered_args = $args;
+        // TODO:
+        // 1. Add entries_id.
+        
+        return $filtered_args;
     }
 }

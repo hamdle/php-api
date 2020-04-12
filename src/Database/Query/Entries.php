@@ -9,11 +9,19 @@ class Entries extends Query
 
     public function add($args, $table = self::ENTRIES_TABLE)
     {
-        parent::add($args, $table);
+        \Utils\ErrorLog::print($args, $table);
+        //parent::add($args, $table);
     }
 
     public function filter_args($args)
     {
-        return $args;
+        $filtered_args = $args;
+        // TODO:
+        // 1. Add exercise_id.
+        // 2. Add workout_id.
+        // 3. Add user_id.
+        // 4. Count reps and update/verify it.
+        
+        return $filtered_args;
     }
 }

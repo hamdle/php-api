@@ -31,11 +31,18 @@ class Workouts extends Query
 
     public function add($args, $table = self::WORKOUT_TABLE)
     {
-        parent::add($args, $table);
+        \Utils\ErrorLog::print($args, $table);
+        //parent::add($args, $table);
     }
 
     public function filter_args($args)
     {
-        return $args;
+        $filtered_args = $args;
+        // TODO:
+        // 1. Remove entries element.
+        unset($filtered_args['entries']);
+        // 2. Add user_id.
+        
+        return $filtered_args;
     }
 }
