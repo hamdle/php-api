@@ -16,11 +16,8 @@ class Entries extends Query
     public function filter_args($args)
     {
         $filtered_args = $args;
-        // TODO:
-        // 1. Add exercise_id.
-        // 2. Add workout_id.
-        // 3. Add user_id.
-        // 4. Count reps and update/verify it.
+        // 'reps' are not processed here.
+        unset($filtered_args['reps']);
         
         return $filtered_args;
     }

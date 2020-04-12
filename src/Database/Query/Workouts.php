@@ -38,10 +38,8 @@ class Workouts extends Query
     public function filter_args($args)
     {
         $filtered_args = $args;
-        // TODO:
-        // 1. Remove entries element.
+        // 'entries' and 'reps' are not processed here.
         unset($filtered_args['entries']);
-        // 2. Add user_id.
         
         return $filtered_args;
     }

@@ -15,10 +15,6 @@ class Reps extends Query
 
     public function filter_args($args)
     {
-        $filtered_args = $args;
-        // TODO:
-        // 1. Add entries_id.
-        
-        return $filtered_args;
+        return $args;
     }
 }
