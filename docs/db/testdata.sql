@@ -2,8 +2,10 @@ use wo_db;
 
 /* users */
 insert into users (email, password) values ('admin@localhost.com', md5('admin'));
+/*
 insert into users (email, password) values ('eric@testmail.dev', md5('password456'));
 insert into users (email, password) values ('user1@localhost.co', md5('testpass'));
+*/
 
 /* exercises */
 insert into exercises 
@@ -47,6 +49,7 @@ insert into exercises
 ('Hollow Body', 3, 5, 60, 'core');
 
 /* entries */
+/*
 insert into entries 
 (exercises_id, workout_id, user_id, sets, reps, feedback) values 
 (3, 3, 2, 3, 6, 'none');
@@ -86,8 +89,10 @@ insert into entries
 insert into entries 
 (exercises_id, workout_id, user_id, sets, reps, feedback) values 
 (1, 0, 1, 3, 12, 'up');
+*/
 
 /* workouts */
+/*
 insert into workouts 
 (user_id, start, end, notes, feel) values 
 (2, '2019-01-01 00:00:00', '2019-01-01 00:34:00', 'Com Truise - Persuasion System', 'average');
@@ -106,8 +111,10 @@ insert into workouts
 insert into workouts 
 (user_id, start, end, notes, feel) values 
 (3, '2019-11-16 22:13:04', '2019-11-16 22:55:40', '', 'strong');
+*/
 
 /* reps */
+/*
 insert into reps (entries_id, amount) values (1, '6');
 insert into reps (entries_id, amount) values (1, '4+2');
 insert into reps (entries_id, amount) values (1, '6');
@@ -123,3 +130,4 @@ insert into reps (entries_id, amount) values (6, '11');
 insert into reps (entries_id, amount) values (6, '12');
 insert into reps (entries_id, amount) values (7, '10+2');
 insert into reps (entries_id, amount) values (7, '10');
+*/
