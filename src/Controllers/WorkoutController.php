@@ -42,6 +42,8 @@ class WorkoutController implements ControllerInterface
             $data_args['user_id'] = $user->id;
             $data_args['start'] = \Utils\Date::timestampToDatetime($data_args['start']);
             $data_args['end'] = \Utils\Date::timestampToDatetime($data_args['end']);
+            // TODO: Filter 'feel' properly.
+            $data_args['feel'] = 'average';
             $workout_id = $workouts->add($workouts->filter_args($data_args));
 
             $entries_args = $data_args['entries'];
