@@ -40,7 +40,7 @@ class WorkoutController implements ControllerInterface
 
             // Save workout to database.
             $data_args['user_id'] = $user->id;
-            $workouts->add($workouts->filter_args($data_args));
+            $workout_id = $workouts->add($workouts->filter_args($data_args));
 
             $entries_args = $data_args['entries'];
 
@@ -48,6 +48,7 @@ class WorkoutController implements ControllerInterface
                 // Save entries to database.
                 // TODO: Add workout_id.
                 $entries_args[$index]['user_id'] = $user->id;
+                $entries_args[$index]['workout_id'] = $workout_id;
                 $entries->add($entries->filter_args($entries_args[$index]));
 
                 $reps_args = $entries_args[$index]['reps'];

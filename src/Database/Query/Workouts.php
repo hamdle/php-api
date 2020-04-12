@@ -32,7 +32,7 @@ class Workouts extends Query
     public function add($args, $table = self::WORKOUT_TABLE)
     {
         \Utils\ErrorLog::print($args, $table);
-        //parent::add($args, $table);
+        parent::add($args, $table);
     }
 
     public function filter_args($args)

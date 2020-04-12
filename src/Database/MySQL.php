@@ -28,6 +28,11 @@ class MySQL
         return self::$mysql;
     }
 
+    /*
+     * Run a sql query using OO version of mysqli
+     * @param $query - a complete SQL query
+     * @return $rows[] or $id or null
+     */
     public static function run($query)
     {
         $db = self::connect();
@@ -35,8 +40,16 @@ class MySQL
         $rows = [];
         if ($results = $db->query($query))
         {
+            \Utils\ErrorLog::print($db->insert_id, 'insert_id');
             if (is_bool($results)) {
-                return [];
+                if ($results) {
+                    return $db->insert_id;
+                }
+                return null;
+            }
+            if ($db->error) {
+                \Utils\ErrorLog::print($db->error, 'database error');
+                return null;
             }
             while ($row = $results->fetch_assoc())
             {
