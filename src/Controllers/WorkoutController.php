@@ -31,21 +31,23 @@ class WorkoutController implements ControllerInterface
     {
         $sessions = new Sessions();
         $data_args = $args['data'];
-        
-        if ($sessions->verify() == true) {
-            $workouts = new Workouts();
-            // Save workout to database.
-            // TODO: Add user_id.
-            $workouts->add($workouts->filter_args($data_args));
 
+        $user = $sessions->verify(); 
+        if ($user) {
+            $workouts = new Workouts();
             $entries = new Entries();
             $reps = new Reps();
 
+            // Save workout to database.
+            $data_args['user_id'] = $user->id;
+            $workouts->add($workouts->filter_args($data_args));
+
             $entries_args = $data_args['entries'];
+
             for ($index = 0; $index < count($entries_args); $index++) {
                 // Save entries to database.
-                // TODO: Add user_id.
                 // TODO: Add workout_id.
+                $entries_args[$index]['user_id'] = $user->id;
                 $entries->add($entries->filter_args($entries_args[$index]));
 
                 $reps_args = $entries_args[$index]['reps'];

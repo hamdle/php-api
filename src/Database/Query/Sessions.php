@@ -32,7 +32,7 @@ class Sessions extends Query
     /**
      * Check to make sure a cookie sent from the client is valid.
      * @params $cookie - ['key' => 'value']
-     * @return bool
+     * @return false or \Models\User
      */
     public function verify($cookie = null)
     {
@@ -67,7 +67,7 @@ class Sessions extends Query
         }
 
         if (strcmp($session->value, md5($user->email.$_ENV['COOKIE_NOISE'])) == 0) {
-            return true;
+            return $user;
         }
 
         return false;
