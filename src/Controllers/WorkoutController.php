@@ -2,7 +2,6 @@
 namespace Controllers;
 
 use Http\Response;
-use Database\Query\Users;
 use Database\Query\Workouts;
 use Database\Query\Reps;
 use Database\Query\Sessions;
@@ -12,19 +11,7 @@ class WorkoutController implements ControllerInterface
 {
     public function get($args = [])
     {
-        $users = new Users();
-        $user = $users->get(1);
-
-        $workouts = new Workouts();
-        $workout = $workouts->new(1);
-
-        $data = [
-            'user' => $user->email,
-            'workout_html' => $workout->html()
-        ];
-
-        $response = new Response();
-        return $response->send(Response::HTTP_200_OK, $data);
+        // TODO
     }
 
     public function post($args = [])
