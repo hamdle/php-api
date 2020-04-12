@@ -30,16 +30,26 @@ class WorkoutController implements ControllerInterface
     public function post($args = [])
     {
         $sessions = new Sessions();
+        $data_args = $args['data'];
         
         if ($sessions->verify() == true) {
             $workouts = new Workouts();
-            $workouts->add($workouts->filter_args($args['data']));
+            // Add workout.
+            $workouts->add($workouts->filter_args($data_args));
 
             $entries = new Entries();
             $reps = new Reps();
-            for ($index = 0; $index < count($args['data']['entries']); $index++) {
-                $entries->add($entries->filter_args($args['data']['entries'][$index]));
-                $reps->add($reps->filter_args($args['data']['entries'][$index]['reps']));
+
+            $entries_args = $data_args['entries'];
+            for ($index = 0; $index < count($entries_args); $index++) {
+                // Add entries.
+                $entries->add($entries->filter_args($entries_args[$index]));
+
+                $reps_args = $entries_args[$index]['reps'];
+                foreach ($reps_args as $rep) {
+                    // Add reps.
+                    $reps->add($reps->filter_args($rep));
+                }
             }
 
             $response = new Response();
