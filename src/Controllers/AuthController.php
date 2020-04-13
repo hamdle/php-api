@@ -3,12 +3,20 @@ namespace Controllers;
 
 use Http\Response;
 use Database\Query\Users;
+use Database\Query\Sessions;
 
 class AuthController implements ControllerInterface
 {
     public function get($args = [])
     {
-        // TODO
+        $response = new Response();
+        $sessions = new Sessions();
+
+        if ($sessions->verify()) {
+            return $response->send(Response::HTTP_200_OK);
+        }
+
+        return $response->send(Response::HTTP_401_UNAUTHORIZED);
     }
 
     public function post($args = [])

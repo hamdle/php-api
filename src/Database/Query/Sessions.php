@@ -41,7 +41,8 @@ class Sessions extends Query
             $cookie = $request->getCookie();
         }
 
-        if (count($cookie) > 1) {
+        if (empty($cookie) ||
+            count($cookie) > 1) {
             return false;
         }
 
