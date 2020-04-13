@@ -83,7 +83,12 @@ Add a new workout that a user has completed.
             'exercises_id': null,
             'sets': null,
             'reps': [
-                'amount': null
+                {
+                    'amount': null
+                },
+                {
+                    'amount': null
+                },
             ],
             'feedback': null
         },
@@ -91,7 +96,12 @@ Add a new workout that a user has completed.
             'exercises_id': null,
             'sets': null,
             'reps': [
-                'amount': null
+                {
+                    'amount': null
+                },
+                {
+                    'amount': null
+                },
             ],
             'feedback': null
         },
