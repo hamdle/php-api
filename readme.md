@@ -26,119 +26,74 @@ This API communicates in JSON and attepts to respond in a RESTful way.
 
 Code | Message
 ---- | -------
-200  | GET, PUT, or PATCH OK
-201  | POST OK
-204  | DELETE OK
+200  | GET, PUT, or PATCH Success
+201  | POST Success
+204  | DELETE Success
 400  | Bad request
-401  | Unauthorized user
-403  | Forbidden resource
+401  | Unauthorized
+403  | Forbidden
 404  | Not found
 
-### Failed response message
+### POST /login
 
-A failed status code will attept to return a message.
+Authenticate a user login request.
+
+#### Request
 
 ```
 {
-    "message": "User not found."
+    'user': 'admin@localhost.com',
+    'password': 'password123'
 }
 ```
-
-## Programs
-
-Programs define a single workout routine. A program is a collection of the exercises, the order to perform the exercises, the number of sets for each exercise, and number of reps for each set.
-
-### GET /{userId}/programs/new
-
-Create a new program for the next workout. This will generate recommendations based on previous workouts.
 
 #### Response
 
 Success code: 200
 
-```
-{
-    "programId": "66",
-    "length": "6",
-    "program": [
-        {
-            "programId": "0",
-            "exerciseId": "3",
-            "title": "Pull Ups",
-            "details": {
-                "sets": 2,
-                "defaultReps": 5,
-                "lastReps": 7,
-                "recommendedReps": 8
-            }
-        },
-        ...
-    ]
-}
-```
+Failure code: 403
 
-### GET /{userId}/programs/new/shuffle
 
-This will generate a program using `/{userId}/programs/new` but perform a second step and shuffle the exercises in an appropriate way.
+### GET /exercises
 
-#### TODO
-
-1. GET `/{userId}/programs`
-2. GET `/{userId}/programs/{programId}`
-
-## Workouts
-
-### POST /{userId}/workouts
-
-Create a new workout. The workout data can be incomplete and filled in via PATCH later.
+Return a list of all exercises and their default values.
 
 #### Request
 
-The `program` data sent should be from the `/{userId}/program` GET request.
-
-```
-{
-    "timestamp": "2019-02-15 12:00:00",
-    "program": [
-        ...
-    ]
-}
-```
+No extra data needed.
 
 #### Response
 
-Success code: 201
+Success code: 200
 
-### PATCH /{userId}/workouts
+### POST /workouts/new
 
-Use this to update a workout as it's happening or to correct existing workout data.
+Add a new workout that a user has completed.
 
 #### Request
 
 ```
 {
-    "workoutId": "22",
-    "timestamp": "1970-01-01 23:00:00",
-    "notes": "Workout notes."
-    "exercise": [
+    'start': null,
+    'end': null,
+    'notes': null,
+    'feel': null,
+    'entries': [
         {
-            "exerciseId": "3",
-            "title": "Chin Ups",
-            "length": "2",
-            "reps": [
-                "6",
-                "6"
-            ]
+            'exercises_id': null,
+            'sets': null,
+            'reps': [
+                'amount': null
+            ],
+            'feedback': null
         },
         {
-            "exerciseId": "0",
-            "title": "Push Ups",
-            "length": "3",
-            "reps": [
-                "5",
-                "5",
-                "5"
-            ]
+            'exercises_id': null,
+            'sets': null,
+            'reps': [
+                'amount': null
+            ],
+            'feedback': null
         },
         ...
     ]
@@ -149,67 +104,5 @@ Use this to update a workout as it's happening or to correct existing workout da
 
 Success code: 200
 
-#### TODO
-
-1. PUT `/{userId}/workouts/{workoutId}`
-2. GET `/{userId}/workouts`
-2. GET `/{userId}/workouts/{workoutId}`
-
-## User
-
-### POST /logout
-
-Log user out of application.
-
-#### Request
-
-```
-{
-    "token": "token"
-}
-```
-
-#### Response
-
-Success code: 200
-
-### GET /user
-
-Get logged in user info.
-
-#### Request
-
-```
-{
-    "token": "token"
-}
-```
-
-#### Response
-
-Success code: 200
-
-### POST /authenticate
-
-Authenticate user.
-
-#### Request
-
-```
-{
-    "email": "admin@localhost",
-    "password": "password"
-}
-```
-
-#### Response
-
-Success code: 201
-
-```
-{
-    "userId": "22",
-    "token": "token"
-}
-```
+Failure code: 400
 
