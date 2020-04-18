@@ -53,6 +53,20 @@ Success code: 200
 
 Failure code: 403
 
+### GET /auth
+
+Verify that a cookie is valid and matches the user creds.
+
+#### Request
+
+No extra data needed.
+
+#### Response
+
+Success code: 200
+
+Failure code: 401
+
 
 ### GET /exercises
 
