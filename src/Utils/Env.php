@@ -7,12 +7,14 @@ class Env
 {
     protected $envPath;
 
-    public function __construct()
+    public
+    function __construct()
     {
         $this->envPath = $_SERVER["DOCUMENT_ROOT"] . '/api/' . '.env';
     }
 
-    public function load()
+    public
+    function load()
     {
         try
         {
@@ -25,7 +27,7 @@ class Env
         }
         catch (Exception $e)
         {
-            echo "There is an issue with the .env file";
+            echo "No file found. Create .env or update permissions.";
             die();
         }
 
@@ -44,7 +46,7 @@ class Env
             }
             else
             {
-                trigger_error('There was an issue reading the .env file around line ' . $lineNumber, E_USER_WARNING);
+                echo "Unable to parse line {$lineNumber} of the .env.";
             }
         }
     }
