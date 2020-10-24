@@ -1,6 +1,7 @@
 <?php
 namespace Utils;
 
+use Http\Request;
 use Controllers\Controller;
 
 class Router
@@ -12,19 +13,19 @@ class Router
         $this->endpoints = $endpoints;
     }
 
-    public function getController($request)
+    public function resolveController()
     {
         // TODO (2) make it better.
 
         // Filter out requests that have no potential endpoint.
-        $endpoints = $this->quickFilterEndpoints($request);
+        $endpoints = $this->quickFilterEndpoints();
         if (empty($endpoints))
         {
             return new Controller('ErrorController', 'get');
         }
 
         // Now, try to match the request parts with the endpoint parts.
-        $requestParts = $request->getPathParts();
+        $requestParts = Request::partsArr();
         $match = true;
         $uriArgs = [];
         // Run through each endpoint.
@@ -57,8 +58,8 @@ class Router
                 $method = $parts[1];
                 $args = [];
                 $args['uri'] = $uriArgs;
-                $args['data'] = $request->getData();
-                $args['post'] = $request->getPost();
+                $args['data'] = Request::data();
+                $args['post'] = Request::post();
 
                 return new Controller($class, $method, $args);
             }
@@ -70,10 +71,10 @@ class Router
     // Return endpoints with the same number of parts and method
     // as the request
     // @return [$key => $value]
-    private function quickFilterEndpoints($request)
+    private function quickFilterEndpoints()
     {
         $filteredEndpoints = [];
-        $requestParts = $request->getPathParts();
+        $requestParts = Request::pathArr();
 
         foreach ($this->endpoints as $uri => $controller) {
             $uriParts = explode('/', $uri);
@@ -86,7 +87,7 @@ class Router
             if (count($requestParts) === count($uriParts))
             {
                 // Request method match
-                if ($method == strtolower($request->getMethod()))
+                if ($method == strtolower(Request::method()))
                 {
                     $filteredEndpoints[$uri] = $controller;
                 }
