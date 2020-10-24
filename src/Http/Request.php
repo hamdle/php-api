@@ -11,13 +11,13 @@ namespace Http;
 class Request
 {
     public static
-    function uri()
+    function uri() : string
     {
         return $_SERVER['REQUEST_URI'];
     }
 
     public static
-    function pathArr()
+    function path() : array
     {
         $arr = array_filter(
             explode('/', self::uri()),
@@ -33,25 +33,25 @@ class Request
     }
 
     public static
-    function method()
+    function method() : string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
     public static
-    function data()
+        function data() /* mixed */
     {
         return json_decode(file_get_contents('php://input'), true);
     }
 
     public static
-    function post()
+    function post() : string
     {
         return $_POST;
     }
 
     public static
-    function cookie()
+    function cookie() : string
     {
         return $_COOKIE;
     }
