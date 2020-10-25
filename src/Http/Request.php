@@ -19,7 +19,7 @@ class Request
     public static function
     path(): array
     {
-        $arr = array_filter(
+        $parts = array_filter(
             explode('/', self::uri()),
             function($part)
             {
@@ -29,7 +29,7 @@ class Request
             }
         );
 
-        return array_values($arr);
+        return array_values($parts);
     }
 
     public static function
