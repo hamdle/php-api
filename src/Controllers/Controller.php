@@ -15,7 +15,7 @@ class Controller
     }
 
     // Send a JSON Response from a Controller.
-    public function response()
+    public function sendResponse()
     {
         $class = __NAMESPACE__."\\".$this->class;
         $method = $this->method;

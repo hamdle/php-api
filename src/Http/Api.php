@@ -1,21 +1,28 @@
 <?php
+
+/*
+ * Http/Api.php: the API's main loop, run()
+ *
+ * Copyright (C) 2020 Eric Marty
+ */
+
 namespace Http;
 
+use Http\Request;
 use Utils\Router;
 
 class Api
 {
     private $endpoints;
 
-    public function run()
+    public function
+    run(): void
     {
-        $request = Request::get();
-        $router = new Router($this->endpoints);
-        $controller = $router->getController($request);
-        $controller->response();
+        ((new Router($this->endpoints))->routeToController())->sendResponse();
     }
 
-    public function endpoint($uri, $controller) 
+    public function
+    endpoint($uri, $controller): void
     {
         $this->endpoints[$uri] = $controller;
     }

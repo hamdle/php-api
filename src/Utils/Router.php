@@ -13,7 +13,8 @@ class Router
         $this->endpoints = $endpoints;
     }
 
-    public function resolveController()
+    public function
+    routeToController() : \Controllers\Controller
     {
         // TODO (2) make it better.
 
@@ -25,7 +26,7 @@ class Router
         }
 
         // Now, try to match the request parts with the endpoint parts.
-        $requestParts = Request::partsArr();
+        $requestParts = Request::path();
         $match = true;
         $uriArgs = [];
         // Run through each endpoint.
@@ -74,7 +75,7 @@ class Router
     private function quickFilterEndpoints()
     {
         $filteredEndpoints = [];
-        $requestParts = Request::pathArr();
+        $requestParts = Request::path();
 
         foreach ($this->endpoints as $uri => $controller) {
             $uriParts = explode('/', $uri);

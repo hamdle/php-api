@@ -10,14 +10,14 @@ namespace Http;
 
 class Request
 {
-    public static
-    function uri() : string
+    public static function
+    uri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
 
-    public static
-    function path() : array
+    public static function
+    path(): array
     {
         $arr = array_filter(
             explode('/', self::uri()),
@@ -32,26 +32,26 @@ class Request
         return array_values($arr);
     }
 
-    public static
-    function method() : string
+    public static function
+    method(): string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public static
-    function data() /* : mixed */
+    public static function
+    data() /* : mixed */
     {
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    public static
-    function post() : string
+    public static function
+    post(): string
     {
         return $_POST;
     }
 
-    public static
-    function cookie() : string
+    public static function
+    cookie(): string
     {
         return $_COOKIE;
     }
