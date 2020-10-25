@@ -8,7 +8,6 @@
 
 namespace Http;
 
-use Http\Request;
 use Utils\Router;
 
 class Api
