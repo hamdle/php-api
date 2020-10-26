@@ -37,9 +37,9 @@ class Router
                 if ($requestParts[$n] == $keyParts[$n])
                     continue;
 
-                if (intval($requestParts[$n]) === 0)
+                if (intval($requestParts[$n]) === 0) {
                     $match = false;
-                else {
+                } else {
                     $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
                     $uriArgs[$argKey] = intval($requestParts[$n]);
                 }
