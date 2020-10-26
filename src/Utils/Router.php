@@ -34,10 +34,9 @@ class Router
             $keyParts = explode('/', $key);
 
             for ($n = 0; $n < count($requestParts); $n++) {
-                if ($requestParts[$n] == $keyParts[$n])
+                if ($requestParts[$n] == $keyParts[$n]) {
                     continue;
-
-                if (intval($requestParts[$n]) === 0) {
+                } else if (intval($requestParts[$n]) === 0) {
                     $match = false;
                 } else {
                     $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
@@ -47,9 +46,9 @@ class Router
 
             if ($match) {
                 $parts = explode('.', $value);
-                $class= $parts[0];
+                $class = $parts[0];
                 $method = $parts[1];
-                $args = [];
+
                 $args['uri'] = $uriArgs;
                 $args['data'] = Request::data();
                 $args['post'] = Request::post();
