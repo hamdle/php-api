@@ -26,14 +26,13 @@ class Router
     getController() : \Controllers\Controller
     {
         $endpoints = $this->filterEndpoints();
-        if (empty($endpoints))
-            return new Controller('ErrorController', 'get');
-
         $requestParts = Request::path();
+
         foreach ($endpoints as $key => $value) {
             $match = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
+
             for ($n = 0; $n < count($requestParts); $n++) {
                 if ($requestParts[$n] == $keyParts[$n])
                     continue;
