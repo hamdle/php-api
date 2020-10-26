@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * Utils/Router.php: match endpoints with the request's
+ * uri path
+ *
+ * Copyright (C) 2020 Eric Marty
+ */
+
 namespace Utils;
 
 use Http\Request;
@@ -8,52 +16,37 @@ class Router
 {
     private $endpoints;
 
-    public function __construct($endpoints)
+    public function
+    __construct($endpoints)
     {
         $this->endpoints = $endpoints;
     }
 
     public function
-    routeToController() : \Controllers\Controller
+    getController() : \Controllers\Controller
     {
-        // TODO (2) make it better.
-
-        // Filter out requests that have no potential endpoint.
-        $endpoints = $this->quickFilterEndpoints();
+        $endpoints = $this->filterEndpoints();
         if (empty($endpoints))
-        {
             return new Controller('ErrorController', 'get');
-        }
 
-        // Now, try to match the request parts with the endpoint parts.
         $requestParts = Request::path();
-        $match = true;
-        $uriArgs = [];
-        // Run through each endpoint.
-        foreach ($endpoints as $key => $value)
-        {
+        foreach ($endpoints as $key => $value) {
             $match = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
-            // Test to see if every uri part matches every endpoint part.
-            for ($n = 0; $n < count($requestParts); $n++)
-            {
+            for ($n = 0; $n < count($requestParts); $n++) {
                 if ($requestParts[$n] == $keyParts[$n])
-                {
                     continue;
-                }
+
                 if (intval($requestParts[$n]) === 0)
-                {
                     $match = false;
-                }
-                else
-                {
+                else {
                     $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
                     $uriArgs[$argKey] = intval($requestParts[$n]);
                 }
             }
-            if ($match)
-            {
+
+            if ($match) {
                 $parts = explode('.', $value);
                 $class= $parts[0];
                 $method = $parts[1];
@@ -69,29 +62,21 @@ class Router
         return new Controller('ErrorController', 'get');
     }
 
-    // Return endpoints with the same number of parts and method
-    // as the request
-    // @return [$key => $value]
-    private function quickFilterEndpoints()
+    private function
+    filterEndpoints(): array
     {
         $filteredEndpoints = [];
         $requestParts = Request::path();
 
         foreach ($this->endpoints as $uri => $controller) {
             $uriParts = explode('/', $uri);
-
             $controllerParts = explode('.', $controller);
             $class = $controllerParts[0];
             $method = $controllerParts[1];
 
-            // URI parts length match
-            if (count($requestParts) === count($uriParts))
-            {
-                // Request method match
-                if ($method == strtolower(Request::method()))
-                {
-                    $filteredEndpoints[$uri] = $controller;
-                }
+            if (count($requestParts) === count($uriParts) &&
+                ($method == strtolower(Request::method()))) {
+                $filteredEndpoints[$uri] = $controller;
             }
         }
 

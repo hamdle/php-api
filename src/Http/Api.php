@@ -17,7 +17,7 @@ class Api
     public function
     run(): void
     {
-        ((new Router($this->endpoints))->routeToController())->sendResponse();
+        ((new Router($this->endpoints))->getController())->sendResponse();
     }
 
     public function
