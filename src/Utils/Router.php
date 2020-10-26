@@ -28,7 +28,7 @@ class Router
         $pathParts = Request::path();
 
         foreach ($this->filterEndpoints() as $key => $value) {
-            $match = true;
+            $pass = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
 
@@ -36,14 +36,14 @@ class Router
                 if ($pathParts[$n] == $keyParts[$n]) {
                     continue;
                 } else if (intval($pathParts[$n]) === 0) {
-                    $match = false;
+                    $pass = false;
                 } else {
                     $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
                     $uriArgs[$argKey] = intval($pathParts[$n]);
                 }
             }
 
-            if ($match) {
+            if ($pass) {
                 $parts = explode('.', $value);
                 $class = $parts[0];
                 $method = $parts[1];
