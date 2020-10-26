@@ -23,24 +23,23 @@ class Router
     }
 
     public function
-    getController() : \Controllers\Controller
+    getController(): \Controllers\Controller
     {
-        $endpoints = $this->filterEndpoints();
-        $requestParts = Request::path();
+        $pathParts = Request::path();
 
-        foreach ($endpoints as $key => $value) {
+        foreach ($this->filterEndpoints() as $key => $value) {
             $match = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
 
-            for ($n = 0; $n < count($requestParts); $n++) {
-                if ($requestParts[$n] == $keyParts[$n]) {
+            for ($n = 0; $n < count($pathParts); $n++) {
+                if ($pathParts[$n] == $keyParts[$n]) {
                     continue;
-                } else if (intval($requestParts[$n]) === 0) {
+                } else if (intval($pathParts[$n]) === 0) {
                     $match = false;
                 } else {
                     $argKey = str_replace(['{', '}'], '', $keyParts[$n]);
-                    $uriArgs[$argKey] = intval($requestParts[$n]);
+                    $uriArgs[$argKey] = intval($pathParts[$n]);
                 }
             }
 
