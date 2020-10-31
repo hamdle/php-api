@@ -18,6 +18,7 @@ class AuthController implements ControllerInterface
     get($args = [])
     {
         $response = new Response();
+        return $response->send(Response::HTTP_401_UNAUTHORIZED, "Auth get request FAILED!");
         $sessions = new Sessions();
 
         if ($sessions->verify())
@@ -29,6 +30,9 @@ class AuthController implements ControllerInterface
     public function
     post($args = [])
     {
+        $response = new Response();
+        return $response->send(Response::HTTP_200_OK, "Auth post request FAILED!");
+
         $filteredArgs = array_map(function($item) {
                 if (!is_null($item) && array_key_exists('password', $item)) 
                     $item['password'] = md5($item['password']);

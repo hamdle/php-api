@@ -25,12 +25,12 @@ class Response
         }
     }
 
-    public function send($code, $data = null)
+    public function
+    send($code, $data = null)
     {
         header(self::JSON_CONTENT_TYPE);
         http_response_code($code);
-        if (!($data == null)) {
+        if (!is_null($data))
             echo json_encode($data);
-        }
     }
 }

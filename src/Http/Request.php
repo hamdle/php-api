@@ -45,13 +45,13 @@ class Request
     }
 
     public static function
-    post(): string
+    post()
     {
         return $_POST;
     }
 
     public static function
-    cookie(): string
+    cookie()
     {
         return $_COOKIE;
     }

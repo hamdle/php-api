@@ -10,7 +10,7 @@ class Env
     public
     function __construct()
     {
-        $this->envPath = $_SERVER["DOCUMENT_ROOT"] . '/api/' . '.env';
+        $this->envPath = $_SERVER["DOCUMENT_ROOT"] . '/.env';
     }
 
     public
