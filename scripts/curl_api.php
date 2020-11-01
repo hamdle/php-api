@@ -3,11 +3,14 @@
 
 /*
  * Run me:
- * $ ./curl_api.php
- * $ php curl_api.php
+ * $ ./curl_api.php auth
  */
 
-exec("curl \"http://localhost/api/auth\"", $output);
-print_r($output);
+$url = "http://localhost/api/".($argv[1] ?? "");
+$cookies = "user=Eric;pass=123";
+exec("curl -X GET \"".$url."\" -H \"Cookie: ".$cookies."\"", $output);
+
+print "\nrequest\n".$url."\n";
+print "\nresponse\n".print_r($output, true);
 
 ?>
