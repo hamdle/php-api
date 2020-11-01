@@ -1,4 +1,11 @@
 <?php
+
+/*
+ * Utils/Env.php: read .env, make global $_ENV
+ *
+ * Copyright (C) 2020 Eric Marty
+ */
+
 namespace Utils;
 
 use Exception;
@@ -14,21 +21,16 @@ class Env
     }
 
     public
-    function load()
+    function load(): void
     {
-        try
-        {
+        try {
             $output = file_get_contents($this->envPath);
- 
+
             if ($output === false || $output == '')
-            {
                 throw new Exception();
-            }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             echo "No file found. Create .env or update permissions.";
-            die();
+            exit();
         }
 
         $fileContent = explode(PHP_EOL, $output);
@@ -41,13 +43,9 @@ class Env
             $keyVal = explode('=', $line);
 
             if (isset($keyVal[0]) && isset($keyVal[1]))
-            {
                 $_ENV[$keyVal[0]] = $keyVal[1];
-            }
             else
-            {
                 echo "Unable to parse line {$lineNumber} of the .env.";
-            }
         }
     }
 }
