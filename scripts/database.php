@@ -10,9 +10,9 @@ $commands = [
 
 class DatabaseCommand
 {
-    private $db_name = 'wo_db';
-    private $db_user = 'root';
-    private $db_pass = 'root';
+    private $db_name = 'workouts';
+    private $db_user = 'workout';
+    private $db_pass = 'tindesk79';
     private $db_schema = '../docs/db/schema.sql';
     private $db_data = '../docs/db/testdata.sql';
 
@@ -28,7 +28,7 @@ class DatabaseCommand
 
     public function exportData()
     {
-        return "mysqldump -u {$this->db_user} -p{$this->db_pass} {$this->db_name} > wo_db_export.sql";
+        return "mysqldump -u {$this->db_user} -p{$this->db_pass} {$this->db_name} > workout_export.sql";
     }
 }
 
