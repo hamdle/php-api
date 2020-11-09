@@ -6,8 +6,8 @@
  * $ ./curl_api.php auth
  */
 
-$url = "http://localhost/api/".($argv[1] ?? "");
-$cookies = "user=Eric;pass=123";
+$url = "http://api.workouts.think/".($argv[1] ?? "");
+$cookies = "user=admin@localhost.com;pass=admin";
 exec("curl -X GET \"".$url."\" -H \"Cookie: ".$cookies."\"", $output);
 
 print "\nrequest\n".$url."\n";
