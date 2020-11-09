@@ -1,4 +1,4 @@
-use wo_db;
+use workouts;
 
 /* users */
 insert into users (email, password) values ('admin@localhost.com', md5('admin'));

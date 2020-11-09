@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `wo_db`;
-USE `wo_db`;
+CREATE DATABASE IF NOT EXISTS `workouts`;
+USE `workouts`;
 
 /* TODO Add proper CONSTRAINTs to the tables. */
 /* TODO Revisit primary keys. */
