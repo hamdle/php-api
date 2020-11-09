@@ -29,6 +29,13 @@ class Response
     send($code, $data = null)
     {
         header(self::JSON_CONTENT_TYPE);
+        /*
+         * Currenly, CORS policy is set in the Nginx config.
+         * To set policy in the API, you can set it here, using
+         * a line similar to:
+         *
+         * header("Access-Control-Allow-Origin: " . $_ENV['ORIGIN']);
+         */
         http_response_code($code);
         if (!is_null($data))
             echo json_encode($data);
