@@ -12,7 +12,6 @@ class Request
 {
     /*
      * Get URI.
-     *
      * @return string
      */
     public static function uri()
@@ -22,7 +21,6 @@ class Request
 
     /*
      * Return API path parts.
-     *
      * @return array
      */
     public static function path()
@@ -42,7 +40,6 @@ class Request
 
     /*
      * Get HTTP request method.
-     *
      * @return string
      */
     public static function method()
@@ -52,7 +49,6 @@ class Request
 
     /*
      * Get file upload data.
-     *
      * @return mixed
      */
     public static function data()
@@ -62,7 +58,6 @@ class Request
 
     /*
      * Get post information.
-     *
      * @return array
      */
     public static function post()
@@ -72,7 +67,6 @@ class Request
 
     /*
      * Get cookie information.
-     *
      * @return array
      */
     public static function cookie()

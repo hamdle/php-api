@@ -14,14 +14,12 @@ class Api
 {
     /*
      * A map of routes to controllers.
-     *
      * @var array
      */
     private $endpoints;
 
     /*
-     * Resolve routes to controllers and send response.
-     *
+     * Resolve controller from endpoints to send response.
      * @return void
      */
     public function run()
@@ -31,10 +29,9 @@ class Api
 
     /*
      * Add a route, controller pair.
-     *
      * @return void
      */
-    public function endpoint($uri, $controller): void
+    public function endpoint($uri, $controller)
     {
         $this->endpoints[$uri] = $controller;
     }
