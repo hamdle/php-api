@@ -3,21 +3,29 @@
 /*
  * Http/Request.php: http request information
  *
- * Copyright (C) 2020 Eric Marty
+ * Copyright (C) 2021 Eric Marty
  */
 
 namespace Http;
 
 class Request
 {
-    public static function
-    uri(): string
+    /*
+     * Get URI.
+     *
+     * @return string
+     */
+    public static function uri()
     {
         return $_SERVER['REQUEST_URI'];
     }
 
-    public static function
-    path(): array
+    /*
+     * Return API path parts.
+     *
+     * @return array
+     */
+    public static function path()
     {
         $parts = array_filter(
             explode('/', self::uri()),
@@ -32,26 +40,42 @@ class Request
         return array_values($parts);
     }
 
-    public static function
-    method(): string
+    /*
+     * Get HTTP request method.
+     *
+     * @return string
+     */
+    public static function method()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public static function
-    data() /* : mixed */
+    /*
+     * Get file upload data.
+     *
+     * @return mixed
+     */
+    public static function data()
     {
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    public static function
-    post()
+    /*
+     * Get post information.
+     *
+     * @return array
+     */
+    public static function post()
     {
         return $_POST;
     }
 
-    public static function
-    cookie()
+    /*
+     * Get cookie information.
+     *
+     * @return array
+     */
+    public static function cookie()
     {
         return $_COOKIE;
     }

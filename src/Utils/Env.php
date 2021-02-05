@@ -3,7 +3,7 @@
 /*
  * Utils/Env.php: read .env, make global $_ENV
  *
- * Copyright (C) 2020 Eric Marty
+ * Copyright (C) 2021 Eric Marty
  */
 
 namespace Utils;
@@ -12,16 +12,24 @@ use Exception;
 
 class Env
 {
+    /*
+     * Location of .env file.
+     *
+     * @return string
+     */
     protected $envPath;
 
-    public
-    function __construct()
+    public function __construct()
     {
         $this->envPath = $_SERVER["DOCUMENT_ROOT"] . '/.env';
     }
 
-    public
-    function load(): void
+    /*
+     * Load .env file.
+     *
+     * @return void
+     */
+    public function load()
     {
         try {
             $output = file_get_contents($this->envPath);

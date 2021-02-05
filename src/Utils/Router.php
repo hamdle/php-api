@@ -4,7 +4,7 @@
  * Utils/Router.php: match endpoints with the request's
  * uri path
  *
- * Copyright (C) 2020 Eric Marty
+ * Copyright (C) 2021 Eric Marty
  */
 
 namespace Utils;
@@ -16,14 +16,12 @@ class Router
 {
     private $endpoints;
 
-    public function
-    __construct($endpoints)
+    public function __construct($endpoints)
     {
         $this->endpoints = $endpoints;
     }
 
-    public function
-    getController(): \Controllers\Controller
+    public function getController(): \Controllers\Controller
     {
         $pathParts = Request::path();
 
@@ -59,8 +57,7 @@ class Router
         return new Controller('ErrorController', 'get');
     }
 
-    private function
-    filterEndpoints(): array
+    private function filterEndpoints(): array
     {
         $filteredEndpoints = [];
         $requestParts = Request::path();

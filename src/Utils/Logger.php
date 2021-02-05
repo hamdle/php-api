@@ -9,7 +9,11 @@
 namespace Utils;
 
 class ErrorLog {
-
+    /*
+     * Print message to error log.
+     *
+     * @return null
+     */
     public static function print($object = null, $tag = '')
     {
         ob_start();
