@@ -16,23 +16,24 @@ class Api
      * A map of routes to controllers.
      * @var array
      */
-    private $endpoints;
+    private static $endpoints;
 
     /*
      * Resolve controller from endpoints to send response.
      * @return void
      */
-    public function run()
+    public static function run()
     {
-        ((new Router($this->endpoints))->getController())->sendResponse();
+        // getController -> resolveController TODO
+        ((new Router(self::$endpoints))->resolveController())->sendResponse();
     }
 
     /*
      * Add a route, controller pair.
      * @return void
      */
-    public function endpoint($uri, $controller)
+    public static function endpoint($uri, $controller)
     {
-        $this->endpoints[$uri] = $controller;
+        self::$endpoints[$uri] = $controller;
     }
 }

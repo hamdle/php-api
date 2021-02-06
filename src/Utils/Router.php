@@ -21,7 +21,7 @@ class Router
         $this->endpoints = $endpoints;
     }
 
-    public function getController(): \Controllers\Controller
+    public function resolveController(): \Controllers\Controller
     {
         $pathParts = Request::path();
 
