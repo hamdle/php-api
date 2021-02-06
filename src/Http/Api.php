@@ -24,8 +24,7 @@ class Api
      */
     public static function run()
     {
-        // getController -> resolveController TODO
-        ((new Router(self::$endpoints))->resolveController())->sendResponse();
+        Router::toController(self::$endpoints)->sendResponse();
     }
 
     /*

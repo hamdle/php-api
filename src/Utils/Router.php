@@ -14,18 +14,16 @@ use Controllers\Controller;
 
 class Router
 {
-    private $endpoints;
-
-    public function __construct($endpoints)
-    {
-        $this->endpoints = $endpoints;
-    }
-
-    public function resolveController(): \Controllers\Controller
+    /*
+     * Return the controller of a matching endpoint if there's a match with the
+     * URI.
+     * @return \Controllers\Controller
+     */
+    public static function toController($endpoints)
     {
         $pathParts = Request::path();
 
-        foreach ($this->filterEndpoints() as $key => $value) {
+        foreach (self::filterEndpoints($endpoints) as $key => $value) {
             $pass = true;
             $uriArgs = [];
             $keyParts = explode('/', $key);
@@ -57,12 +55,16 @@ class Router
         return new Controller('ErrorController', 'get');
     }
 
-    private function filterEndpoints(): array
+    /*
+     * Run basic test for matching request path with endpoints.
+     * @return array
+     */
+    private static function filterEndpoints($endpoints)
     {
         $filteredEndpoints = [];
         $requestParts = Request::path();
 
-        foreach ($this->endpoints as $uri => $controller) {
+        foreach ($endpoints as $uri => $controller) {
             $uriParts = explode('/', $uri);
             $controllerParts = explode('.', $controller);
             $class = $controllerParts[0];
