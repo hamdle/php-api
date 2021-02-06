@@ -25,8 +25,8 @@ class Env
             if ($output === false || $output == '')
                 throw new Exception();
         } catch (Exception $e) {
-            echo "No file found. Create .env or update permissions.";
-            exit();
+            print "No file found. Create .env or update permissions.";
+            exit;
         }
 
         $fileContent = explode(PHP_EOL, $output);
