@@ -1,12 +1,25 @@
 <?php
+
+/*
+ * Http/Response.php: define and send http responses
+ *
+ * Copyright (C) 2021 Eric Marty
+ */
+
 namespace Http;
 
 class Response
 {
-    // Content type
+    /*
+     * Content type.
+     * @var string
+     */
     const JSON_CONTENT_TYPE = 'Content-Type: application/json';
 
-    // Http status codes
+    /*
+     * Http status codes.
+     * @vars numeric
+     */
     const HTTP_200_OK = 200;
     const HTTP_201_CREATED = 201;
     const HTTP_204_DELETED = 204;
@@ -15,18 +28,21 @@ class Response
     const HTTP_403_FORBIDDEN = 403;
     const HTTP_404_NOT_FOUND = 404;
 
-    /**
+    /*
      * Set cookie.
      * @param map - key => value pair to map to the cookie.
      */
     public function cookie($map) {
-        foreach ($map as $key => $value) {
+        foreach ($map as $key => $value)
             setcookie($key, $value, strtotime('+30 days'));
-        }
     }
 
-    public function
-    send($code, $data = null)
+    /*
+     * Sedn an Http response.
+     * @param $code - numeric
+     * @param $date - string
+     */
+    public function send($code, $data = null)
     {
         header(self::JSON_CONTENT_TYPE);
         /*
