@@ -38,7 +38,7 @@ class Response
     }
 
     /*
-     * Sedn an Http response.
+     * Send an Http response.
      * @param $code - numeric
      * @param $date - string
      */
