@@ -13,26 +13,14 @@ use Exception;
 class Env
 {
     /*
-     * Location of .env file.
-     *
-     * @return string
-     */
-    protected $envPath;
-
-    public function __construct()
-    {
-        $this->envPath = $_SERVER["DOCUMENT_ROOT"] . '/.env';
-    }
-
-    /*
      * Load .env file.
-     *
      * @return void
      */
-    public function load()
+    public static function load($path = null)
     {
         try {
-            $output = file_get_contents($this->envPath);
+            $output = file_get_contents(
+                $path ?? $_SERVER["DOCUMENT_ROOT"] . '/.env');
 
             if ($output === false || $output == '')
                 throw new Exception();

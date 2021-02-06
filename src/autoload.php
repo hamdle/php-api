@@ -13,20 +13,16 @@ use Utils\Env;
 class Autoload {
     /*
      * Load .env and register custom autoloader.
-     *
      * @return void
      */
     public static function register()
     {
-        $env = new Env();
-        $env->load();
-
+        Env::load();
         spl_autoload_register('Autoload::loadFile');
     }
 
     /*
      * Custom autoload algorithm.
-     *
      * @param $class - string
      * @return bool
      */
