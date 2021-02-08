@@ -6,11 +6,11 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Models;
+namespace Modules\Exercises;
 
 class Exercise
 {
-    use \Utils\Attributes;
+    use \Misc\Traits\Attributes;
 
     /*
      * The Exercise attributes defined in the database are:

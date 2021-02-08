@@ -6,7 +6,7 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Utils;
+namespace Misc\Traits;
 
 trait Attributes
 {
