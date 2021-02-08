@@ -10,8 +10,6 @@ require __DIR__.'/src/autoload.php';
 
 use Http\Api;
 
-//Api::endpoint("auth", "AuthController.get");
-//Api::endpoint("workouts/new", "WorkoutController.post");
 // URI variables are supported using brackets, i.e.,
 // Api::endpoint("{userId}/workouts/new", "WorkoutController.get");
 
@@ -22,8 +20,10 @@ Api::controllers(
         'Http\Controllers\Error',
     ]);
 
-Api::get("exercises", "controller.Exercise.getAllExercises");
+Api::get("auth", "controller.Authentication.authenticateUser");
 Api::post("login", "controller.Authentication.login");
+Api::get("exercises", "controller.Exercise.getAllExercises");
+Api::post("workouts/new", "contoller.Workout.saveWorkout");
 
 Api::respond();
 
