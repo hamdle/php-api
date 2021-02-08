@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Models/Entry.php: an exercise entry, performing an exercise
+ * Modules/Entry.php: an exercise entry, performing an exercise
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Models;
+namespace Modules\ExerciseTypes;
 
 class Entry
 {
-    use \Utils\Attributes;
+    use \Misc\Traits\Attributes;
 
     /*
      * The Entry attributes defined in the database are:

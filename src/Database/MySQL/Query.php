@@ -46,7 +46,7 @@ class Query
         return $rows;
     }
 
-    public function filter_by($args, $table)
+    public function execute($args, $table)
     {
         $query = $this->buildFilterBy($args, $table);
         return $this->run($query);

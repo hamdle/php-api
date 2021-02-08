@@ -6,17 +6,16 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http\Controllers;
+namespace Modules\ExerciseTypes;
 
 use Misc\Routing;
-use Modules\Exercises;
 use Http\Response;
 
-class Exercise extends Routing\Registration {
-    public static $registration = ["controller" => "Exercise"];
+class Controller extends Routing\Registration {
+    public static $registration = ["module" => "ExerciseTypes"];
 
     public static function getAllExercises() {
-        $exercises = new Exercises\Model();
+        $exercises = new Model();
         $all = $exercises->all();
 
         $response = new Response();
