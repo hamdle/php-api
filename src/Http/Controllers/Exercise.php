@@ -9,14 +9,14 @@
 namespace Http\Controllers;
 
 use Misc\Routing;
-use Database\Query\Exercises;
+use Modules\Exercises;
 use Http\Response;
 
 class Exercise extends Routing\Registration {
     public static $registration = ["controller" => "Exercise"];
 
     public static function getAllExercises() {
-        $exercises = new Exercises();
+        $exercises = new Exercises\Model();
         $all = $exercises->all();
 
         $response = new Response();
