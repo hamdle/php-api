@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Database/MySQL.php: interface with MySQL database
+ * Database/MySQL/Connection.php: connect to MySQL database
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -24,7 +24,7 @@ class Connection
      *
      * @return mysqli connection object
      */
-    protected static function connect()
+    public static function mysql()
     {
         if (is_null(self::$mysql))
         {
@@ -43,42 +43,6 @@ class Connection
         }
 
         return self::$mysql;
-    }
-
-    /*
-     * Run a sql query using OO version of mysqli.
-     *
-     * @param $query - a complete SQL query
-     * @return $rows[] | $id | null
-     */
-    public static function run($query)
-    {
-        $db = self::connect();
-
-        $rows = [];
-        if ($results = $db->query($query))
-        {
-            if (is_bool($results))
-            {
-                if ($results)
-                    return $db->insert_id;
-
-                return null;
-            }
-            if ($db->error)
-            {
-                \Utils\Logger::info($db->error, 'database error');
-                return null;
-            }
-            while ($row = $results->fetch_assoc())
-            {
-                $rows[] = $row;
-            }
-
-            $results->free();
-        }
-
-        return $rows;
     }
 
     /*

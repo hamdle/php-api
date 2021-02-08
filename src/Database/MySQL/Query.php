@@ -1,23 +1,61 @@
 <?php
+
+/*
+ * Database/MySQL/Query.php: run queries using mysql connection
+ *
+ * Copyright (C) 2021 Eric Marty
+ */
+
 namespace Database\MySQL;
 
 class Query
 {
+    /*
+     * Run a sql query using OO version of mysqli.
+     *
+     * @param $query - a complete SQL query
+     * @return $rows[] | $id | null
+     */
     public function run($query)
     {
-        return Connection::run($query);
+        $db = Connection::mysql();
+
+        $rows = [];
+        if ($results = $db->query($query))
+        {
+            if (is_bool($results))
+            {
+                if ($results)
+                    return $db->insert_id;
+
+                return null;
+            }
+            if ($db->error)
+            {
+                \Utils\Logger::info($db->error, 'database error');
+                return null;
+            }
+            while ($row = $results->fetch_assoc())
+            {
+                $rows[] = $row;
+            }
+
+            $results->free();
+        }
+
+        return $rows;
     }
 
     public function filter_by($args, $table)
     {
         $query = $this->buildFilterBy($args, $table);
-        return Connection::run($query);
+        return $this->run($query);
     }
 
     public function get($id, $table)
     {
         $query = "select * from {$table} where id = {$id}";
-        return Connection::run($query);
+        return $this->run($query);
     }
 
     public function add($args, $table)
@@ -34,12 +72,7 @@ class Query
 
         $query .= ") values ({$values})";
 
-        return Connection::run($query);
-    }
-
-    public function update($args, $table)
-    {
-        // TODO
+        return $this->run($query);
     }
 
     private function buildFilterBy($args, $table)
