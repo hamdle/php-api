@@ -25,6 +25,7 @@ class Router
         foreach ($creds as $controller => $name)
         {
             self::$controllers[$controller][] = $name;
+            return $controller;
         }
     }
 
@@ -38,15 +39,13 @@ class Router
         $token = self::parseControllerToken($api);
         if (self::verifyControllerToken($token))
             return self::toCallableController($token);
+        // Handle failed verification TODO
     }
 
-    private static function toCallableController($token)
-    {
-        $tokenParts = explode(".", $token);
-        $exec = "\\Http\\Controllers\\".$tokenParts[1]."::".$tokenParts[2];
-        return $exec;
-    }
-
+    /*
+     * Parse controller token from request.
+     * @return string
+     */
     private static function parseControllerToken($api)
     {
         $pathParts = Request::path();
@@ -58,6 +57,7 @@ class Router
                 if (array_key_exists(0, $pathParts) &&
                     $pathParts[0] == $key)
                 {
+                    // Verify token parts before returning TODO
                     return $token;
                 }
             }
@@ -66,6 +66,10 @@ class Router
         return "controller.Error.noControllerFound";
     }
 
+    /*
+     * Verify token was registered by a controller.
+     * @return bool
+     */
     private static function verifyControllerToken($token)
     {
         $tokenParts = explode(".", $token);
@@ -79,4 +83,14 @@ class Router
         return true;
     }
 
+    /*
+     * Create a callable function from a controller token.
+     * @return callable string
+     */
+    private static function toCallableController($token)
+    {
+        $tokenParts = explode(".", $token);
+        $exec = "\\Http\\Controllers\\".$tokenParts[1]."::".$tokenParts[2];
+        return $exec;
+    }
 }
