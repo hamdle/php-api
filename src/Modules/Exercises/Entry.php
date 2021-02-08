@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Models/Exercise.php: an exercise that can be performed
+ * Models/Exercise/Entry.php: an exercise entry object, a single exercise
  *
  * Copyright (C) 2021 Eric Marty
  */
 
 namespace Modules\Exercises;
 
-class Exercise
+class Entry
 {
     use \Misc\Traits\Attributes;
 
