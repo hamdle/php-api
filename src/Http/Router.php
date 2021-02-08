@@ -11,6 +11,8 @@ namespace Http;
 
 class Router
 {
+    const DEFAULT_CONTROLLER = "controller.Error.noControllerFound";
+
     /*
      * A verified list of controllers.
      * @var array
@@ -76,7 +78,7 @@ class Router
             }
         }
 
-        return "controller.Error.noControllerFound";
+        return self::DEFAULT_CONTROLLER;
     }
 
     /*
