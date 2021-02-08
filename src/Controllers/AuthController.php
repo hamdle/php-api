@@ -14,6 +14,16 @@ use Database\Query\Sessions;
 
 class AuthController implements ControllerInterface
 {
+    public static $api = [
+        "get" => [
+            "exercises" => "contollers.Exercise.getNew"
+        ],
+        "post" => [
+            "login" => "conrollers.Authentication.authenticateUserLogin",
+            "workouts/new" => "conrollers.Workout.saveWorkout"
+        ]
+    ];
+
     public function get($args = [])
     {
         $response = new Response();
@@ -42,8 +52,15 @@ class AuthController implements ControllerInterface
             },
             $args
         );
+
         $users = new Users();
         $user = $users->filter_by($filteredArgs['post']);
+
+        $user = new \Users\Entity($args[0]);
+        $user->update($filteredArgs);
+
+        \Users\Model::filterBy($filters);
+        \Users\Model::fromId($filteredArgs['userId']);
 
         if ($user == null) {
             $response = new Response();

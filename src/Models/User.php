@@ -34,6 +34,7 @@ class User
     public function cookie() {
         $sessions = new Sessions();
         $session = $sessions->filter_by(['user_id' => $this->id]);
+        //\Modules\Sessions\Model::cookie($this->id);
 
         if (is_null($session))
         {

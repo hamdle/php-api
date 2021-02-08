@@ -42,7 +42,7 @@ class Response
      * @param $code - numeric
      * @param $date - string
      */
-    public function send($code, $data = null)
+    public static function send($code, $data = null)
     {
         header(self::JSON_CONTENT_TYPE);
         /*
@@ -55,5 +55,16 @@ class Response
         http_response_code($code);
         if (!is_null($data))
             echo json_encode($data);
+    }
+
+    /*
+     * Send an Http response and exit program.
+     * @param $code - numeric
+     * @param $date - string
+     */
+    public static function sendAndExit($code, $data = null)
+    {
+        self::send($code, $data);
+        exit;
     }
 }

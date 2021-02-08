@@ -10,13 +10,21 @@ require __DIR__.'/src/autoload.php';
 
 use Http\Api;
 
-Api::endpoint("login", "AuthController.post");
-Api::endpoint("auth", "AuthController.get");
-Api::endpoint("workouts/new", "WorkoutController.post");
-Api::endpoint("exercises", "ExerciseController.get");
+//Api::endpoint("auth", "AuthController.get");
+//Api::endpoint("workouts/new", "WorkoutController.post");
 // URI variables are supported using brackets, i.e.,
 // Api::endpoint("{userId}/workouts/new", "WorkoutController.get");
 
-Api::run();
+Api::controllers(
+    [
+        'Http\Controllers\Authentication',
+        'Http\Controllers\Exercise',
+        'Http\Controllers\Error',
+    ]);
+
+Api::get("exercises", "controller.Exercise.getAllExercises");
+Api::post("login", "controller.Authentication.login");
+
+Api::respond();
 
 ?>

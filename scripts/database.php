@@ -10,9 +10,10 @@ $commands = [
 
 class DatabaseCommand
 {
+    // Use Env loader TODO
     private $db_name = 'workouts';
-    private $db_user = 'workout';
-    private $db_pass = 'tindesk79';
+    private $db_user = 'homestead';
+    private $db_pass = 'secret';
     private $db_schema = '../docs/db/schema.sql';
     private $db_data = '../docs/db/testdata.sql';
 
