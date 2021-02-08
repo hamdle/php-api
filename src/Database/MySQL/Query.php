@@ -1,23 +1,23 @@
 <?php
-namespace Database;
+namespace Database\MySQL;
 
-class Query implements QueryInterface
+class Query
 {
     public function run($query)
     {
-        return MySQL::run($query);
+        return Connection::run($query);
     }
 
     public function filter_by($args, $table)
     {
         $query = $this->buildFilterBy($args, $table);
-        return MySQL::run($query);
+        return Connection::run($query);
     }
 
     public function get($id, $table)
     {
         $query = "select * from {$table} where id = {$id}";
-        return MySQL::run($query);
+        return Connection::run($query);
     }
 
     public function add($args, $table)
@@ -34,7 +34,7 @@ class Query implements QueryInterface
 
         $query .= ") values ({$values})";
 
-        return MySQL::run($query);
+        return Connection::run($query);
     }
 
     public function update($args, $table)

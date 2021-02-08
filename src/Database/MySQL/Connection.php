@@ -6,11 +6,11 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Database;
+namespace Database\MySQL;
 
 use mysqli;
 
-class MySQL
+class Connection
 {
     /*
      * Static connection to MySQL database.

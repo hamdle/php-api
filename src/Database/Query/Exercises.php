@@ -1,7 +1,7 @@
 <?php
 namespace Database\Query;
 
-use Database\Query;
+use Database\MySQL\Query;
 
 class Exercises extends Query
 {
