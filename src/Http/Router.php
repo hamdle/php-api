@@ -18,6 +18,19 @@ class Router
     private static $controllers;
 
     /*
+     * Controllers configuration.
+     * @var array
+     */
+    private static $controllerConfig = [
+        "controller" => [
+            "namespace" => "Http\Controllers",
+        ],
+        "module" => [
+            "namespace" => "Modules",
+        ]
+    ];
+
+    /*
      * Add an Api request controllers.
      * @return null
      */
@@ -90,7 +103,15 @@ class Router
     private static function toCallableController($token)
     {
         $tokenParts = explode(".", $token);
-        $exec = "\\Http\\Controllers\\".$tokenParts[1]."::".$tokenParts[2];
+        $exec = null;
+        if ($tokenParts[0] === "controller")
+        {
+            $exec = "\\".self::$controllerConfig[$tokenParts[0]]['namespace']."\\".$tokenParts[1]."::".$tokenParts[2];
+        }
+        else if ($tokenParts[0] === "module")
+        {
+            $exec = "\\".self::$controllerConfig[$tokenParts[0]]['namespace']."\\".$tokenParts[1]."\\Controller::".$tokenParts[2];
+        }
         return $exec;
     }
 }
