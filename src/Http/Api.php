@@ -19,6 +19,12 @@ class Api
     private static $api;
 
     /*
+     * A map of controller keys to namespaces.
+     * @var array
+     */
+    private static $controllerNamespaces;
+
+    /*
      * Resolve controller from endpoints to send response.
      * @return void
      */
@@ -51,6 +57,11 @@ class Api
         self::$api['post'][] = [$path => $controller];
     }
 
+    /*
+     * Add post request to the Api.
+     * @param $registrars - array of strings
+     * @return void
+     */
     public static function controllers($registrars)
     {
         try
@@ -58,9 +69,14 @@ class Api
             foreach ($registrars as $registrar)
             {
                 if (class_exists($registrar))
-                    Router::register($registrar::registration());
+                {
+                    $domain = Router::register($registrar::registration());
+                    self::$controllerNamespaces[] = [$domain => $registrar];
+                }
                 else 
+                {
                     throw new \Exception("Unable to register controller ".$registrar);
+                }
             }
         } 
         catch (\Exception $e)
