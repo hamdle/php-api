@@ -1,21 +1,24 @@
 <?php
-namespace Controllers;
 
+/*
+ * Http/Controllers/Workout.php: handle workout requests
+ *
+ * Copyright (C) 2021 Eric Marty
+ */
+
+namespace Http\Controllers;
+
+use Misc\Routing;
 use Http\Response;
-use Database\Query\Workouts;
-use Database\Query\Reps;
-use Database\Query\Sessions;
-use Database\Query\Entries;
 
-class WorkoutController implements ControllerInterface
-{
-    public function get($args = [])
-    {
-        // TODO
-    }
+class Workout extends Routing\Registration {
+    public static $registration = ["controller" => "Workout"];
 
-    public function post($args = [])
-    {
+    public static function saveWorkout() {
+        $response = new Response();
+        return $response->send(Response::HTTP_200_OK, "Saving workout");
+
+        /*
         $response = new Response();
         $sessions = new Sessions();
         $data_args = $args['data'];
@@ -65,20 +68,6 @@ class WorkoutController implements ControllerInterface
         }
 
         return $response->send(Response::HTTP_401_UNAUTHORIZED);
-    }
-
-    public function put($args = [])
-    {
-        // TODO
-    }
-
-    public function patch($args = [])
-    {
-        // TODO
-    }
-
-    public function delete($args = [])
-    {
-        // TODO
+        */
     }
 }
