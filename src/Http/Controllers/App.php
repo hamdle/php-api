@@ -15,7 +15,10 @@ class App extends Routing\Registration {
     public static $registration = ["controller" => "App"];
 
     public static function version() {
-        $response = new Response();
-        return $response->send(Response::HTTP_200_OK, $_ENV['VERSION']);
+        return (new Response())->send(Response::HTTP_200_OK, $_ENV['VERSION']);
+    }
+
+    public static function pong() {
+        return (new Response())->send(Response::HTTP_200_OK, "pong");
     }
 }

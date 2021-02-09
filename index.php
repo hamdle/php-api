@@ -15,6 +15,7 @@ Api::post("login", "controller.Authentication.login");
 Api::get("exercises", "module.ExerciseTypes.getAllExercises");
 Api::post("workouts/new", "module.Workouts.saveWorkout");
 Api::get("version", "controller.App.version");
+Api::get("ping", "controller.App.pong");
 
 Api::respond();
 
