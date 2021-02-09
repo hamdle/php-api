@@ -60,7 +60,7 @@ class Router
     }
 
     /*
-     * Parse controller token from request.
+     * Look for a matching uri and return its token
      * @return string
      */
     private static function parseControllerToken($api)
@@ -69,14 +69,23 @@ class Router
 
         foreach ($api[Request::method()] ?? [] as $route)
         {
-            foreach ($route as $key => $token)
+            foreach ($route as $uri => $token)
             {
-                if (array_key_exists(0, $pathParts) &&
-                    $pathParts[0] == $key)
+                $uriParts = explode("/", $uri);
+                $pass = true;
+
+                for ($i = 0; $i < count($uriParts); $i++)
                 {
-                    // Verify token parts before returning TODO
-                    return $token;
+                    if (!(isset($pathParts[$i]) &&
+                        isset($uriParts[$i]) &&
+                        $pathParts[$i] == $uriParts[$i]))
+                    {
+                        $pass = false;
+                    }
                 }
+
+                if ($pass)
+                    return $token;
             }
         }
 
