@@ -45,7 +45,10 @@ class Api
      */
     public static function get($path, $controller)
     {
-        self::$api['get'][] = [$path => $controller];
+        if (Router::verifyControllerToken($controller))
+            self::$api['get'][] = [$path => $controller];
+        else
+            throw new \Exception("Unable to verify 'get' Api endpoint for token \"".$controller."\".");
     }
 
     /*
@@ -54,7 +57,10 @@ class Api
      */
     public static function post($path, $controller)
     {
-        self::$api['post'][] = [$path => $controller];
+        if (Router::verifyControllerToken($controller))
+            self::$api['post'][] = [$path => $controller];
+        else
+            throw new \Exception("Unable to verify 'post' Api endpoint for token \"".$controller."\".");
     }
 
     /*

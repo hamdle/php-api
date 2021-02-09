@@ -11,13 +11,17 @@ namespace Http;
 
 class Router
 {
+    /*
+     * Define a default controller.
+     * @var string
+     */
     const DEFAULT_CONTROLLER = "controller.Error.noControllerFound";
 
     /*
      * A verified list of controllers.
      * @var array
      */
-    private static $controllers;
+    private static $registeredControllers;
 
     /*
      * Controllers configuration.
@@ -25,10 +29,10 @@ class Router
      */
     private static $controllerConfig = [
         "controller" => [
-            "namespace" => "Http\Controllers",
+            "callable" => "\Http\Router::controllerToCallable"
         ],
         "module" => [
-            "namespace" => "Modules",
+            "callable" => "\Http\Router::moduleToCallable"
         ]
     ];
 
@@ -39,7 +43,7 @@ class Router
     public static function register($creds) {
         foreach ($creds as $controller => $name)
         {
-            self::$controllers[$controller][] = $name;
+            self::$registeredControllers[$controller][] = $name;
             return $controller;
         }
     }
@@ -52,9 +56,7 @@ class Router
     public static function toController($api)
     {
         $token = self::parseControllerToken($api);
-        if (self::verifyControllerToken($token))
-            return self::toCallableController($token);
-        // Handle failed verification TODO
+        return self::toCallableController($token);
     }
 
     /*
@@ -85,17 +87,20 @@ class Router
      * Verify token was registered by a controller.
      * @return bool
      */
-    private static function verifyControllerToken($token)
+    public static function verifyControllerToken($token)
     {
         $tokenParts = explode(".", $token);
-        $controllers = self::$controllers[$tokenParts[0]];
+        $controllers = self::$registeredControllers[$tokenParts[0]];
 
-        if (array_search($tokenParts[1], $controllers) === false)
+        // Make sure the second part of the token, the function name, is in a
+        // registered controller and check the controller config exists.
+        if (in_array($tokenParts[1], $controllers) !== false &&
+            isset(self::$controllerConfig[$tokenParts[0]]))
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /*
@@ -105,15 +110,27 @@ class Router
     private static function toCallableController($token)
     {
         $tokenParts = explode(".", $token);
-        $exec = null;
-        if ($tokenParts[0] === "controller")
-        {
-            $exec = "\\".self::$controllerConfig[$tokenParts[0]]['namespace']."\\".$tokenParts[1]."::".$tokenParts[2];
-        }
-        else if ($tokenParts[0] === "module")
-        {
-            $exec = "\\".self::$controllerConfig[$tokenParts[0]]['namespace']."\\".$tokenParts[1]."\\Controller::".$tokenParts[2];
-        }
-        return $exec;
+        if (count($tokenParts) != 3)
+            return null;
+
+        return self::$controllerConfig[$tokenParts[0]]['callable']($tokenParts);
+    }
+
+    /*
+     * Create a callable \Http\Controllers controller from token parts.
+     * @return string - callable function
+     */
+    private static function controllerToCallable($tokenParts)
+    {
+        return "\\Http\\Controllers\\".$tokenParts[1]."::".$tokenParts[2];
+    }
+
+    /*
+     * Create a callable \Modules controller from token parts.
+     * @return string - callable function
+     */
+    private static function moduleToCallable($tokenParts)
+    {
+        return "\\Modules\\".$tokenParts[1]."\\Controller::".$tokenParts[2];
     }
 }

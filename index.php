@@ -10,7 +10,8 @@ require __DIR__.'/src/autoload.php';
 
 use Http\Api;
 
-//This could be registered when added using Api::get, Api::post
+// This could be registered when added using Api::get, Api::post, etc
+// and the this can be removed TODO
 Api::controllers(
     [
         'Http\Controllers\Authentication',
