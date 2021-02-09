@@ -84,23 +84,27 @@ class Router
     }
 
     /*
-     * Verify token was registered by a controller.
+     * Attempt to register the controller using the token string, then verify
+     * that the requested function was registered.
      * @return bool
      */
     public static function verifyControllerToken($token)
     {
         $tokenParts = explode(".", $token);
+        if (count($tokenParts) != 3)
+            return false;
+
+        // Register the controller
+        $controllerParts = explode("::", self::$controllerConfig[$tokenParts[0]]['callable']($tokenParts));
+        Router::register($controllerParts[0]::registration());
+
+        // Verify a registered domain (controller, module) registered the
+        // requested controller (Authentication, ExerciseTypes, etc).
         $controllers = self::$registeredControllers[$tokenParts[0]];
+        if (in_array($tokenParts[1], $controllers) === false)
+            return false;
 
-        // Make sure the second part of the token, the function name, is in a
-        // registered controller and check the controller config exists.
-        if (in_array($tokenParts[1], $controllers) !== false &&
-            isset(self::$controllerConfig[$tokenParts[0]]))
-        {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /*
