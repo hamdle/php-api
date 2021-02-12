@@ -11,8 +11,8 @@ namespace Http\Controllers;
 use Misc\Routing;
 use Http\Response;
 
-class Error extends Routing\Registration {
-    public static $registration = ["controller" => "Error"];
+class Error extends Routing\ControllerAlias {
+    public static $alias = ["controller" => "Error"];
 
     public static function noControllerFound() {
         $response = new Response();

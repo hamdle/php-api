@@ -10,12 +10,16 @@ require __DIR__.'/src/autoload.php';
 
 use Http\Api;
 
+// Api format::
+// alias.class.function
 Api::get("auth", "controller.Authentication.authenticateUser");
-Api::post("login", "controller.Authentication.login");
 Api::get("exercises", "module.ExerciseTypes.getAllExercises");
+
+Api::get("version", "http.App.version");
+Api::get("ping", "http.App.pong");
+
+Api::post("login", "controller.Authentication.login");
 Api::post("workouts/new", "module.Workouts.saveWorkout");
-Api::get("version", "controller.App.version");
-Api::get("ping", "controller.App.pong");
 
 Api::respond();
 

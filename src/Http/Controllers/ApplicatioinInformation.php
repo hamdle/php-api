@@ -11,8 +11,8 @@ namespace Http\Controllers;
 use Misc\Routing;
 use Http\Response;
 
-class App extends Routing\Registration {
-    public static $registration = ["controller" => "App"];
+class App extends Routing\ControllerAlias {
+    public static $alias = ["controller" => "App"];
 
     public static function version() {
         $response = new Response();

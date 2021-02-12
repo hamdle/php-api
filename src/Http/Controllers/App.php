@@ -11,8 +11,8 @@ namespace Http\Controllers;
 use Misc\Routing;
 use Http\Response;
 
-class App extends Routing\Registration {
-    public static $registration = ["controller" => "App"];
+class App extends Routing\ControllerAlias {
+    public static $alias = ["http" => "App"];
 
     public static function version() {
         return (new Response())->send(Response::HTTP_200_OK, $_ENV['VERSION']);

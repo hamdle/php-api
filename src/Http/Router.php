@@ -21,7 +21,7 @@ class Router
      * A verified list of controllers.
      * @var array
      */
-    private static $registeredControllers;
+    private static $registeredControllerAliases;
 
     /*
      * Controllers configuration.
@@ -29,6 +29,9 @@ class Router
      */
     private static $controllerConfig = [
         "controller" => [
+            "callable" => "\Http\Router::controllerToCallable"
+        ],
+        "http" => [
             "callable" => "\Http\Router::controllerToCallable"
         ],
         "module" => [
@@ -43,7 +46,7 @@ class Router
     public static function register($creds) {
         foreach ($creds as $controller => $name)
         {
-            self::$registeredControllers[$controller][] = $name;
+            self::$registeredControllerAliases[$controller][] = $name;
             return $controller;
         }
     }
@@ -105,11 +108,11 @@ class Router
 
         // Register the controller
         $controllerParts = explode("::", self::$controllerConfig[$tokenParts[0]]['callable']($tokenParts));
-        Router::register($controllerParts[0]::registration());
+        Router::register($controllerParts[0]::registerAlias());
 
         // Verify a registered domain (controller, module) registered the
         // requested controller (Authentication, ExerciseTypes, etc).
-        $controllers = self::$registeredControllers[$tokenParts[0]];
+        $controllers = self::$registeredControllerAliases[$tokenParts[0]];
         if (in_array($tokenParts[1], $controllers) === false)
             return false;
 

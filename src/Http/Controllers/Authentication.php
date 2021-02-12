@@ -11,8 +11,8 @@ namespace Http\Controllers;
 use Misc\Routing;
 use Http\Response;
 
-class Authentication extends Routing\Registration {
-    public static $registration = ["controller" => "Authentication"];
+class Authentication extends Routing\ControllerAlias {
+    public static $alias = ["controller" => "Authentication"];
 
     public static function login()
     {
@@ -31,8 +31,10 @@ class Authentication extends Routing\Registration {
         $users = new Users();
         $user = $users->filter_by($filteredArgs['post']);
 
-        $user = new \Users\Entity($args[0]);
+        $id = $args[0];
+        $user = new \Users\Entity($id);
         $user->update($filteredArgs);
+        $user->getOrMakeCookie();
 
         \Users\Model::filterBy($filters);
         \Users\Model::fromId($filteredArgs['userId']);

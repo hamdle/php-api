@@ -11,8 +11,8 @@ namespace Modules\ExerciseTypes;
 use Misc\Routing;
 use Http\Response;
 
-class Controller extends Routing\Registration {
-    public static $registration = ["module" => "ExerciseTypes"];
+class Controller extends Routing\ControllerAlias {
+    public static $alias = ["module" => "ExerciseTypes"];
 
     public static function getAllExercises() {
         $exercises = new Model();

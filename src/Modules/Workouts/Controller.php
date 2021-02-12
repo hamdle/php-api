@@ -11,8 +11,8 @@ namespace Modules\Workouts;
 use Misc\Routing;
 use Http\Response;
 
-class Controller extends Routing\Registration {
-    public static $registration = ["module" => "Workouts"];
+class Controller extends Routing\ControllerAlias {
+    public static $alias = ["module" => "Workouts"];
 
     public static function saveWorkout() {
         $response = new Response();
