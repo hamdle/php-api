@@ -6,18 +6,14 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http\Controllers;
+namespace Controllers;
 
-use Misc\Routing;
 use Http\Response;
 
-class Authentication extends Routing\ControllerAlias {
-    public static $alias = ["controller" => "Authentication"];
-
+class Authentication {
     public static function login()
     {
-        $response = new Response();
-        return $response->send(Response::HTTP_200_OK, "Login request");
+        return Response::send(Response::HTTP_200_OK, "Login request");
 
         /*
         $filteredArgs = array_map(function($item) {
@@ -52,8 +48,7 @@ class Authentication extends Routing\ControllerAlias {
 
     public static function authenticateUser()
     {
-        $response = new Response();
-        return $response->send(Response::HTTP_200_OK, "Authentication request");
+        return Response::send(Response::HTTP_200_OK, "Authentication request");
 
         /*
         $sessions = new Sessions();

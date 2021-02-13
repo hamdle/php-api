@@ -1,12 +1,31 @@
 <?php
-namespace Database\Query;
 
-use Database\Query;
-use Models\User;
+/*
+ * Models/User.php: a workout app user
+ *
+ * Copyright (C) 2021 Eric Marty
+ */
 
-class Users extends Query
+namespace Models;
+
+class Users
 {
+    use \Traits\Attributes;
+
+    /*
+     * The User attributes defined in the database are:
+     *
+     * id
+     * email
+     * password
+     */
+
     protected const USER_TABLE = 'users';
+
+    public function __construct($attributes = [])
+    {
+        $this->attributes = $attributes;
+    }
 
     /**
      * Return a single User object from an id.

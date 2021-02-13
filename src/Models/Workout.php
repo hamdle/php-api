@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Models/Workout.php: a workout
+ * Models/Workout.php: Handle workout data for the Api
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Models;
+namespace Models\Workout;
 
 class Workout
 {
-    use \Utils\Attributes;
+    use \Traits\Attributes;
 
     /*
      * The Workout attributes defined in the database are:
@@ -22,6 +22,8 @@ class Workout
      * notes
      * feel
      */
+
+    protected const WORKOUT_TABLE = 'workouts';
 
     public function __construct($attributes = [])
     {

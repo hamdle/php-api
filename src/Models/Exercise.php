@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Models/Exercise/Entry.php: an exercise entry object, a single exercise
+ * Modules/Exercises/Model.php: handle exercise data requests
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Modules\Exercises;
+namespace Models;
 
-class Entry
+class Exercise
 {
-    use \Misc\Traits\Attributes;
+    use \Traits\Attributes;
 
     /*
      * The Exercise attributes defined in the database are:
@@ -22,6 +22,8 @@ class Entry
      * wait_time
      * category
      */
+
+    protected const EXERCISE_TABLE = 'exercises';
 
     public function __construct($attributes = [])
     {

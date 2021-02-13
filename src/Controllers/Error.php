@@ -8,12 +8,9 @@
 
 namespace Http\Controllers;
 
-use Misc\Routing;
 use Http\Response;
 
-class Error extends Routing\ControllerAlias {
-    public static $alias = ["controller" => "Error"];
-
+class Error {
     public static function noControllerFound() {
         $response = new Response();
         return $response->send(Response::HTTP_404_NOT_FOUND, "404 not found");

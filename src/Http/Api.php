@@ -8,7 +8,7 @@
 
 namespace Http;
 
-use Http\Router;
+use \Http\Router;
 
 class Api
 {
@@ -19,24 +19,17 @@ class Api
     private static $api;
 
     /*
-     * A map of controller keys to namespaces.
-     * @var array
-     */
-    private static $controllerNamespaces;
-
-    /*
      * Resolve controller from endpoints to send response.
      * @return void
      */
     public static function respond()
     {
-        $controller = Router::toController(self::$api);
-        return self::run($controller);
-    }
+        $controller = Router::parseController(self::$api);
 
-    public static function run($controller)
-    {
-        return $controller();
+        if (is_callable($controller))
+            return call_user_func($controller);
+
+        return (new Response())->send(Response::HTTP_404_NOT_FOUND);
     }
 
     /*
@@ -45,10 +38,7 @@ class Api
      */
     public static function get($path, $controller)
     {
-        if (Router::verifyControllerToken($controller))
-            self::$api['get'][] = [$path => $controller];
-        else
-            throw new \Exception("Unable to verify 'get' Api endpoint for token \"".$controller."\".");
+        self::$api['get'][] = [$path => $controller];
     }
 
     /*
@@ -57,9 +47,6 @@ class Api
      */
     public static function post($path, $controller)
     {
-        if (Router::verifyControllerToken($controller))
-            self::$api['post'][] = [$path => $controller];
-        else
-            throw new \Exception("Unable to verify 'post' Api endpoint for token \"".$controller."\".");
+        self::$api['post'][] = [$path => $controller];
     }
 }

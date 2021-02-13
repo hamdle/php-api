@@ -10,7 +10,7 @@ namespace Models;
 
 class Rep
 {
-    use \Utils\Attributes;
+    use \Traits\Attributes;
 
     /*
      * The Rep attributes defined in the database are:
@@ -20,8 +20,6 @@ class Rep
      * amount
      */
 
-    public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
+    protected const REPS_TABLE = 'reps';
+
 }

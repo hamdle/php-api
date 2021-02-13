@@ -12,67 +12,16 @@ namespace Http;
 class Router
 {
     /*
-     * Define a default controller.
-     * @var string
-     */
-    const DEFAULT_CONTROLLER = "controller.Error.noControllerFound";
-
-    /*
-     * A verified list of controllers.
-     * @var array
-     */
-    private static $registeredControllerAliases;
-
-    /*
-     * Controllers configuration.
-     * @var array
-     */
-    private static $controllerConfig = [
-        "controller" => [
-            "callable" => "\Http\Router::controllerToCallable"
-        ],
-        "http" => [
-            "callable" => "\Http\Router::controllerToCallable"
-        ],
-        "module" => [
-            "callable" => "\Http\Router::moduleToCallable"
-        ]
-    ];
-
-    /*
-     * Add an Api request controllers.
-     * @return null
-     */
-    public static function register($creds) {
-        foreach ($creds as $controller => $name)
-        {
-            self::$registeredControllerAliases[$controller][] = $name;
-            return $controller;
-        }
-    }
-
-    /*
-     * Return the controller of a matching endpoint if there's a match with the
-     * URI.
-     * @return \Controllers\Controller
-     */
-    public static function toController($api)
-    {
-        $token = self::parseControllerToken($api);
-        return self::toCallableController($token);
-    }
-
-    /*
      * Look for a matching uri and return its token
      * @return string
      */
-    private static function parseControllerToken($api)
+    public static function parseController($api)
     {
         $pathParts = Request::path();
 
         foreach ($api[Request::method()] ?? [] as $route)
         {
-            foreach ($route as $uri => $token)
+            foreach ($route as $uri => $controller)
             {
                 $uriParts = explode("/", $uri);
                 $pass = true;
@@ -88,65 +37,10 @@ class Router
                 }
 
                 if ($pass)
-                    return $token;
+                    return $controller;
             }
         }
 
-        return self::DEFAULT_CONTROLLER;
-    }
-
-    /*
-     * Attempt to register the controller using the token string, then verify
-     * that the requested function was registered.
-     * @return bool
-     */
-    public static function verifyControllerToken($token)
-    {
-        $tokenParts = explode(".", $token);
-        if (count($tokenParts) != 3)
-            return false;
-
-        // Register the controller
-        $controllerParts = explode("::", self::$controllerConfig[$tokenParts[0]]['callable']($tokenParts));
-        Router::register($controllerParts[0]::registerAlias());
-
-        // Verify a registered domain (controller, module) registered the
-        // requested controller (Authentication, ExerciseTypes, etc).
-        $controllers = self::$registeredControllerAliases[$tokenParts[0]];
-        if (in_array($tokenParts[1], $controllers) === false)
-            return false;
-
-        return true;
-    }
-
-    /*
-     * Create a callable function from a controller token.
-     * @return callable string
-     */
-    private static function toCallableController($token)
-    {
-        $tokenParts = explode(".", $token);
-        if (count($tokenParts) != 3)
-            return null;
-
-        return self::$controllerConfig[$tokenParts[0]]['callable']($tokenParts);
-    }
-
-    /*
-     * Create a callable \Http\Controllers controller from token parts.
-     * @return string - callable function
-     */
-    private static function controllerToCallable($tokenParts)
-    {
-        return "\\Http\\Controllers\\".$tokenParts[1]."::".$tokenParts[2];
-    }
-
-    /*
-     * Create a callable \Modules controller from token parts.
-     * @return string - callable function
-     */
-    private static function moduleToCallable($tokenParts)
-    {
-        return "\\Modules\\".$tokenParts[1]."\\Controller::".$tokenParts[2];
+        return null;
     }
 }

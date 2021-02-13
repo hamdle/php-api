@@ -1,13 +1,34 @@
 <?php
-namespace Database\Query;
+
+/*
+ * Models/Session.php: user session log
+ *
+ * Copyright (C) 2021 Eric Marty
+ */
+
+namespace Models;
 
 use Http\Request;
-use Database\Query;
-use Models\Session;
 
-class Sessions extends Query
+class Session
 {
+    use \Traits\Attributes;
+
+    /*
+     * The Entry attributes defined in the database are:
+     *
+     * id
+     * user_id
+     * key
+     * value
+     */
+
     protected const SESSIONS_TABLE = 'sessions';
+
+    public function __construct($attributes = [])
+    {
+        $this->attributes = $attributes;
+    }
 
     public function filter_by($filters, $table = self::SESSIONS_TABLE)
     {

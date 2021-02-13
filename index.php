@@ -9,17 +9,18 @@
 require __DIR__.'/src/autoload.php';
 
 use Http\Api;
+use Http\Response;
 
-// Api format::
-// alias.class.function
-Api::get("auth", "controller.Authentication.authenticateUser");
-Api::get("exercises", "module.ExerciseTypes.getAllExercises");
-
-Api::get("version", "http.App.version");
-Api::get("ping", "http.App.pong");
-
-Api::post("login", "controller.Authentication.login");
-Api::post("workouts/new", "module.Workouts.saveWorkout");
+Api::get("ping", function() {
+    return Response::send(\Http\Response::HTTP_200_OK, "ping");
+});
+Api::get("version", function() {
+    return Response::send(\Http\Response::HTTP_200_OK, $_ENV['VERSION']);
+});
+Api::get("auth", "\Controllers\Authentication::authenticateUser");
+Api::get("exercises", "\Controllers\ExerciseTypes::getAllExercises");
+Api::post("login", "\Controllers\Authentication::login");
+Api::post("workouts/new", "\Controllers\Workouts::saveWorkout");
 
 Api::respond();
 
