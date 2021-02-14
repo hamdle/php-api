@@ -19,20 +19,6 @@ class Api
     private static $api;
 
     /*
-     * Resolve controller from endpoints to send response.
-     * @return void
-     */
-    public static function respond()
-    {
-        $controller = Router::parseController(self::$api);
-
-        if (is_callable($controller))
-            return call_user_func($controller);
-
-        return (new Response())->send(Response::HTTP_404_NOT_FOUND);
-    }
-
-    /*
      * Add get request to the Api.
      * @return void
      */
@@ -48,5 +34,19 @@ class Api
     public static function post($path, $controller)
     {
         self::$api['post'][] = [$path => $controller];
+    }
+
+    /*
+     * Resolve controller from endpoints to send response.
+     * @return void
+     */
+    public static function respond()
+    {
+        $controller = Router::parseController(self::$api);
+
+        if (is_callable($controller))
+            return call_user_func($controller);
+
+        return Response::send(Response::HTTP_404_NOT_FOUND);
     }
 }
