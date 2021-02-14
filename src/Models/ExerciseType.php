@@ -8,7 +8,7 @@
 
 namespace Models;
 
-use Database\MySQL\Query;
+use Database\Query;
 
 class ExerciseType
 {
