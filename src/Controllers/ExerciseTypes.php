@@ -13,7 +13,7 @@ use Models\ExerciseType;
 
 class ExerciseTypes
 {
-    public static function getAllExercises()
+    public function getAllExercises()
     {
         $exerciseType = new ExerciseType();
         return Response::send(Response::HTTP_200_OK, $exerciseType->selectAll());

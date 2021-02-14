@@ -11,7 +11,7 @@ namespace Controllers;
 use Http\Response;
 
 class Authentication {
-    public static function login()
+    public function login()
     {
         return Response::send(Response::HTTP_200_OK, "Login request");
 
@@ -46,7 +46,7 @@ class Authentication {
          */
     }
 
-    public static function authenticateUser()
+    public function authenticateUser()
     {
         return Response::send(Response::HTTP_200_OK, "Authentication request");
 

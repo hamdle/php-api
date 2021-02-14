@@ -6,13 +6,12 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http\Controllers;
+namespace Controllers;
 
 use Http\Response;
 
 class Error {
     public static function noControllerFound() {
-        $response = new Response();
-        return $response->send(Response::HTTP_404_NOT_FOUND, "404 not found");
+        return Response::send(Response::HTTP_404_NOT_FOUND, "404 not found");
     }
 }

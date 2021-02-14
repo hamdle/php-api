@@ -1,22 +1,20 @@
 <?php
 
 /*
- * Modules/Workouts/Controller.php: handle workout requests
+ * Controllers/Workouts.php: handle workout requests
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Modules\Workouts;
+namespace Controllers;
 
-use Misc\Routing;
 use Http\Response;
 
-class Controller extends Routing\ControllerAlias {
-    public static $alias = ["module" => "Workouts"];
-
-    public static function saveWorkout() {
-        $response = new Response();
-        return $response->send(Response::HTTP_200_OK);
+class Workouts
+{
+    public function saveWorkout()
+    {
+        return Response::send(Response::HTTP_200_OK);
 
         /*
         $response = new Response();
