@@ -1,22 +1,26 @@
 <?php
 
 /*
- * Modules/ExerciseTypes/Model.php: handle exerciseType data requests
+ * Models/ExerciseType.php: handle exerciseType data requests
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Modules\ExerciseTypes;
+namespace Models;
 
 use Database\MySQL\Query;
 
-class Model
+class ExerciseType
 {
-    protected const EXERCISE_TYPES_TABLE = 'exerciseTypes';
+    public const TABLE_NAME = 'exerciseTypes';
 
-    public function all()
+    public function __construct($attributes = [])
     {
-        $query = new Query();
-        return $query->execute([], self::EXERCISE_TYPES_TABLE);
+        $this->attributes = $attributes;
+    }
+
+    public function selectAll()
+    {
+        return Query::select("select * from ".self::TABLE_NAME);
     }
 }

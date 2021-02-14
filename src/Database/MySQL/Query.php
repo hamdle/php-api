@@ -11,12 +11,23 @@ namespace Database\MySQL;
 class Query
 {
     /*
+     * Run a select query.
+     *
+     * @param $query - a complete SQL query
+     * @return see Database\MySQL\Query::run()
+     */
+    public static function select($query)
+    {
+        return self::run($query);
+    }
+
+    /*
      * Run a sql query using OO version of mysqli.
      *
      * @param $query - a complete SQL query
      * @return $rows[] | $id | null
      */
-    public function run($query)
+    public static function run($query)
     {
         $db = Connection::mysql();
 
@@ -32,7 +43,7 @@ class Query
             }
             if ($db->error)
             {
-                \Utils\Logger::info($db->error, 'database error');
+                \Utils\Logger::error($db->error, 'A database error has occured.');
                 return null;
             }
             while ($row = $results->fetch_assoc())
@@ -63,13 +74,13 @@ class Query
         $query = "insert into {$table} (";
         $values = "";
 
-        foreach ($args as $key => $value) {
+        foreach ($args as $key => $value)
+        {
             $query .= "`{$key}`,"; 
             $values .= "'{$value}',";
         }
         $query = substr($query, 0, -1);
         $values = substr($values, 0, -1);
-
         $query .= ") values ({$values})";
 
         return $this->run($query);
@@ -79,19 +90,19 @@ class Query
     {
         $query = "select * from {$table}";
 
-        if (count($args) > 0) {
+        if (count($args) > 0)
             $query .= " where";
-        }
 
         $count = 1;
-        foreach ($args as $key => $value) {
-            if (count($args) === 1) {
+        foreach ($args as $key => $value)
+        {
+            if (count($args) === 1)
                 $query .= " `{$key}` = '{$value}'";
-            } else if ($count < count($args)) {
+            else if ($count < count($args))
                 $query .= " `{$key}` = '{$value}' and";
-            } else {
+            else
                 $query .= " `{$key}` = '{$value}'";
-            }
+
             $count++;
         }
 

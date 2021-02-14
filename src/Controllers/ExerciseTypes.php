@@ -9,12 +9,13 @@
 namespace Controllers;
 
 use Http\Response;
+use Models\ExerciseType;
 
-class ExerciseTypes {
-    public static function getAllExercises() {
-        //$exercise = new Exercise();
-        //$all = $exercises->all();
-
-        return Response::send(Response::HTTP_200_OK, "All exercises");
+class ExerciseTypes
+{
+    public static function getAllExercises()
+    {
+        $exerciseType = new ExerciseType();
+        return Response::send(Response::HTTP_200_OK, $exerciseType->selectAll());
     }
 }

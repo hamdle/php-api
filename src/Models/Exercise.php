@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Modules/Exercises/Model.php: handle exercise data requests
+ * Modules/Exercise.php: handle exercise data requests
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -23,7 +23,7 @@ class Exercise
      * category
      */
 
-    protected const EXERCISE_TABLE = 'exercises';
+    public const TABLE_NAME = 'exercises';
 
     public function __construct($attributes = [])
     {
