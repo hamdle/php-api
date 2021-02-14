@@ -47,6 +47,6 @@ class Api
         if (is_callable($controller))
             return call_user_func($controller);
 
-        return Response::send(Response::HTTP_404_NOT_FOUND);
+        return Response::defaultResponse();
     }
 }

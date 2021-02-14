@@ -32,7 +32,8 @@ class Response
      * Set cookie.
      * @param map - key => value pair to map to the cookie.
      */
-    public function cookie($map) {
+    public function cookie($map)
+    {
         foreach ($map as $key => $value)
             setcookie($key, $value, strtotime('+30 days'));
     }
@@ -66,5 +67,10 @@ class Response
     {
         self::send($code, $data);
         exit;
+    }
+
+    public static function defaultResponse()
+    {
+        return Response::send(Response::HTTP_404_NOT_FOUND, "Not found");
     }
 }
