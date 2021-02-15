@@ -15,7 +15,6 @@ class ExerciseTypes
 {
     public function getAllExercises()
     {
-        $exerciseType = new ExerciseType();
-        return Response::send(Response::HTTP_200_OK, $exerciseType->selectAll());
+        return Response::send(Response::HTTP_200_OK, (new ExerciseType())->selectAll());
     }
 }

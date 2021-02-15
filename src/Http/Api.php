@@ -46,6 +46,8 @@ class Api
 
         if (is_callable($controller))
             return call_user_func($controller);
+        if (is_array($controller) && count($controller) == 2)
+            return call_user_func([new $controller[0](), $controller[1]]);
 
         return Response::defaultResponse();
     }
