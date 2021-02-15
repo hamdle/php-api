@@ -23,5 +23,3 @@ Api::post('login', ['\Controllers\Authentication', 'login']);
 Api::post('workouts/new', ['\Controllers\Workouts', 'saveWorkout']);
 
 Api::respond();
-
-?>

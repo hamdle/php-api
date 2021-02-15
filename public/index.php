@@ -6,4 +6,4 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-include dirname(__DIR__, 1)."/app.php";
+require dirname(__DIR__, 1).'/app.php';
