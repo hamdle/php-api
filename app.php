@@ -1,7 +1,7 @@
 <?php
 
 /*
- * index.php: entry point of the API
+ * app.php: define the Api here
  *
  * Copyright (C) 2021 Eric Marty
  */
