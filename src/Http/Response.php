@@ -69,7 +69,10 @@ class Response
         exit;
     }
 
-    public static function defaultResponse()
+    /*
+     * Send a default Http response.
+     */
+    public static function sendDefault()
     {
         return Response::send(Response::HTTP_404_NOT_FOUND, "Not found");
     }
