@@ -11,9 +11,6 @@ require __DIR__.'/src/autoload.php';
 use Http\Api;
 use Http\Response;
 
-Api::get('ping', function() {
-    return Response::send(\Http\Response::HTTP_200_OK, 'ping');
-});
 Api::get('version', function() {
     return Response::send(\Http\Response::HTTP_200_OK, $_ENV['VERSION']);
 });

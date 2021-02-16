@@ -1,20 +1,16 @@
-# wo API
+# workout API
 
-This is a web application to track my workouts, herby dubbed wo.
+This is one component of a larger web application that I use to track my workouts.
 
-There are three parts to the wo project (1) the app, (2) the API, and (3) the deploy.
-
-This is (2) the API. The API is the data application programming interface of wo. It processes, saves, and sends the workout data.
-
-The workout API accepts data sent from the app and is deployed by a custom-built auto deploy application.
+The key tenets of this codebase are speed and simplicity. Every object that is instantiated, is used. Controllers that are never used, are never put in memory. No architechtures and patterns are only used when necessary.
 
 # Nginx setup
 
-All API request should be rounted through `/wo/api/index.php`. To achieve this, place the following in your nginx config file.
+To route the API through the URI, like `workout.dev/api`, place the following in the nginx config.
 
 ```
-location /wo/api {
-    try_files $uri $uri/ /wo/api/index.php?query_string;
+location /workout/api {
+    try_files $uri $uri/ /workout/api/index.php?query_string;
 }
 ```
 
@@ -36,7 +32,7 @@ Code | Message
 
 ### POST /login
 
-Authenticate a user login request.
+Authenticate a user login request by returning a seccess or failure code.
 
 #### Request
 
@@ -59,7 +55,7 @@ Verify that a cookie is valid and matches the user creds.
 
 #### Request
 
-No extra data needed.
+No extra data needed. In browsers, the cookie will be send automatically.
 
 #### Response
 
@@ -71,6 +67,18 @@ Failure code: 401
 ### GET /exercises
 
 Return a list of all exercises and their default values.
+
+#### Request
+
+No extra data needed.
+
+#### Response
+
+Success code: 200
+
+### GET /version
+
+Return the current version of the API. Good for a quick ping to make sure everything is okay.
 
 #### Request
 
