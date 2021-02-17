@@ -14,7 +14,7 @@ class Response
      * Content type.
      * @var string
      */
-    const JSON_CONTENT_TYPE = 'Content-Type: application/json';
+    const JSON_CONTENT_TYPE = 'Content-Type: application/json; charset=utf-8';
 
     /*
      * Http status codes.
