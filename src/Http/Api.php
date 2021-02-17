@@ -37,8 +37,8 @@ class Api
     }
 
     /*
-     * Resolve controller from endpoints to send response.
-     * @return void
+     * Parse a controller and execute it to return a response.
+     * @return \Http\Response
      */
     public static function respond()
     {
