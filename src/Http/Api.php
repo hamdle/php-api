@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Http/Api.php: the API's main loop, run()
+ * Http/Api.php: holder of the ring
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -46,8 +46,14 @@ class Api
 
         if (is_callable($controller))
             return call_user_func($controller);
-        if (is_array($controller) && count($controller) == 2)
-            return call_user_func([new $controller[0](), $controller[1]]);
+
+        if (is_array($controller) &&
+            count($controller) == 2 &&
+            ($callable = [new $controller[0](), $controller[1]]) &&
+            is_callable($callable))
+        {
+            return call_user_func($callable);
+        }
 
         return Response::sendDefault();
     }
