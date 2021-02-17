@@ -1,8 +1,8 @@
-# workout API
+# Workout API
 
-This is one component of a larger web application that I use to track my workouts.
+This API is designed to track a workout program that I've been developing, based on my experience learning calisthenics exercises, over the past few years. I've built an accompanying web application to provide helpful tools to track and log workouts. The web app is maintained in a separate project and only depends on the API endpoints responding as defined in the readme of this API, but is not depended on this application in particular to produce them. That said, this API could be used for more than just workouts, by redefining the Controllers and Models.
 
-The key tenets of this codebase are speed and simplicity. Every object that is instantiated, is used. Controllers that are never used, are never put in memory. No architechtures and patterns are only used when necessary.
+Key tenets of this codebase are speed and simplicity. Static functions are typically invoked in every request. Objects are only instantiated when they're used, like the Controllers, which are not loaded into memeory unless they are matched and called directly. Design patterns are only used to lower complexit, not add to it. Array structures are used to model data because they are fast and efficient. One of my main goals is to keep the execution stack clean and easy to follow.
 
 # Nginx setup
 
@@ -32,7 +32,7 @@ Code | Message
 
 ### POST /login
 
-Authenticate a user login request by returning a seccess or failure code.
+Authenticate a user login request by returning a success or failure code.
 
 #### Request
 
