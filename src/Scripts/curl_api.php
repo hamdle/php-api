@@ -6,6 +6,7 @@
  * $ ./curl_api.php auth
  */
 
+// use getopt() to accept or set cookies TODO
 $url = "http://api.workouts.think/".($argv[1] ?? "");
 $cookies = "user=admin@localhost.com;pass=admin";
 exec("curl -X GET \"".$url."\" -H \"Cookie: ".$cookies."\"", $output);

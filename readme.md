@@ -1,16 +1,16 @@
 # Workout API
 
-This API is designed to track a workout program, not computer program, that I've been developing over the past few years. The workout program is based on my experice learning and trying out calisthenics workouts, so the exercises are geared towards individual workouts with limited equipment. I've built an accompanying web application, which is a computer program, that communicates with this API, also a computer program. I originally tracked workouts in .txt files which was robust but difficult to get more functionality out of. The web app and API solve this problem and allows for slightly more sophistication than managing workouts on paper. Auto suggesting reps, one-click workout generation, automatically time tracking, and charting workouts are a few of the nice features made possible by using this API and web app together.
+The Workout API is designed to track workouts that I've been using, and logging, and losing, for the past few years. The API manages the data and users to log workouts in an effort to best my old pen and paper logging system. There's an accompanying web application that manages all of the user facing interactions --- logging in the user, logging the workouts, rendering cool charts --- that works in collaboration with the API.
 
-The execution stack should be clean and easy to follow. If a function is static, there's a good chance it will be called in the excution tree of every request. Objects, like Controllers and Models, are not loaded into memeory until they need to be executed. Design patterns are only used to lower complexity, not add to it. Array structures are a good way to model data for web applications and I try to use them as often as I can.
+The execution stack of the API is intended to be clean and easy to follow. There are a few ethos that have contributed to the design of this programm. If a function is static, it will almost always be called in the excution tree of every request. Objects like Controllers and Models are not loaded into memeory until they have something to contribute or execute. I try to use design patterns to lower complexity not add to it. And arrays are a powerful tool that are wholly capable of modeling data, for the program and the programmers mental model of the program, so they are used as a central part of the API.
 
 # Nginx setup
 
 To route the API through the URI, like `workout.dev/api`, place the following in the nginx config.
 
 ```
-location /workout/api {
-    try_files $uri $uri/ /workout/api/index.php?query_string;
+location /api {
+    try_files $uri $uri/ /api/index.php?query_string;
 }
 ```
 
