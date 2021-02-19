@@ -32,15 +32,18 @@ class Session
 
     public function filter_by($filters, $table = self::SESSIONS_TABLE)
     {
+        /*
         $queryResults = parent::filter_by($filters, $table);
         if ($queryResults == null) {
             return null;
         }
         return new Session($queryResults[0]);
+         */
     }
 
     public function save($user_id, $key, $value)
     {
+        /*
         $args = [
             'user_id' => $user_id,
             'key' => $key,
@@ -48,6 +51,7 @@ class Session
         ];
 
         parent::add($args, self::SESSIONS_TABLE);
+         */
     }
 
     /**
@@ -57,6 +61,8 @@ class Session
      */
     public function verify($cookie = null)
     {
+        return true;
+        /*
         if ($cookie == null) {
             $request = new Request();
             $cookie = $request->getCookie();
@@ -93,5 +99,6 @@ class Session
         }
 
         return false;
+         */
     }
 }

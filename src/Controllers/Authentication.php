@@ -8,12 +8,24 @@
 
 namespace Controllers;
 
+use Http\Request;
 use Http\Response;
+use Models\User;
+use Models\Session;
 
 class Authentication {
     public function login()
     {
-        return Response::send(Response::HTTP_200_OK, "Login request");
+        $user = new User();
+        $user->authenticate();
+
+        if ($user->login())
+        {
+            Response::cookie($user->getCookie());
+            return Response::send(Response::HTTP_200_OK);
+        }
+
+        return Response::send(Response::HTTP_401_UNAUTHORIZED, $user->getMessages());
 
         /*
         $filteredArgs = array_map(function($item) {
@@ -31,32 +43,16 @@ class Authentication {
         $user = new \Users\Entity($id);
         $user->update($filteredArgs);
         $user->getOrMakeCookie();
-
-        \Users\Model::filterBy($filters);
-        \Users\Model::fromId($filteredArgs['userId']);
-
-        if ($user == null) {
-            $response = new Response();
-            return $response->send(Response::HTTP_401_UNAUTHORIZED);
-        } else {
-            $response = new Response();
-            $response->cookie($user->cookie());
-            return $response->send(Response::HTTP_200_OK);
-        }
          */
     }
 
     public function authenticateUser()
     {
-        return Response::send(Response::HTTP_200_OK, "Authentication request");
+        $session = new Session();
 
-        /*
-        $sessions = new Sessions();
+        if ($session->verify())
+            return Response::send(Response::HTTP_200_OK);
 
-        if ($sessions->verify())
-            return $response->send(Response::HTTP_200_OK);
-
-        return $response->send(Response::HTTP_401_UNAUTHORIZED);
-         */
+        return Response::send(Response::HTTP_401_UNAUTHORIZED);
     }
 }

@@ -32,7 +32,7 @@ class Response
      * Set cookie.
      * @param map - key => value pair to map to the cookie.
      */
-    public function cookie($map)
+    public static function cookie($map)
     {
         foreach ($map as $key => $value)
             setcookie($key, $value, strtotime('+30 days'));
@@ -47,9 +47,8 @@ class Response
     {
         header(self::JSON_CONTENT_TYPE);
         /*
-         * Currenly, CORS policy is set in the Nginx config.
-         * To set policy in the API, you can set it here, using
-         * a line similar to:
+         * Currenly, CORS policy is set in the Nginx config. To set policy in
+         * PHP, you can set it here using:
          *
          * header("Access-Control-Allow-Origin: " . $_ENV['ORIGIN']);
          */
@@ -74,6 +73,6 @@ class Response
      */
     public static function sendDefault()
     {
-        return Response::send(Response::HTTP_404_NOT_FOUND, "Not found");
+        return self::send(Response::HTTP_404_NOT_FOUND, "Not found");
     }
 }

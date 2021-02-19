@@ -14,6 +14,7 @@ class Workouts
 {
     public function saveWorkout()
     {
+        \Utils\Logger::error(\Http\Request::data(), "POST_DATA");
         return Response::send(Response::HTTP_200_OK);
 
         /*
