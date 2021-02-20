@@ -6,11 +6,12 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Models\Workout;
+namespace Models;
 
 class Workout
 {
     use \Traits\Attributes;
+    use \Traits\Messages;
 
     /*
      * The Workout attributes defined in the database are:

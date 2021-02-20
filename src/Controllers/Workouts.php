@@ -9,13 +9,21 @@
 namespace Controllers;
 
 use Http\Response;
+use Models\Workout;
+use Forms\Workout as WorkoutForm;
 
 class Workouts
 {
     public function saveWorkout()
     {
-        \Utils\Logger::error(\Http\Request::data(), "POST_DATA");
-        return Response::send(Response::HTTP_200_OK);
+        $workoutForm = new WorkoutForm();   // uses Request::data()
+        if (!$workoutForm->validate())
+            return Response::send(Response::HTTP_400_BAD_REQUEST, $workoutForm->getMessages()); 
+
+        if (!$workoutForm->save())
+            return Response::send(Response::HTTP_400_BAD_REQUEST, $workoutForm->getMessages());
+
+        return Response::send(Response::HTTP_200_OK, $workout->getMessages());
 
         /*
         $response = new Response();

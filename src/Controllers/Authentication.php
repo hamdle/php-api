@@ -12,47 +12,38 @@ use Http\Request;
 use Http\Response;
 use Models\User;
 use Models\Session;
+use Forms\Login as LoginForm;
 
 class Authentication {
     public function login()
     {
-        $user = new User();
-        $user->authenticate();
+        // 1. validate the form or return error message
+        $loginForm = new LoginForm();   // uses Request::post()
 
-        if ($user->login())
-        {
-            Response::cookie($user->getCookie());
-            return Response::send(Response::HTTP_200_OK);
-        }
+        if (!$loginForm->validate())
+            return Response::send(Response::HTTP_400_BAD_REQUEST, $loginForm->getMessages()); 
 
-        return Response::send(Response::HTTP_401_UNAUTHORIZED, $user->getMessages());
+        // 2. create user from form input or return error message
+        if (!$user = $loginForm->createUserFromInput())
+            return Response::send(Response::HTTP_401_UNAUTHORIZED, $loginForm->getMessages());
 
-        /*
-        $filteredArgs = array_map(function($item) {
-                if (!is_null($item) && array_key_exists('password', $item)) 
-                    $item['password'] = md5($item['password']);
-                return $item;
-            },
-            $args
-        );
+        // you need to do the database query next TODO
+        // 3. login the user or return error message
+        if (!$user->login())
+            return Response::send(Response::HTTP_401_UNAUTHORIZED, $loginForm->getMessages());
 
-        $users = new Users();
-        $user = $users->filter_by($filteredArgs['post']);
-
-        $id = $args[0];
-        $user = new \Users\Entity($id);
-        $user->update($filteredArgs);
-        $user->getOrMakeCookie();
-         */
+        Response::cookie($user->getCookie());
+        return Response::send(Response::HTTP_200_OK);
     }
 
     public function authenticateUser()
     {
+        return Response::send(Response::HTTP_403_FORBIDDEN);
         $session = new Session();
 
-        if ($session->verify())
-            return Response::send(Response::HTTP_200_OK);
+        if (!$session->verify())
+            return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
-        return Response::send(Response::HTTP_401_UNAUTHORIZED);
+        return Response::send(Response::HTTP_200_OK);
     }
 }

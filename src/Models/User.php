@@ -8,6 +8,8 @@
 
 namespace Models;
 
+// should the user be able to build itself, or should a user represent data
+// from the database, aka no database entry, no user
 class User
 {
     use \Traits\Attributes;
@@ -34,23 +36,28 @@ class User
         return "";
     }
 
-    public function authenticate()
-    {
-        // This function loads a user based on input arguments. The inputs 
-        // need to be sanatized as the may come from user inputs.
-        // If a user can't be found it should log errors, or other messages,
-        // that can be sent back with the response.
-        \Http\Request::post()
-    }
-
-    public function getMessages()
-    {
-        return $messages;
-    }
-
     public function login($args = null)
     {
         return true;
+
+        /*
+        // The form can do this now
+        $filteredArgs = array_map(function($item) {
+                if (!is_null($item) && array_key_exists('password', $item)) 
+                    $item['password'] = md5($item['password']);
+                return $item;
+            },
+            $args
+        );
+
+        $users = new Users();
+        $user = $users->filter_by($filteredArgs['post']);
+
+        $id = $args[0];
+        $user = new \Users\Entity($id);
+        $user->update($filteredArgs);
+        $user->getOrMakeCookie();
+         */
     }
 
     /**
