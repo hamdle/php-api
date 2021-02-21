@@ -17,22 +17,15 @@ use Forms\Login as LoginForm;
 class Authentication {
     public function login()
     {
-        // 1. validate the form or return error message
-        $loginForm = new LoginForm();   // uses Request::post()
-
+        $loginForm = new LoginForm(Request::post());
         if (!$loginForm->validate())
             return Response::send(Response::HTTP_400_BAD_REQUEST, $loginForm->getMessages()); 
 
-        // 2. create user from form input or return error message
-        if (!$user = $loginForm->createUserFromInput())
-            return Response::send(Response::HTTP_401_UNAUTHORIZED, $loginForm->getMessages());
+        $user = new User(Request::post());
 
-        // you need to do the database query next TODO
-        // 3. login the user or return error message
         if (!$user->login())
-            return Response::send(Response::HTTP_401_UNAUTHORIZED, $loginForm->getMessages());
+            return Response::send(Response::HTTP_401_UNAUTHORIZED, $user->getMessages());
 
-        Response::cookie($user->getCookie());
         return Response::send(Response::HTTP_200_OK);
     }
 

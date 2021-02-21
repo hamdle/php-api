@@ -8,11 +8,13 @@
 
 namespace Models;
 
-// should the user be able to build itself, or should a user represent data
-// from the database, aka no database entry, no user
+use \Http\Response;
+use \Database\Query;
+
 class User
 {
     use \Traits\Attributes;
+    use \Traits\Messages;
 
     /*
      * The User attributes defined in the database are:
@@ -22,54 +24,125 @@ class User
      * password
      */
 
-    protected const USER_TABLE = 'users';
-
-    private $messages = [];
+    private const USER_TABLE = 'users';
+    private $config = [];
 
     public function __construct($attributes = [])
     {
+        $this->config = [
+            'email' => function ($entry) {
+                return $entry;
+            },
+            'password' => function ($entry) {
+                return md5($entry);
+            },
+        ];
         $this->attributes = $attributes;
     }
 
+    /*
+     * Filter out attributes that are not in the config.
+     * @return void
+     */
+    private function filter($attributes)
+    {
+        foreach ($attributes as $key => $attribute)
+        {
+            if (array_key_exists($key, $this->config))
+                $this->attributes[$key] = $attribute;
+        }
+    }
+
+    /*
+     * Run attributes through input transforms.
+     * @return void
+     */
+    public function transform()
+    {
+        foreach ($this->config as $key => $transform)
+        {
+            $this->attributes[$key] = $transform($this->attributes[$key]);
+        }
+    }
+
+    public function load()
+    {
+        $this->filter($this->attributes);
+        $this->transform();
+
+        // Find in database
+        $str = [];
+        foreach ($this->attributes as $key => $attribute)
+        {
+            $str[] = $key . " = '" . $attribute . "'";
+        }
+
+        // This should happen so this whole thing needs to be moved into Query
+        // $str[1] = $mysqli->real_escape_string($str[1]);
+        $results = Query::run(
+            "select * from ".self::USER_TABLE.
+            " where ".$str[0]." and ".$str[1]);
+
+        if (array_key_exists(0, $results))
+        {
+            // Add to attributes
+            foreach ($results[0] as $key => $value)
+            {
+                $this->attributes[$key] = $value;
+            }
+        }
+        else
+        {
+            $this->message[] = "User not found.";
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
+     * Login user by verifying user and creating cookie. This funciton will
+     * add the cookie to the Response.
+     * @return bool
+     */
+    public function login()
+    {
+        if ($this->load())
+        {
+            Response::addCookie($this->getCookie());
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+     * Return a the user cookie
+     * @return string - cookie
+     */
     public function getCookie()
     {
-        return "";
-    }
-
-    public function login($args = null)
-    {
-        return true;
-
+        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
+        $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+        return [$key => $value];
         /*
-        // The form can do this now
-        $filteredArgs = array_map(function($item) {
-                if (!is_null($item) && array_key_exists('password', $item)) 
-                    $item['password'] = md5($item['password']);
-                return $item;
-            },
-            $args
-        );
+        // 1. search for a session (cookie) that already exists
+        $sessions = new Sessions();
+        $session = $sessions->filter_by(['user_id' => $this->id]);
 
-        $users = new Users();
-        $user = $users->filter_by($filteredArgs['post']);
-
-        $id = $args[0];
-        $user = new \Users\Entity($id);
-        $user->update($filteredArgs);
-        $user->getOrMakeCookie();
+        // 2. or make a new cookie
+        if ($session == null) {
+        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
+         $value = md5($this->email.$_ENV['COOKIE_NOISE']);
+         // TODO: How do we know if this fails?
+        // 3. save the new cookie into sessions
+         $sessions->save($this->id, $key, $value);
+         return [$key => $value];
+         }
+        // 4. return the cookie to be sent with request
+        return [$session->key => $session->value];
+        return $this->attributes['email'];
          */
-    }
-
-    /**
-     * Return a single User object from an id.
-     * @param $id - a user id
-     * @return \Models\User
-     */
-    public function get($id, $table = self::USER_TABLE)
-    {
-        $queryResults = parent::get($id, $table);
-        $user = new User($queryResults[0]);
-        return $user;
     }
 
     /** 
@@ -79,10 +152,12 @@ class User
      */
     public function filter_by($map, $table = self::USER_TABLE)
     {
+        /*
         $queryResults = parent::filter_by($map, $table);
         if ($queryResults == null) {
             return null;
         }
         return new User($queryResults[0]);
+         */
     }
 }

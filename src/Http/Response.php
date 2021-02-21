@@ -32,10 +32,12 @@ class Response
      * Set cookie.
      * @param map - key => value pair to map to the cookie.
      */
-    public static function cookie($map)
+    public static function addCookie($map)
     {
         foreach ($map as $key => $value)
+        {
             setcookie($key, $value, strtotime('+30 days'));
+        }
     }
 
     /*

@@ -12,44 +12,52 @@ use Http\Request;
 
 class Login
 {
+    use \Traits\Attributes;
     use \Traits\Messages;
 
     private $config = [];
 
-    public function __construct()
+    public function __construct($attributes = [])
     {
         $this->config = [
-            'email' => (function ($entry) {
+            'email' => function ($entry) {
                 if (empty($entry))
                     return "Email address should not be empty.";
                 return true;
-            }),
-            'password' => (function ($entry) {
+            },
+            'password' => function ($entry) {
                 if (empty($entry))
                     return "Password should not be empty.";
                 return true;
-            }),
+            },
         ];
+        $this->filter($attributes);
+    }
+
+    /*
+     * Filter out attributes that are not in the config.
+     * @return void
+     */
+    private function filter($attributes)
+    {
+        foreach ($attributes as $key => $attribute)
+        {
+            if (array_key_exists($key, $this->config))
+                $this->attributes[$key] = $attribute;
+        }
     }
 
     public function validate()
     {
         foreach ($this->config as $key => $validator)
         {
-            if (array_key_exists($key, Request::post()))
+            if (array_key_exists($key, $this->attributes))
             {
-                if (($validationResponse = $validator(Request::post()[$key])) !== true)
-                {
+                if (($validationResponse = $validator($this->attributes[$key])) !== true)
                     $this->messages[] = $validationResponse;
-                }
             }
         }
-        return empty($this->messages) ? true : false;
-    }
 
-    public function createUserFromInput()
-    {
-        // use array function to use only the keys from $config TODO
-        return new \Models\User(\Http\Request::post());
+        return empty($this->messages) ? true : false;
     }
 }
