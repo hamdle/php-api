@@ -20,7 +20,7 @@ class Env
     {
         try {
             $output = file_get_contents(
-                $path ?? dirname($_SERVER["DOCUMENT_ROOT"], 1) . '/.env');
+                $path ?? $_SERVER["DOCUMENT_ROOT"] . '/api/.env');
 
             if ($output === false || $output == '')
                 throw new Exception();
