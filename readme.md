@@ -1,8 +1,6 @@
 # Workout API
 
-The Workout API is designed to track workouts that I've been using, and logging, and losing, for the past few years. The API manages the data and users to log workouts in an effort to best my old pen and paper logging system. There's an accompanying web application that manages all of the user facing interactions --- logging in the user, logging the workouts, rendering cool charts --- that works in collaboration with the API.
-
-The execution stack of the API is intended to be clean and easy to follow. There are a few ethos that have contributed to the design of this programm. If a function is static, it will almost always be called in the excution tree of every request. Objects like Controllers and Models are not loaded into memeory until they have something to contribute or execute. I try to use design patterns to lower complexity not add to it. And arrays are a powerful tool that are wholly capable of modeling data, for the program and the programmers mental model of the program, so they are used as a central part of the API.
+The Workout API is designed to track workouts that I've been doing for the past few years. There's an accompanying web application that manages all of the user facing interactions --- user login and exercise tracking during workouts --- that works in collaboration with the API. The API has been designed to model the workout data that is required to log and track my exercies. 
 
 # Nginx setup
 

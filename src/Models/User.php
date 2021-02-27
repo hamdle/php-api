@@ -109,7 +109,7 @@ class User
     {
         if ($this->load())
         {
-            Response::addCookie($this->getCookie());
+            Response::addCookie($this->getOrMakeCookie());
             return true;
         }
 
@@ -117,15 +117,34 @@ class User
     }
 
     /*
-     * Return a the user cookie
+     * Return the users cookie his function assumes the user has been loaded
      * @return string - cookie
      */
-    public function getCookie()
+    public function getOrMakeCookie()
     {
-        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
-        $value = md5($this->email.$_ENV['COOKIE_NOISE']);
-        return [$key => $value];
+        return [md5(random_int(PHP_INT_MIN, PHP_INT_MAX)),
+                md5($this->email.$_ENV['COOKIE_NOISE'])];
+
         /*
+         * The new code
+        $cookie = new Session($this->id);
+        if (!$cookie->load() || $cookie->expired())
+        {
+            $cookie->delete();
+
+            $newCookie = new Session([
+                'key' => md5(random_int(PHP_INT_MIN, PHP_INT_MAX)),
+                'value' => md5($this->email.$_ENV['COOKIE_NOISE'])]);
+            $newCookie->save();
+
+            return $newCookie->toArray();
+        }
+
+        return $cookie->toArray();
+         */
+
+        /*
+         * The old code
         // 1. search for a session (cookie) that already exists
         $sessions = new Sessions();
         $session = $sessions->filter_by(['user_id' => $this->id]);
@@ -141,7 +160,6 @@ class User
          }
         // 4. return the cookie to be sent with request
         return [$session->key => $session->value];
-        return $this->attributes['email'];
          */
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * app.php: define the Api here
+ * index.php: define the Api here
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -12,7 +12,7 @@ use Http\Api;
 use Http\Response;
 
 Api::get('version', function() {
-    return Response::send(\Http\Response::HTTP_200_OK, $_ENV['VERSION']);
+    return Response::send(Response::HTTP_200_OK, $_ENV['VERSION']);
 });
 Api::get('auth', ['\Controllers\Authentication', 'authenticateUser']);
 Api::get('exercises', ['\Controllers\ExerciseTypes', 'getAllExercises']);

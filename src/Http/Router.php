@@ -12,10 +12,10 @@ namespace Http;
 class Router
 {
     /*
-     * Look for a matching uri and return its token
-     * @return string
+     * Match an Api endpoint with the request to find a Controller.
+     * @return string - a callable Controller
      */
-    public static function parseController($api)
+    public static function requestToController($api)
     {
         $pathParts = Request::path();
 

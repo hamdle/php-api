@@ -8,8 +8,6 @@
 
 namespace Forms;
 
-use Http\Request;
-
 class Login
 {
     use \Traits\Attributes;
@@ -47,6 +45,10 @@ class Login
         }
     }
 
+    /*
+     * Run attributes through the config validation functions.
+     * @return bool - false if one or many validatons failed
+     */
     public function validate()
     {
         foreach ($this->config as $key => $validator)

@@ -9,11 +9,14 @@
 namespace Controllers;
 
 use Http\Response;
-use Models\Workout;
 use Forms\Workout as WorkoutForm;
 
 class Workouts
 {
+    /*
+     * Handle request to save a workout.
+     * @return \Http\Response
+     */
     public function saveWorkout()
     {
         $workoutForm = new WorkoutForm();   // uses Request::data()

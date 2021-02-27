@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Database/MySQL/Query.php: run queries using mysql connection
+ * Database/Query.php: run database queries
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -14,14 +14,12 @@ class Query
 {
     /*
      * Static connection to MySQL database.
-     *
      * @var mysqli connection object
      */
     protected static $mysql = null;
 
     /*
      * Get or create connection to MySQL database.
-     *
      * @return mysqli connection object
      */
     public static function connection()
@@ -47,20 +45,16 @@ class Query
 
     /*
      * Close MySQL connection.
-     *
      * @return void
      */
     public static function close()
     {
         if (!is_null(self::$mysql))
-        {
             self::$mysql->close();
-        }
     }
 
     /*
      * Run a select query.
-     *
      * @param $query - a complete SQL query
      * @return see Database\MySQL\Query::run()
      */
@@ -71,15 +65,14 @@ class Query
 
     /*
      * Run a sql query using OO version of mysqli.
-     *
      * @param $query - a complete SQL query
      * @return $rows[] | $id | null
      */
     public static function run($query)
     {
         $db = self::connection();
-
         $rows = [];
+
         if ($results = $db->query($query))
         {
             if (is_bool($results))
@@ -105,6 +98,7 @@ class Query
         return $rows;
     }
 
+    /*
     public function execute($args, $table)
     {
         $query = $this->buildFilterBy($args, $table);
@@ -156,4 +150,5 @@ class Query
 
         return $query;
     }
+     */
 }

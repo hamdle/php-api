@@ -36,7 +36,7 @@ class Response
     {
         foreach ($map as $key => $value)
         {
-            setcookie($key, $value, strtotime('+30 days'));
+            setcookie($key, $value, strtotime('+30 days'), "/");
         }
     }
 

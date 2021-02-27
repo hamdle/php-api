@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Utils/Attributes.php: Create dynamic attributes trait
+ * Traits/Attributes.php: Create dynamic attributes trait
  *
  * Copyright (C) 2021 Eric Marty
  */
