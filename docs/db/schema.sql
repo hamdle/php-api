@@ -7,8 +7,8 @@ USE `workouts`;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `email` varchar(128) DEFAULT NULL,
-    `password` varchar(128) DEFAULT NULL,
+    `email` varchar(128) NOT NULL,
+    `password` varchar(128) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
