@@ -13,8 +13,6 @@ class Login
     use \Traits\Attributes;
     use \Traits\Messages;
 
-    private $config = [];
-
     public function __construct($attributes = [])
     {
         $this->config = [
@@ -30,19 +28,6 @@ class Login
             },
         ];
         $this->filter($attributes);
-    }
-
-    /*
-     * Filter out attributes that are not in the config.
-     * @return void
-     */
-    private function filter($attributes)
-    {
-        foreach ($attributes as $key => $attribute)
-        {
-            if (array_key_exists($key, $this->config))
-                $this->attributes[$key] = $attribute;
-        }
     }
 
     /*

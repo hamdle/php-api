@@ -11,6 +11,7 @@ namespace Traits;
 trait Attributes
 {
     protected $attributes = [];
+    protected $config = [];
 
     public function __get($attr)
     {
@@ -29,5 +30,33 @@ trait Attributes
         else
             return null;
     }
-}
 
+    /*
+     * Filter out attributes that are not in the config.
+     * @return void
+     */
+    public function filter()
+    {
+        foreach ($this->attributes as $key => $attribute)
+        {
+            if (array_key_exists($key, $this->config) &&
+                !is_null($attribute))
+                $this->attributes[$key] = $attribute;
+            else
+                unset($this->attributes);
+        }
+    }
+
+    /*
+     * Run attributes through input transforms.
+     * @return void
+     */
+    public function transform()
+    {
+        foreach ($this->config as $key => $transform)
+        {
+            if (array_key_exists($key, $this->attributes))
+                $this->attributes[$key] = $transform($this->attributes[$key]);
+        }
+    }
+}

@@ -16,8 +16,7 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
-    `key` varchar(128) NOT NULL,
-    `value` varchar(128) NOT NULL,
+    `token` varchar(256) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 

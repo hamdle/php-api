@@ -14,8 +14,8 @@ class DatabaseCommand
     private $db_name = 'workouts';
     private $db_user = 'homestead';
     private $db_pass = 'secret';
-    private $db_schema = '../docs/db/schema.sql';
-    private $db_data = '../docs/db/testdata.sql';
+    private $db_schema = '../../docs/db/schema.sql';
+    private $db_data = '../../docs/db/testdata.sql';
 
     public function reloadSchema()
     {

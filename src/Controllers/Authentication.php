@@ -40,10 +40,9 @@ class Authentication {
      */
     public function authenticateUser()
     {
-        return Response::send(Response::HTTP_403_FORBIDDEN);
         $session = new Session();
         if (!$session->verify())
-            return Response::send(Response::HTTP_401_UNAUTHORIZED);
+            return Response::send(Response::HTTP_401_UNAUTHORIZED, $session->getMessages());
 
         return Response::send(Response::HTTP_200_OK);
     }

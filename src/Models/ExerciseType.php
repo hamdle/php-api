@@ -21,6 +21,6 @@ class ExerciseType
 
     public function selectAll()
     {
-        return Query::select('select * from '.self::TABLE_NAME);
+        return Query::select(self::TABLE_NAME, "*");
     }
 }

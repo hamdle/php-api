@@ -25,7 +25,6 @@ class User
      */
 
     private const USER_TABLE = 'users';
-    private $config = [];
 
     public function __construct($attributes = [])
     {
@@ -34,54 +33,18 @@ class User
                 return $entry;
             },
             'password' => function ($entry) {
-                return md5($entry);
+                return empty($entry) ? null : md5($entry);
             },
         ];
         $this->attributes = $attributes;
     }
 
-    /*
-     * Filter out attributes that are not in the config.
-     * @return void
-     */
-    private function filter($attributes)
-    {
-        foreach ($attributes as $key => $attribute)
-        {
-            if (array_key_exists($key, $this->config))
-                $this->attributes[$key] = $attribute;
-        }
-    }
-
-    /*
-     * Run attributes through input transforms.
-     * @return void
-     */
-    public function transform()
-    {
-        foreach ($this->config as $key => $transform)
-        {
-            $this->attributes[$key] = $transform($this->attributes[$key]);
-        }
-    }
-
     public function load()
     {
-        $this->filter($this->attributes);
+        $this->filter();
         $this->transform();
 
-        // Find in database
-        $str = [];
-        foreach ($this->attributes as $key => $attribute)
-        {
-            $str[] = $key . " = '" . $attribute . "'";
-        }
-
-        // This should happen so this whole thing needs to be moved into Query
-        // $str[1] = $mysqli->real_escape_string($str[1]);
-        $results = Query::run(
-            "select * from ".self::USER_TABLE.
-            " where ".$str[0]." and ".$str[1]);
+        $results = Query::select(self::USER_TABLE, "*", $this->attributes);
 
         if (array_key_exists(0, $results))
         {
@@ -93,7 +56,7 @@ class User
         }
         else
         {
-            $this->message[] = "User not found.";
+            $this->messages[] = "User not found.";
             return false;
         }
 
@@ -109,7 +72,7 @@ class User
     {
         if ($this->load())
         {
-            Response::addCookie($this->getOrMakeCookie());
+            $this->createNewSession();
             return true;
         }
 
@@ -120,47 +83,19 @@ class User
      * Return the users cookie his function assumes the user has been loaded
      * @return string - cookie
      */
-    public function getOrMakeCookie()
+    public function createNewSession()
     {
-        return [md5(random_int(PHP_INT_MIN, PHP_INT_MAX)),
-                md5($this->email.$_ENV['COOKIE_NOISE'])];
-
-        /*
-         * The new code
-        $cookie = new Session($this->id);
-        if (!$cookie->load() || $cookie->expired())
+        $cookie = new Session(['user_id' => $this->id]);
+        if ($cookie->load())
         {
-            $cookie->delete();
-
-            $newCookie = new Session([
-                'key' => md5(random_int(PHP_INT_MIN, PHP_INT_MAX)),
-                'value' => md5($this->email.$_ENV['COOKIE_NOISE'])]);
-            $newCookie->save();
-
-            return $newCookie->toArray();
+            // send expired cookie then delete it from database TODO
+            //$cookie->setExpiredCookie();
+            //$cookie->delete();
         }
 
-        return $cookie->toArray();
-         */
-
-        /*
-         * The old code
-        // 1. search for a session (cookie) that already exists
-        $sessions = new Sessions();
-        $session = $sessions->filter_by(['user_id' => $this->id]);
-
-        // 2. or make a new cookie
-        if ($session == null) {
-        $key = md5(random_int(PHP_INT_MIN, PHP_INT_MAX));
-         $value = md5($this->email.$_ENV['COOKIE_NOISE']);
-         // TODO: How do we know if this fails?
-        // 3. save the new cookie into sessions
-         $sessions->save($this->id, $key, $value);
-         return [$key => $value];
-         }
-        // 4. return the cookie to be sent with request
-        return [$session->key => $session->value];
-         */
+        $newCookie = new Session(['user_id' => $this->id]);
+        $newCookie->createNewCookie($this);
+        $newCookie->addCookie();
     }
 
     /** 

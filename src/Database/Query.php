@@ -54,12 +54,48 @@ class Query
     }
 
     /*
+     * Run an insert query.
+     * @param $query - a complete SQL query
+     * @return see Database\Query::run()
+     */
+    public static function insert($query)
+    {
+        return self::run($query);
+    }
+
+    /*
      * Run a select query.
      * @param $query - a complete SQL query
-     * @return see Database\MySQL\Query::run()
+     * @return see Database\Query::run()
      */
-    public static function select($query)
+    public static function select($table, $selects, $where = null)
     {
+        $query = "select ";
+
+        if ($selects == '*')
+            $query .= $selects;
+        else if (is_array($selects))
+            $query .= implode(",", $selects);
+
+        $query .= " from ".$table;
+
+        if (is_array($where))
+        {
+            $query .= " where ";
+
+            $count = 0;
+            foreach ($where as $key => $attribute)
+            {
+                $count++;
+                if (!is_array($attribute))
+                {
+                    $query .= $key . " = '" . mysqli_real_escape_string(self::connection(), $attribute) . "'";
+                    if (count($where) !== $count)
+                        $query .= " and ";
+                }
+            }
+        }
+
         return self::run($query);
     }
 

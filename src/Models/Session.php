@@ -9,10 +9,13 @@
 namespace Models;
 
 use Http\Request;
+use Http\Response;
+use Database\Query;
 
 class Session
 {
     use \Traits\Attributes;
+    use \Traits\Messages;
 
     /*
      * The Entry attributes defined in the database are:
@@ -24,81 +27,133 @@ class Session
      */
 
     protected const SESSIONS_TABLE = 'sessions';
+    const COOKIE_KEY = 'Session-Id';
 
     public function __construct($attributes = [])
     {
+        $this->config = [
+            'user_id' => function ($entry) {
+                return $entry;
+            },
+            'token' => function ($entry) {
+                return $entry;
+            },
+        ];
         $this->attributes = $attributes;
     }
 
-    public function filter_by($filters, $table = self::SESSIONS_TABLE)
+    public function load()
     {
-        /*
-        $queryResults = parent::filter_by($filters, $table);
-        if ($queryResults == null) {
-            return null;
+        $this->filter($this->attributes);
+        $this->transform();
+
+        // use new Query::select TODO
+        // Find in database
+        $str = [];
+        foreach ($this->attributes as $key => $attribute)
+        {
+            $str[] = $key . " = '" . $attribute . "'";
         }
-        return new Session($queryResults[0]);
-         */
+
+
+        // This should happen so this whole thing needs to be moved into Query
+        // $str[1] = $mysqli->real_escape_string($str[1]);
+        $results = Query::run(
+            "select * from ".self::SESSIONS_TABLE.
+            " where ".$str[0]);
+
+        if (array_key_exists(0, $results))
+        {
+            // Add to attributes
+            foreach ($results[0] as $key => $value)
+            {
+                $this->attributes[$key] = $value;
+            }
+        }
+        else
+        {
+            $this->messages[] = "Session not found.";
+            return false;
+        }
+
+        return true;
     }
 
-    public function save($user_id, $key, $value)
+    public function setExpiredCookie()
     {
-        /*
-        $args = [
-            'user_id' => $user_id,
-            'key' => $key,
-            'value' => $value
-        ];
+        // use setCookie() with a past date TODO
+    }
 
-        parent::add($args, self::SESSIONS_TABLE);
-         */
+    public function delete()
+    {
+        // delete this cookie from the database and clear object attributes TODO
+    }
+
+    public function save()
+    {
+        // build out insert in Query, similar to select TODO
+        Query::insert("insert into `".self::SESSIONS_TABLE."` (`user_id`, `token`) values (".
+            "'".$this->user_id."',".
+            "'".$this->token."')"
+        );
+    }
+
+    public function createNewCookie($user)
+    {
+        // Generate token and mac hash
+        $token = bin2hex(random_bytes(128));
+        $cookie = $user->email.":".$token;
+        $mac = hash_hmac('sha256', $cookie, $_ENV['COOKIE_KEY']);
+        $cookie .= ":".$mac;
+
+        // Save token to the database
+        $this->user_id = $user->id;
+        $this->token = $token;
+        $this->save();
+
+        $this->cookie = $cookie;
+    }
+
+    public function addCookie()
+    {
+        Response::addCookie([self::COOKIE_KEY => $this->cookie]);
+    }
+
+    public function removeCookie()
+    {
+        //Response::removeCookie(['mycookie' => $this->cookie]);
     }
 
     /**
      * Check to make sure a cookie sent from the client is valid.
-     * @params $cookie - ['key' => 'value']
      * @return false or \Models\User
      */
-    public function verify($cookie = null)
+    public function verify()
     {
-        return true;
-        /*
-        if ($cookie == null) {
-            $request = new Request();
-            $cookie = $request->getCookie();
-        }
-
-        if (empty($cookie) ||
-            count($cookie) > 1) {
-            return false;
-        }
-
-        $cookieArgs = [];
+        $cookie = Request::cookie();
         foreach ($cookie as $key => $value) {
-            $cookieArgs = [
-                'key' => $key,
-                'value' => $value
-            ]; 
-        }
+            if (strcmp($key, self::COOKIE_KEY) !== 0)
+                continue;
 
-        $session = $this->filter_by($cookieArgs, self::SESSIONS_TABLE);
+            $parts = explode(":", $value);
+            if (count($parts) !== 3)
+                return false;
 
-        if ($session == null) {
-            return false;
-        }
+            $user = new User(['email' => $parts[0]]);
+            if (!$user->load())
+                return false;
 
-        $users = new Users();
-        $user = $users->filter_by(['id' => $session->user_id]);
+            $this->user_id = $user->id;
+            if (!$this->load())
+                return false;
 
-        if ($user == null) {
-            return false;
-        }
+            $cookie = $user->email.":".$this->token;
+            $mac = hash_hmac('sha256', $cookie, $_ENV['COOKIE_KEY']);
 
-        if (strcmp($session->value, md5($user->email.$_ENV['COOKIE_NOISE'])) == 0) {
-            return $user;
+            if (hash_equals($mac, $parts[2]))
+                return true;
         }
 
         return false;
-         */
     }
 }
