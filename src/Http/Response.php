@@ -29,6 +29,20 @@ class Response
     const HTTP_404_NOT_FOUND = 404;
 
     /*
+     * You can't explicitly delete cookies so just set them as expired. But
+     * gnerally, this would be triggered because the client-side cookie had
+     * expired and has already been deleted by the browser.
+     * @param map - key => value pair to map to the cookie.
+     */
+    public static function addExpiredCookie($map)
+    {
+        foreach ($map as $key => $value)
+        {
+            setcookie($key, $value, strtotime('-30 days'), "/");
+        }
+    }
+
+    /*
      * Set cookie.
      * @param map - key => value pair to map to the cookie.
      */

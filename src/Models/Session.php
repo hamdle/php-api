@@ -68,12 +68,12 @@ class Session
 
     public function setExpiredCookie()
     {
-        // use setCookie() with a past date TODO
+        Response::addExpiredCookie([self::COOKIE_KEY => $this->cookie]);
     }
 
     public function delete()
     {
-        // delete this cookie from the database and clear object attributes TODO
+        Query::delete(self::SESSIONS_TABLE, ['id' => $this->id]);
     }
 
     public function save()
@@ -106,11 +106,6 @@ class Session
         Response::addCookie([self::COOKIE_KEY => $this->cookie]);
     }
 
-    public function removeCookie()
-    {
-        //Response::removeCookie(['mycookie' => $this->cookie]);
-    }
-
     /**
      * Check to make sure a cookie sent from the client is valid.
      * @return false or \Models\User
@@ -132,10 +127,13 @@ class Session
 
             $this->user_id = $user->id;
             if (!$this->load())
+            {
+                $this->setExpiredCookie();
                 return false;
+            }
 
-            $cookie = $user->email.":".$this->token;
-            $mac = hash_hmac('sha256', $cookie, $_ENV['COOKIE_KEY']);
+            $this->cookie = $user->email.":".$this->token;
+            $mac = hash_hmac('sha256', $this->cookie, $_ENV['COOKIE_KEY']);
 
             if (hash_equals($mac, $parts[2]))
                 return true;

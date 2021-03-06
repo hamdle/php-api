@@ -39,6 +39,10 @@ class User
         $this->attributes = $attributes;
     }
 
+    /*
+     * Load properties from database using attributes.
+     * @return bool
+     */
     public function load()
     {
         $this->filter();
@@ -88,9 +92,8 @@ class User
         $cookie = new Session(['user_id' => $this->id]);
         if ($cookie->load())
         {
-            // send expired cookie then delete it from database TODO
-            //$cookie->setExpiredCookie();
-            //$cookie->delete();
+            $cookie->setExpiredCookie();
+            $cookie->delete();
         }
 
         $newCookie = new Session(['user_id' => $this->id]);

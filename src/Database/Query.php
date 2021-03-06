@@ -63,9 +63,32 @@ class Query
         return self::run($query);
     }
 
+    public static function delete($table, $where = null)
+    {
+        $query = "delete from ".$table;
+
+        if (is_array($where))
+        {
+            $query .= " where ";
+
+            $count = 0;
+            foreach ($where as $key => $attribute)
+            {
+                $count++;
+                if (!is_array($attribute))
+                {
+                    $query .= $key . " = '" . mysqli_real_escape_string(self::connection(), $attribute) . "'";
+                    if (count($where) !== $count)
+                        $query .= " and ";
+                }
+            }
+        }
+
+        return self::run($query);
+    }
+
     /*
      * Run a select query.
-     * @param $query - a complete SQL query
      * @return see Database\Query::run()
      */
     public static function select($table, $selects, $where = null)
