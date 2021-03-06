@@ -63,6 +63,10 @@ class Query
         return self::run($query);
     }
 
+    /*
+     * Run a delete query.
+     * @return see Database\Query::run()
+     */
     public static function delete($table, $where = null)
     {
         $query = "delete from ".$table;
@@ -156,58 +160,4 @@ class Query
 
         return $rows;
     }
-
-    /*
-    public function execute($args, $table)
-    {
-        $query = $this->buildFilterBy($args, $table);
-        return $this->run($query);
-    }
-
-    public function get($id, $table)
-    {
-        $query = "select * from {$table} where id = {$id}";
-        return $this->run($query);
-    }
-
-    public function add($args, $table)
-    {
-        $query = "insert into {$table} (";
-        $values = "";
-
-        foreach ($args as $key => $value)
-        {
-            $query .= "`{$key}`,"; 
-            $values .= "'{$value}',";
-        }
-        $query = substr($query, 0, -1);
-        $values = substr($values, 0, -1);
-        $query .= ") values ({$values})";
-
-        return $this->run($query);
-    }
-
-    private function buildFilterBy($args, $table)
-    {
-        $query = "select * from {$table}";
-
-        if (count($args) > 0)
-            $query .= " where";
-
-        $count = 1;
-        foreach ($args as $key => $value)
-        {
-            if (count($args) === 1)
-                $query .= " `{$key}` = '{$value}'";
-            else if ($count < count($args))
-                $query .= " `{$key}` = '{$value}' and";
-            else
-                $query .= " `{$key}` = '{$value}'";
-
-            $count++;
-        }
-
-        return $query;
-    }
-     */
 }

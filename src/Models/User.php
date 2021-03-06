@@ -8,7 +8,6 @@
 
 namespace Models;
 
-use \Http\Response;
 use \Database\Query;
 
 class User
@@ -99,21 +98,5 @@ class User
         $newCookie = new Session(['user_id' => $this->id]);
         $newCookie->createNewCookie($this);
         $newCookie->addCookie();
-    }
-
-    /** 
-     * Query the users table, return a User object or null.
-     * @param map is a key, value array.
-     * @return \Models\User
-     */
-    public function filter_by($map, $table = self::USER_TABLE)
-    {
-        /*
-        $queryResults = parent::filter_by($map, $table);
-        if ($queryResults == null) {
-            return null;
-        }
-        return new User($queryResults[0]);
-         */
     }
 }
