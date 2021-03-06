@@ -47,20 +47,7 @@ class Session
         $this->filter($this->attributes);
         $this->transform();
 
-        // use new Query::select TODO
-        // Find in database
-        $str = [];
-        foreach ($this->attributes as $key => $attribute)
-        {
-            $str[] = $key . " = '" . $attribute . "'";
-        }
-
-
-        // This should happen so this whole thing needs to be moved into Query
-        // $str[1] = $mysqli->real_escape_string($str[1]);
-        $results = Query::run(
-            "select * from ".self::SESSIONS_TABLE.
-            " where ".$str[0]);
+        $results = Query::select(self::SESSIONS_TABLE, "*", $this->attributes);
 
         if (array_key_exists(0, $results))
         {
