@@ -24,11 +24,11 @@ class Authentication {
     {
         $loginForm = new LoginForm(Request::post());
         if (!$loginForm->validate())
-            return Response::send(Response::HTTP_400_BAD_REQUEST, $loginForm->getMessages()); 
+            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $loginForm->getMessages());
 
         $user = new User(Request::post());
         if (!$user->login())
-            return Response::send(Response::HTTP_401_UNAUTHORIZED, $user->getMessages());
+            return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
         return Response::send(Response::HTTP_200_OK);
     }
@@ -42,7 +42,7 @@ class Authentication {
     {
         $session = new Session();
         if (!$session->verify())
-            return Response::send(Response::HTTP_401_UNAUTHORIZED, $session->getMessages());
+            return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
         return Response::send(Response::HTTP_200_OK);
     }

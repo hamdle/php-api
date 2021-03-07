@@ -27,6 +27,7 @@ Code | Message
 401  | Unauthorized
 403  | Forbidden
 404  | Not found
+422  | Unprocessable Entity
 
 ### POST /login
 
@@ -45,7 +46,9 @@ Authenticate a user login request by returning a success or failure code.
 
 Success code: 200
 
-Failure code: 403
+Form validation failure: 422
+
+Failure code: 401
 
 ### GET /auth
 
@@ -74,6 +77,16 @@ No extra data needed.
 
 Success code: 200
 
+Body: an list of exercises
+
+```
+[
+    {"id":"1","title":"Warm Up","default_sets":"1","default_reps":"1","wait_time":"0","category":"warm"},
+    {"id":"2","title":"Pull Ups","default_sets":"2","default_reps":"5","wait_time":"60","category":"pull"},
+    ...
+]
+```
+
 ### GET /version
 
 Return the current version of the API. Good for a quick ping to make sure everything is okay.
@@ -85,6 +98,8 @@ No extra data needed.
 #### Response
 
 Success code: 200
+
+Body: string with version number
 
 ### POST /workouts/new
 
