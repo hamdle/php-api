@@ -58,8 +58,35 @@ class Query
      * @param $query - a complete SQL query
      * @return see Database\Query::run()
      */
-    public static function insert($query)
+    public static function insert($table, $fields, $values)
     {
+        $query = "insert into ".$table;
+
+        $query .= " (";
+        $query .= implode(
+            ",",
+            array_map(
+                function ($entry) {
+                    return "`".$entry."`";
+                },
+                $fields
+            )
+        );
+        $query .= ")";
+
+        $query .= " values (";
+        $query .= implode(
+            ",",
+            array_map(
+                function ($entry) {
+                    return "'".mysqli_real_escape_string(self::connection(), $entry)."'";
+                },
+                $values
+            )
+        );
+        $query .= ")";
+
+        \Utils\Logger::error($query, "NEW_QUERY");
         return self::run($query);
     }
 

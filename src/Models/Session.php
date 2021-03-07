@@ -78,11 +78,10 @@ class Session
 
     public function save()
     {
-        // build out insert in Query, similar to select TODO
-        Query::insert("insert into `".self::SESSIONS_TABLE."` (`user_id`, `token`) values (".
-            "'".$this->user_id."',".
-            "'".$this->token."')"
-        );
+        Query::insert(
+            self::SESSIONS_TABLE,
+            ["user_id", "token"],
+            [$this->user_id, $this->token]);
     }
 
     public function createNewCookie($user)
