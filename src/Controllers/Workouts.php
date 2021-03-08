@@ -9,6 +9,7 @@
 namespace Controllers;
 
 use Http\Response;
+use Models\Session;
 use Forms\Workout as WorkoutForm;
 
 class Workouts
@@ -19,14 +20,18 @@ class Workouts
      */
     public function saveWorkout()
     {
+        $session = new Session();
+        if (!$session->verify())
+            return Response::send(Response::HTTP_401_UNAUTHORIZED);
+
         $workoutForm = new WorkoutForm();   // uses Request::data()
         if (!$workoutForm->validate())
-            return Response::send(Response::HTTP_400_BAD_REQUEST, $workoutForm->getMessages()); 
+            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workoutForm->getMessages());
 
         if (!$workoutForm->save())
-            return Response::send(Response::HTTP_400_BAD_REQUEST, $workoutForm->getMessages());
+            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workoutForm->getMessages());
 
-        return Response::send(Response::HTTP_200_OK, $workout->getMessages());
+        return Response::send(Response::HTTP_201_CREATED);
 
         /*
         $response = new Response();

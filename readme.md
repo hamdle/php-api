@@ -44,7 +44,7 @@ Authenticate a user login request by returning a success or failure code.
 
 #### Response
 
-Success code: 200
+Success code: 201
 
 Form validation failure: 422
 
@@ -101,6 +101,10 @@ Success code: 200
 
 Body: string with version number
 
+```
+"1.0"
+```
+
 ### POST /workouts/new
 
 Add a new workout that a user has completed.
@@ -147,7 +151,9 @@ Add a new workout that a user has completed.
 
 #### Response
 
-Success code: 200
+Success code: 201
+
+Form validation failure: 422
 
 Failure code: 400
 

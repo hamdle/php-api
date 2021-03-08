@@ -30,7 +30,7 @@ class Authentication {
         if (!$user->login())
             return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
-        return Response::send(Response::HTTP_200_OK);
+        return Response::send(Response::HTTP_201_CREATED);
     }
 
     /*
