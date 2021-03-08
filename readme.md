@@ -77,7 +77,7 @@ No extra data needed.
 
 Success code: 200
 
-Body: an list of exercises
+Body: a list of exercises
 
 ```
 [

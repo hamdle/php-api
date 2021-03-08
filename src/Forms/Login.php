@@ -27,7 +27,8 @@ class Login
                 return true;
             },
         ];
-        $this->filter($attributes);
+        $this->attributes = $attributes;
+        $this->filter();
     }
 
     /*
@@ -41,7 +42,7 @@ class Login
             if (array_key_exists($key, $this->attributes))
             {
                 if (($validationResponse = $validator($this->attributes[$key])) !== true)
-                    $this->messages[] = $validationResponse;
+                    $this->messages[$key] = $validationResponse;
             }
         }
 
