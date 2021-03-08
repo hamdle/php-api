@@ -25,7 +25,7 @@ trait Attributes
 
     private function get($attr)
     {
-        if (array_key_exists($attr, $this->attributes))
+        if (array_key_exists($attr, $this->attributes ?? []))
             return $this->attributes[$attr];
         else
             return null;
@@ -39,11 +39,10 @@ trait Attributes
     {
         foreach ($this->attributes as $key => $attribute)
         {
-            if (array_key_exists($key, $this->config) &&
-                !is_null($attribute))
-                $this->attributes[$key] = $attribute;
-            else
+            if (!array_key_exists($key, $this->config))
+            {
                 unset($this->attributes);
+            }
         }
     }
 

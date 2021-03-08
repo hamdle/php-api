@@ -130,6 +130,7 @@ class Session
                 $this->setExpiredCookie();
                 return false;
             }
+            $this->user = $user;
 
             $this->cookie = $user->email.":".$this->token;
             $mac = hash_hmac('sha256', $this->cookie, $_ENV['COOKIE_KEY']);

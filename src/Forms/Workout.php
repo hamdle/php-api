@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Forms/Login.php: handle login form tasks
+ * Forms/Workout.php: handle workout tasks
  *
  * Copyright (C) 2021 Eric Marty
  */
 
 namespace Forms;
 
-class Login
+class Workout
 {
     use \Traits\Attributes;
     use \Traits\Messages;
@@ -16,14 +16,19 @@ class Login
     public function __construct($attributes = [])
     {
         $this->config = [
-            'email' => function ($entry) {
-                if (empty($entry))
-                    return "Email address should not be empty.";
+            'start' => function ($entry) {
                 return true;
             },
-            'password' => function ($entry) {
-                if (empty($entry))
-                    return "Password should not be empty.";
+            'end' => function ($entry) {
+                return true;
+            },
+            'notes' => function ($entry) {
+                return true;
+            },
+            'feel' => function ($entry) {
+                return true;
+            },
+            'entries' => function ($entry) {
                 return true;
             },
         ];
@@ -50,5 +55,10 @@ class Login
         }
 
         return empty($this->messages) ? true : false;
+    }
+
+    public function save($user)
+    {
+        return false;
     }
 }

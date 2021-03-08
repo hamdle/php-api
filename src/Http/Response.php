@@ -28,6 +28,7 @@ class Response
     const HTTP_403_FORBIDDEN = 403;
     const HTTP_404_NOT_FOUND = 404;
     const HTTP_422_UNPROCESSABLE_ENTITY = 422;
+    const HTTP_500_INTERNAL_SERVER_ERROR = 500;
 
     /*
      * You can't explicitly delete cookies so just set them as expired. But
