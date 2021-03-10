@@ -8,6 +8,8 @@
 
 namespace Forms;
 
+use \Utils\Configuration;
+
 class Login
 {
     use \Traits\Attributes;
@@ -15,6 +17,7 @@ class Login
 
     public function __construct($attributes = [])
     {
+        /*
         $this->config = [
             'email' => function ($entry) {
                 if (empty($entry))
@@ -27,6 +30,8 @@ class Login
                 return true;
             },
         ];
+         */
+        $this->config = Configuration::login();
         $this->attributes = $attributes;
         $this->filter();
     }
