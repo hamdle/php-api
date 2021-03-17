@@ -12,21 +12,18 @@ use Http\Request;
 use Http\Response;
 use Models\User;
 use Models\Session;
-use Forms\Login as LoginForm;
 
 class Authentication {
     /*
-     * Handle login request. This will vaildate the login form information and
-     * attempt to login the user.
+     * Handle login request. Vaildate the form and attempt to log the user in.
      * @return \Http\Response
      */
     public function login()
     {
-        $loginForm = new LoginForm(Request::post());
-        if (!$loginForm->validate())
-            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $loginForm->getMessages());
-
         $user = new User(Request::post());
+        if (!$user->validate())
+            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $user->getMessages());
+
         if (!$user->login())
             return Response::send(Response::HTTP_401_UNAUTHORIZED);
 

@@ -11,7 +11,6 @@ namespace Controllers;
 use Http\Response;
 use Http\Request;
 use Models\Session;
-use Forms\Workout as WorkoutForm;
 
 class Workouts
 {
@@ -25,11 +24,12 @@ class Workouts
         if (!$session->verify())
             return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
-        $workoutForm = new WorkoutForm(Request::data());
-        if (!$workoutForm->validate())
+        $workout = new \Models\Workout(Request::data());
+        if (!$workout->validate())
             return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workoutForm->getMessages());
 
-        if (!$workoutForm->save($session->user))
+        // you are here, move Forms workouts save function to models workouts save TODO
+        if (!$workout->save($session->user))
             return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR);
 
         return Response::send(Response::HTTP_201_CREATED);

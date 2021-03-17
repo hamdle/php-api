@@ -15,6 +15,7 @@ use Database\Query;
 class Session
 {
     use \Traits\Attributes;
+    use \Traits\AttributeActions;
     use \Traits\Messages;
 
     /*
@@ -31,21 +32,13 @@ class Session
 
     public function __construct($attributes = [])
     {
-        $this->config = [
-            'user_id' => function ($entry) {
-                return $entry;
-            },
-            'token' => function ($entry) {
-                return $entry;
-            },
-        ];
         $this->attributes = $attributes;
     }
 
     public function load()
     {
-        $this->filter($this->attributes);
-        $this->transform();
+        $this->filter($this->config());
+        $this->transform($this->transforms());
 
         $results = Query::select(self::SESSIONS_TABLE, "*", $this->attributes);
 
@@ -111,8 +104,7 @@ class Session
      */
     public function verify()
     {
-        $cookie = Request::cookie();
-        foreach ($cookie as $key => $value) {
+        foreach (Request::cookie() as $key => $value) {
             if (strcmp($key, self::COOKIE_KEY) !== 0)
                 continue;
 
@@ -140,5 +132,33 @@ class Session
         }
 
         return false;
+    }
+
+    public function config()
+    {
+        return [
+            'user_id' => function ($entry) {
+                if (empty($entry))
+                    return "User ID should not be empty.";
+                return true;
+            },
+            'token' => function ($entry) {
+                if (empty($entry))
+                    return "Token should not be empty.";
+                return true;
+            },
+        ];
+    }
+
+    public function transforms()
+    {
+        return [
+            'user_id' => function ($entry) {
+                return $entry;
+            },
+            'token' => function ($entry) {
+                return $entry;
+            },
+        ];
     }
 }

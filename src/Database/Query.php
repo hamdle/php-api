@@ -86,7 +86,6 @@ class Query
         );
         $query .= ")";
 
-        \Utils\Logger::error($query, "NEW_QUERY");
         return self::run($query);
     }
 

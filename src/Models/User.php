@@ -13,6 +13,7 @@ use \Database\Query;
 class User
 {
     use \Traits\Attributes;
+    use \Traits\AttributeActions;
     use \Traits\Messages;
 
     /*
@@ -27,14 +28,6 @@ class User
 
     public function __construct($attributes = [])
     {
-        $this->config = [
-            'email' => function ($entry) {
-                return $entry;
-            },
-            'password' => function ($entry) {
-                return empty($entry) ? null : md5($entry);
-            },
-        ];
         $this->attributes = $attributes;
     }
 
@@ -44,11 +37,12 @@ class User
      */
     public function load()
     {
-        $this->filter();
-        $this->transform();
+        $this->filter($this->config());
+        $this->transform($this->transforms());
 
         $results = Query::select(self::USER_TABLE, "*", $this->attributes);
 
+        // If this select failes it may cause errors TODO
         if (array_key_exists(0, $results))
         {
             // Add to attributes
@@ -98,5 +92,52 @@ class User
         $newCookie = new Session(['user_id' => $this->id]);
         $newCookie->createNewCookie($this);
         $newCookie->addCookie();
+    }
+
+    public function validate()
+    {
+        if (($results = $this->validation($this->config())) !== true)
+        {
+            $this->messages[] = $results;
+            return false;
+        }
+
+        return true;
+    }
+
+    public function config()
+    {
+        return [
+            'email' => function ($entry) {
+                if (empty($entry))
+                    return "Email address should not be empty.";
+                return true;
+            },
+            'password' => function ($entry) {
+                if (empty($entry))
+                    return "Password should not be empty.";
+                return true;
+            },
+        ];
+    }
+
+    public function transforms()
+    {
+        return [
+            'email' => function ($entry) {
+                return $entry;
+            },
+            'password' => function ($entry) {
+                return empty($entry) ? null : md5($entry);
+            },
+        ];
+    }
+
+    public static function __callStatic($method, $args)
+    {
+        $call = $args[0] ?? null;
+        array_shift($args);
+        if ($method == 'call' && $call)
+            return (new User())->$call(...$args);
     }
 }
