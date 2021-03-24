@@ -45,7 +45,7 @@ class Response
     }
 
     /*
-     * Set cookie.
+     * Set cookie using setcookie(). The max size of a cookie values is 4K.
      * @param map - key => value pair to map to the cookie.
      */
     public static function addCookie($map)
