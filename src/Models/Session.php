@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Models/Session.php: user session log
+ * Models/Session.php: a user session
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -35,6 +35,10 @@ class Session
         $this->attributes = $attributes;
     }
 
+    /*
+     * Attept to load a session using the attributes assigned to this session.
+     * @return bool - a message will be set if the session fails to load
+     */
     public function load()
     {
         $this->filter($this->config());
@@ -59,16 +63,9 @@ class Session
         return true;
     }
 
-    public function setExpiredCookie()
-    {
-        Response::addExpiredCookie([self::COOKIE_KEY => $this->cookie]);
-    }
-
-    public function delete()
-    {
-        Query::delete(self::SESSIONS_TABLE, ['id' => $this->id]);
-    }
-
+    /*
+     * Save this token to the database.
+     */
     public function save()
     {
         Query::insert(
@@ -77,15 +74,25 @@ class Session
             [$this->user_id, $this->token]);
     }
 
+    /*
+     * Delete this token to the database.
+     */
+    public function delete()
+    {
+        Query::delete(self::SESSIONS_TABLE, ['id' => $this->id]);
+    }
+
+    /*
+     * Create a new cookie for a user.
+     * @param \Models\User
+     */
     public function createNewCookie($user)
     {
-        // Generate token and mac hash
         $token = bin2hex(random_bytes(128));
         $cookie = $user->email.":".$token;
         $mac = hash_hmac('sha256', $cookie, $_ENV['COOKIE_KEY']);
         $cookie .= ":".$mac;
 
-        // Save token to the database
         $this->user_id = $user->id;
         $this->token = $token;
         $this->save();
@@ -93,14 +100,19 @@ class Session
         $this->cookie = $cookie;
     }
 
+    /*
+     * Add cookie to response that's attached to this session object.
+     */
     public function addCookie()
     {
         Response::addCookie([self::COOKIE_KEY => $this->cookie]);
     }
 
-    /**
-     * Check to make sure a cookie sent from the client is valid.
-     * @return false or \Models\User
+    /*
+     * Verify that a cookie sent from the client is valid. If the cookie is
+     * valid, the verified user (of type \Models\User) will be added to the
+     * session's attributes.
+     * @return bool
      */
     public function verify()
     {
@@ -133,6 +145,15 @@ class Session
 
         return false;
     }
+
+    /*
+     * Delete a cookie on the client by setting it as expired.
+     */
+    public function setExpiredCookie()
+    {
+        Response::addExpiredCookie([self::COOKIE_KEY => $this->cookie]);
+    }
+
 
     public function config()
     {
