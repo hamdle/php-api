@@ -41,10 +41,7 @@ class Workout
     public function save($user)
     {
         $this->filter($this->config());
-        //\Utils\Logger::error(array_keys($this->attributes));
-        //\Utils\Logger::error($user->email);
 
-        // YOU ARE HERE
         foreach ($this->attributes['entries'] as $exerciseEntry)
         {
             $exercise = new \Models\Exercise($exerciseEntry);

@@ -19,7 +19,7 @@ class Session
     use \Traits\Messages;
 
     /*
-     * The Entry attributes defined in the database are:
+     * The Session attributes defined in the database are:
      *
      * id
      * user_id
@@ -36,7 +36,7 @@ class Session
     }
 
     /*
-     * Attept to load a session using the attributes assigned to this session.
+     * Attempt to load a session using the attributes assigned to this session.
      * @return bool - a message will be set if the session fails to load
      */
     public function load()
@@ -48,7 +48,6 @@ class Session
 
         if (array_key_exists(0, $results))
         {
-            // Add to attributes
             foreach ($results[0] as $key => $value)
             {
                 $this->attributes[$key] = $value;
@@ -136,6 +135,9 @@ class Session
             }
             $this->user = $user;
 
+            // The final cookie value will be in the form of "email:token:mac".
+            // Where the email and token combine with a key from the .env to
+            // create the mac.
             $this->cookie = $user->email.":".$this->token;
             $mac = hash_hmac('sha256', $this->cookie, $_ENV['COOKIE_KEY']);
 

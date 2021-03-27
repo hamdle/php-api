@@ -28,7 +28,6 @@ class Workouts
         if (!$workout->validate())
             return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workoutForm->getMessages());
 
-        // you are here, move Forms workouts save function to models workouts save TODO
         if (!$workout->save($session->user))
             return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR);
 
