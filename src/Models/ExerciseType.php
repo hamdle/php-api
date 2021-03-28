@@ -34,7 +34,7 @@ class ExerciseType
         $this->attributes = $attributes;
     }
 
-    public function selectAll()
+    public function all()
     {
         return Query::select(self::TABLE_NAME, "*");
     }
