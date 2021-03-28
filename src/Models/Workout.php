@@ -8,6 +8,8 @@
 
 namespace Models;
 
+use Database\Query;
+
 class Workout
 {
     use \Traits\Attributes;
@@ -42,20 +44,12 @@ class Workout
     {
         $this->filter($this->config());
 
-        foreach ($this->attributes['entries'] as $exerciseEntry)
-        {
-            $exercise = new \Models\Exercise($exerciseEntry);
-            if (!$exercise->save())
-                return false;
-        }
-        
-        /*
-        if (!$workout->save())
-            return false;
+        Query::insert(
+            self::WORKOUT_TABLE,
+            ["user_id", "token"],
+            [$user->id, $this->token]);
 
         return true;
-         */
-        return false;
     }
 
     public function validate()
@@ -83,9 +77,6 @@ class Workout
             },
             'feel' => function ($entry) {
                 return true;
-            },
-            'entries' => function ($entry) {
-                return is_array($entry);
             },
         ];
     }

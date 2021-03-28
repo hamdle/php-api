@@ -11,6 +11,8 @@ namespace Controllers;
 use Http\Response;
 use Http\Request;
 use Models\Session;
+use Models\Rep;
+use Models\Exercise;
 
 class Workouts
 {
@@ -24,12 +26,26 @@ class Workouts
         if (!$session->verify())
             return Response::send(Response::HTTP_401_UNAUTHORIZED);
 
+        foreach ($this->attributes['entries'] as $exerciseEntry)
+        {
+            $exercise = new Exercise($exerciseEntry);
+            if (!$exercise->save())
+                return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR, $exercise->getMessages());
+
+            foreach ($exerciseEntry['reps'] as $repEntry)
+            {
+                $rep = new Rep($repEntry);
+                if (!$rep->save())
+                    return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR, $rep->getMessages());
+            }
+        }
+
         $workout = new \Models\Workout(Request::data());
         if (!$workout->validate())
-            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workoutForm->getMessages());
+            return Response::send(Response::HTTP_422_UNPROCESSABLE_ENTITY, $workout->getMessages());
 
         if (!$workout->save($session->user))
-            return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR);
+            return Response::send(Response::HTTP_500_INTERNAL_SERVER_ERROR, $workout->getMessages());
 
         return Response::send(Response::HTTP_201_CREATED);
 
