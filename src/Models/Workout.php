@@ -8,15 +8,12 @@
 
 namespace Models;
 
+use \Database\Record;
 use \Database\Query;
 use \Utils\Date;
 
-class Workout
+class Workout extends Record
 {
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
-
     protected const WORKOUT_TABLE = 'workouts';
 
     public function __construct($attributes = [])

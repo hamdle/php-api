@@ -8,12 +8,10 @@
 
 namespace Models;
 
-class Exercise
-{
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
+use Database\Record;
 
+class Exercise extends Record
+{
     public const TABLE_NAME = 'exercises';
 
     public function __construct($attributes = [])

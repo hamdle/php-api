@@ -8,14 +8,11 @@
 
 namespace Models;
 
+use Database\Record;
 use Database\Query;
 
-class ExerciseType
+class ExerciseType extends Record
 {
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
-
     public const TABLE_NAME = 'exerciseTypes';
 
     public function __construct($attributes = [])

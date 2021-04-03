@@ -1,17 +1,37 @@
 <?php
 
 /*
- * Traits/AttributeActions.php: handle validation and filtering tasks
- *
- * validation = applying functions to an array of attributes
+ * Database/Record.php: Create dynamic attributes trait
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Traits;
+namespace Database;
 
-trait AttributeActions
+class Record
 {
+    use \Traits\Messages;
+
+    public $attributes = [];
+
+    public function __get($attr)
+    {
+        return $this->get($attr);
+    }
+
+    public function __set($attr, $value)
+    {
+        $this->attributes[$attr] = $value;
+    }
+
+    private function get($attr)
+    {
+        if (array_key_exists($attr, $this->attributes ?? []))
+            return $this->attributes[$attr];
+        else
+            return null;
+    }
+
     /*
      * Run attributes through the config validation functions.
      * @return bool - false if one or many validatons failed
@@ -59,5 +79,15 @@ trait AttributeActions
             if (array_key_exists($key, $this->attributes))
                 $this->attributes[$key] = $transform($this->attributes[$key]);
         }
+    }
+
+    public function config()
+    {
+        return [];
+    }
+
+    public function transforms()
+    {
+        return [];
     }
 }

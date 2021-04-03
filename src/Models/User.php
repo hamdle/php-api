@@ -8,14 +8,11 @@
 
 namespace Models;
 
+use \Database\Record;
 use \Database\Query;
 
-class User
+class User extends Record
 {
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
-
     private const USER_TABLE = 'users';
 
     public function __construct($attributes = [])

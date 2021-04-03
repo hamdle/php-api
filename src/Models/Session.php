@@ -10,14 +10,11 @@ namespace Models;
 
 use Http\Request;
 use Http\Response;
+use Database\Record;
 use Database\Query;
 
-class Session
+class Session extends Record
 {
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
-
     protected const SESSIONS_TABLE = 'sessions';
 
     const COOKIE_KEY = 'Session-Id';

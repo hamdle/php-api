@@ -8,12 +8,10 @@
 
 namespace Models;
 
-class Rep
-{
-    use \Traits\Attributes;
-    use \Traits\AttributeActions;
-    use \Traits\Messages;
+use Database\Record;
 
+class Rep extends Record
+{
     protected const REPS_TABLE = 'reps';
 
     public function validate()
