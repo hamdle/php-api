@@ -17,6 +17,11 @@ abstract class Record
     abstract public function config();
     abstract public function transforms();
 
+    public function __construct($attributes = [])
+    {
+        $this->attributes = $attributes;
+    }
+
     public function __get($attr)
     {
         return $this->get($attr);

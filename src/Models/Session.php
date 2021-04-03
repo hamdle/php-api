@@ -19,11 +19,6 @@ class Session extends Record
 
     const COOKIE_KEY = 'Session-Id';
 
-    public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
-
     /*
      * Attempt to load a session using the attributes assigned to this session.
      * @return bool - a message will be set if the session fails to load

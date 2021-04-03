@@ -16,11 +16,6 @@ class Workout extends Record
 {
     protected const WORKOUT_TABLE = 'workouts';
 
-    public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
-
     /*
      * Save a new workout.
      * @return int - ID of the inserted record

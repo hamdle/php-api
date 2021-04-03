@@ -15,11 +15,6 @@ class User extends Record
 {
     private const USER_TABLE = 'users';
 
-    public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
-
     /*
      * Load properties from database using attributes.
      * @return bool

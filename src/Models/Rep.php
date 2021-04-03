@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Models/Rep.php: One round of an exercise
+ * Models/Rep.php: a single round of an exercise
  *
  * Copyright (C) 2021 Eric Marty
  */
