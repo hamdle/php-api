@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Utils/Logger.php: print messages to the PHP's error log
+ * Utils/Log.php: print messages to the PHP's error log
  *
  * Copyright (C) 2021 Eric Marty
  */
 
 namespace Utils;
 
-class Logger {
+class Log {
     /*
      * Print message to error log.
      * @return null
