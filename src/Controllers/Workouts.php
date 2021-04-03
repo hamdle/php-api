@@ -27,38 +27,14 @@ class Workouts
         if (!$session->verify())
             return Response::send(\Http\Code::UNAUTHORIZED_401);
 
-        $models = $this->buildWorkout($session);
-        if (gettype($models) == 'Response')
-            return $models;
-
-        foreach ($models as $model)
-        {
-            if (!$model->save())
-                return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
-        }
-
-        return Response::send(\Http\Code::CREATED_201);
-    }
-
-    /*
-     * Create Models from the request data and validate them while we're
-     * looping through everything. Return all the models that pass.
-     * @param $session - a verifed user session
-     * @return an array of Models or a Response
-     */
-    function buildWorkout($session)
-    {
-        $validModels = [];
-
         $workout = new Workout(Request::complexData());
         $workout->user_id = $session->user->id;
 
         if (!$workout->validate())
             return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $workout->getMessages());
 
-        $validModels[] = $workout;
-
-        return $validModels;
+        if (!$workout->save())
+            return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
 
         foreach ($workout->entries ?? [] as $exerciseEntry)
         {
@@ -69,7 +45,8 @@ class Workouts
             if (!$exercise->validate())
                 return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $exercise->getMessages());
 
-            $validModels[] = $exercise;
+            if (!$exercise->save())
+                return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
 
             foreach ($exerciseEntry['reps'] ?? [] as $repEntry)
             {
@@ -79,9 +56,11 @@ class Workouts
                 if (!$rep->validate())
                     return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $rep->getMessages());
 
-                $validModels[] = $rep;
+                if (!$rep->save())
+                    return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
             }
         }
 
+        return Response::send(\Http\Code::CREATED_201);
     }
 }
