@@ -14,11 +14,6 @@ class Exercise extends Record
 {
     public const TABLE_NAME = 'exercises';
 
-    public function __construct($attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
-
     public function save()
     {
         return true;
