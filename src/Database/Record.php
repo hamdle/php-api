@@ -36,6 +36,21 @@ abstract class Record
     }
 
     /*
+     * Run the validation and return error messages.
+     * @return bool - false if one or many validatons failed
+     */
+    public function validate()
+    {
+        if (($results = $this->validation($this->config())) !== true)
+        {
+            $this->messages[] = $results;
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
      * Run attributes through the config validation functions.
      * @return bool - false if one or many validatons failed
      */

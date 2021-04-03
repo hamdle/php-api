@@ -24,17 +24,6 @@ class Exercise extends Record
         return true;
     }
 
-    public function validate()
-    {
-        if (($results = $this->validation($this->config())) !== true)
-        {
-            $this->messages[] = $results;
-            return false;
-        }
-
-        return true;
-    }
-
     public function config()
     {
         return [
