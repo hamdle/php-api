@@ -18,16 +18,8 @@ class Session
     use \Traits\AttributeActions;
     use \Traits\Messages;
 
-    /*
-     * The Session attributes defined in the database are:
-     *
-     * id
-     * user_id
-     * key
-     * value
-     */
-
     protected const SESSIONS_TABLE = 'sessions';
+
     const COOKIE_KEY = 'Session-Id';
 
     public function __construct($attributes = [])

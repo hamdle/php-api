@@ -14,17 +14,6 @@ class Exercise
     use \Traits\AttributeActions;
     use \Traits\Messages;
 
-    /*
-     * The Exercise attributes defined in the database are:
-     *
-     * id
-     * exercises_id
-     * workout_id
-     * user_id
-     * sets
-     * feedback
-     */
-
     public const TABLE_NAME = 'exercises';
 
     public function __construct($attributes = [])

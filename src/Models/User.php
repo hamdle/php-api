@@ -16,14 +16,6 @@ class User
     use \Traits\AttributeActions;
     use \Traits\Messages;
 
-    /*
-     * The User attributes defined in the database are:
-     *
-     * id
-     * email
-     * password
-     */
-
     private const USER_TABLE = 'users';
 
     public function __construct($attributes = [])
@@ -131,13 +123,5 @@ class User
                 return empty($entry) ? null : md5($entry);
             },
         ];
-    }
-
-    public static function __callStatic($method, $args)
-    {
-        $call = $args[0] ?? null;
-        array_shift($args);
-        if ($method == 'call' && $call)
-            return (new User())->$call(...$args);
     }
 }
