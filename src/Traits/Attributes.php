@@ -10,7 +10,7 @@ namespace Traits;
 
 trait Attributes
 {
-    protected $attributes = [];
+    public $attributes = [];
 
     public function __get($attr)
     {

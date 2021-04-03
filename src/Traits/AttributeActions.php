@@ -18,6 +18,7 @@ trait AttributeActions
      */
     public function validation($config)
     {
+        // Can this function call $this->config() directly? TODO
         if (!isset($this->attributes))
             return false;
 
@@ -38,14 +39,12 @@ trait AttributeActions
      * Filter out attributes that are not in the config.
      * @return void
      */
-    public function filter($config)
+    public function filter()
     {
         foreach ($this->attributes as $key => $attribute)
         {
-            if (!array_key_exists($key, $config))
-            {
-                unset($this->attributes);
-            }
+            if (!array_key_exists($key, $this->config()))
+                unset($this->attributes[$key]);
         }
     }
 

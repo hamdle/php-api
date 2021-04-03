@@ -41,16 +41,16 @@ class Session
      */
     public function load()
     {
-        $this->filter($this->config());
+        $this->filter();
         $this->transform($this->transforms());
 
-        $results = Query::select(self::SESSIONS_TABLE, "*", $this->attributes);
+        $records = Query::select(self::SESSIONS_TABLE, "*", $this->attributes);
 
-        if (array_key_exists(0, $results))
+        if (array_key_exists(0, $records))
         {
-            foreach ($results[0] as $key => $value)
+            foreach ($records[0] as $field => $value)
             {
-                $this->attributes[$key] = $value;
+                $this->attributes[$field] = $value;
             }
         }
         else

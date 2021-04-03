@@ -8,7 +8,8 @@
 
 namespace Models;
 
-use Database\Query;
+use \Database\Query;
+use \Utils\Date;
 
 class Workout
 {
@@ -36,18 +37,19 @@ class Workout
 
     /*
      * Save a new workout.
-     * @param $user - this user should be verified already. The best place to
-     * get a verified user is directly from a session that has been verified().
-     * @return bool - true, able to build and save the workout to the database
+     * @return int - ID of the inserted record
      */
-    public function save($user)
+    public function save()
     {
         $this->filter($this->config());
 
-        Query::insert(
+        // Add workout query parts here TODO
+        /*
+        $results = Query::insert(
             self::WORKOUT_TABLE,
             ["user_id", "token"],
-            [$user->id, $this->token]);
+            [$this->user_id, $this->token]);
+         */
 
         return true;
     }
@@ -66,6 +68,9 @@ class Workout
     public function config()
     {
         return [
+            'user_id' => function ($entry) {
+                return is_numeric($entry);
+            },
             'start' => function ($entry) {
                 return is_numeric($entry);
             },
@@ -77,6 +82,27 @@ class Workout
             },
             'feel' => function ($entry) {
                 return true;
+            },
+        ];
+    }
+
+    public function transforms()
+    {
+        return [
+            'user_id' => function ($entry) {
+                return (int) $entry;
+            },
+            'start' => function ($entry) {
+                return Date::timestampToDatetime($entry);
+            },
+            'end' => function ($entry) {
+                return Date::timestampToDatetime($entry);
+            },
+            'notes' => function ($entry) {
+                return $entry;
+            },
+            'feel' => function ($entry) {
+                return empty($entry) ? 'average' : $entry;
             },
         ];
     }

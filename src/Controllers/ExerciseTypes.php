@@ -19,6 +19,6 @@ class ExerciseTypes
      */
     public function getAllExercises()
     {
-        return Response::send(\Http\Code::HTTP_200_OK, (new ExerciseType())->all());
+        return Response::send(\Http\Code::OK_200, (new ExerciseType())->all());
     }
 }

@@ -51,7 +51,7 @@ class Request
      * Get file upload data.
      * @return mixed
      */
-    public static function data()
+    public static function complexData()
     {
         return json_decode(file_get_contents('php://input'), true);
     }

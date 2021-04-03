@@ -11,6 +11,8 @@ namespace Models;
 class Rep
 {
     use \Traits\Attributes;
+    use \Traits\AttributeActions;
+    use \Traits\Messages;
 
     /*
      * The Rep attributes defined in the database are:
@@ -22,4 +24,13 @@ class Rep
 
     protected const REPS_TABLE = 'reps';
 
+    public function validate()
+    {
+        return true;
+    }
+
+    public function save()
+    {
+        return true;
+    }
 }

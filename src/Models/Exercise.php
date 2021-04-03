@@ -34,6 +34,7 @@ class Exercise
 
     public function save()
     {
+        return true;
     }
 
     public function validate()
@@ -61,6 +62,27 @@ class Exercise
             },
             'sets' => function ($entry) {
                 return is_numeric($entry);
+            },
+            'feedback' => function ($entry) {
+                return true;
+            },
+        ];
+    }
+
+    public function transforms()
+    {
+        return [
+            'exercises_id' => function ($entry) {
+                return (int) $entry;
+            },
+            'workout_id' => function ($entry) {
+                return (int) $entry;
+            },
+            'user_id' => function ($entry) {
+                return (int) $entry;
+            },
+            'sets' => function ($entry) {
+                return (int) $entry;
             },
             'feedback' => function ($entry) {
                 return trim($entry);
