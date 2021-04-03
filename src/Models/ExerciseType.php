@@ -24,4 +24,14 @@ class ExerciseType extends Record
     {
         return Query::select(self::TABLE_NAME, "*");
     }
+
+    public function config()
+    {
+        return [];
+    }
+
+    public function transforms()
+    {
+        return [];
+    }
 }

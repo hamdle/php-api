@@ -23,4 +23,14 @@ class Rep extends Record
     {
         return true;
     }
+
+    public function config()
+    {
+        return [];
+    }
+
+    public function transforms()
+    {
+        return [];
+    }
 }

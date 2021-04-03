@@ -1,18 +1,21 @@
 <?php
 
 /*
- * Database/Record.php: Create dynamic attributes trait
+ * Database/Record.php: a record from the database
  *
  * Copyright (C) 2021 Eric Marty
  */
 
 namespace Database;
 
-class Record
+abstract class Record
 {
     use \Traits\Messages;
 
     public $attributes = [];
+
+    abstract public function config();
+    abstract public function transforms();
 
     public function __get($attr)
     {
@@ -79,15 +82,5 @@ class Record
             if (array_key_exists($key, $this->attributes))
                 $this->attributes[$key] = $transform($this->attributes[$key]);
         }
-    }
-
-    public function config()
-    {
-        return [];
-    }
-
-    public function transforms()
-    {
-        return [];
     }
 }
