@@ -23,7 +23,7 @@ class Session extends Record
     }
 
     /*
-     * Attempt to load a session using the attributes assigned to this session.
+     * Attempt to load a session using the fields assigned to this session.
      * @return bool - a message will be set if the session fails to load
      */
     public function load()
@@ -31,13 +31,13 @@ class Session extends Record
         $this->filter();
         $this->transform($this->transforms());
 
-        $records = Query::select($this->table(), "*", $this->attributes);
+        $records = Query::select($this->table(), "*", $this->fields);
 
         if (array_key_exists(0, $records))
         {
             foreach ($records[0] as $field => $value)
             {
-                $this->attributes[$field] = $value;
+                $this->fields[$field] = $value;
             }
         }
         else
@@ -86,7 +86,7 @@ class Session extends Record
     /*
      * Verify that a cookie sent from the client is valid. If the cookie is
      * valid, the verified user (of type \Models\User) will be added to the
-     * session's attributes.
+     * session's fields.
      * @return bool
      */
     public function verify()

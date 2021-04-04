@@ -19,7 +19,7 @@ class User extends Record
     }
 
     /*
-     * Load properties from database using attributes.
+     * Load properties from database using fields.
      * @return bool
      */
     public function load()
@@ -27,15 +27,15 @@ class User extends Record
         $this->filter();
         $this->transform($this->transforms());
 
-        $results = Query::select($this->table(), "*", $this->attributes);
+        $results = Query::select($this->table(), "*", $this->fields);
 
         // If this select failes it may cause errors TODO
         if (array_key_exists(0, $results))
         {
-            // Add to attributes
+            // Add to fields
             foreach ($results[0] as $key => $value)
             {
-                $this->attributes[$key] = $value;
+                $this->fields[$key] = $value;
             }
         }
         else

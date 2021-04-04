@@ -12,31 +12,31 @@ abstract class Record
 {
     use \Traits\Messages;
 
-    public $attributes = [];
+    public $fields = [];
 
     abstract public function table();
     abstract public function config();
     abstract public function transforms();
 
-    public function __construct($attributes = [])
+    public function __construct($fields = [])
     {
-        $this->attributes = $attributes;
+        $this->fields = $fields;
     }
 
-    public function __get($attr)
+    public function __get($field)
     {
-        return $this->get($attr);
+        return $this->get($field);
     }
 
-    public function __set($attr, $value)
+    public function __set($field, $value)
     {
-        $this->attributes[$attr] = $value;
+        $this->fields[$field] = $value;
     }
 
-    private function get($attr)
+    private function get($field)
     {
-        if (array_key_exists($attr, $this->attributes ?? []))
-            return $this->attributes[$attr];
+        if (array_key_exists($field, $this->fields ?? []))
+            return $this->fields[$field];
         else
             return null;
     }
@@ -52,8 +52,8 @@ abstract class Record
 
         $results = Query::insert(
             $this->table(),
-            array_keys($this->attributes),
-            array_values($this->attributes));
+            array_keys($this->fields),
+            array_values($this->fields));
 
         return true;
     }
@@ -74,21 +74,21 @@ abstract class Record
     }
 
     /*
-     * Run attributes through the config validation functions.
+     * Run fields through the config validation functions.
      * @return bool - false if one or many validatons failed
      */
     public function validation($config)
     {
         // Can this function call $this->config() directly? TODO
-        if (!isset($this->attributes))
+        if (!isset($this->fields))
             return false;
 
         $messages = [];
         foreach ($config as $key => $validator)
         {
-            if (array_key_exists($key, $this->attributes))
+            if (array_key_exists($key, $this->fields))
             {
-                if (($validationResponse = $validator($this->attributes[$key])) !== true)
+                if (($validationResponse = $validator($this->fields[$key])) !== true)
                     $messages[$key] = $validationResponse;
             }
         }
@@ -97,28 +97,29 @@ abstract class Record
     }
 
     /*
-     * Filter out attributes that are not in the config.
+     * Filter out fields that are not in the config.
      * @return void
      */
     public function filter()
     {
-        foreach ($this->attributes as $key => $attribute)
+        foreach ($this->fields as $key => $field)
         {
             if (!array_key_exists($key, $this->config()))
-                unset($this->attributes[$key]);
+                unset($this->fields[$key]);
         }
     }
 
     /*
-     * Run attributes through input transforms.
+     * Run fields through input transforms.
      * @return void
      */
     public function transform($transforms)
     {
+        // use $this->transforms() now that it is required TODO
         foreach ($transforms as $key => $transform)
         {
-            if (array_key_exists($key, $this->attributes))
-                $this->attributes[$key] = $transform($this->attributes[$key]);
+            if (array_key_exists($key, $this->fields))
+                $this->fields[$key] = $transform($this->fields[$key]);
         }
     }
 }

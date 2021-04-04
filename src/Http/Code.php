@@ -14,6 +14,7 @@ class Code
      * Http status codes.
      * @vars numeric
      */
+    // convert these to the new versions below TODO
     const HTTP_200_OK = 200;
     const HTTP_201_CREATED = 201;
     const HTTP_204_DELETED = 204;
