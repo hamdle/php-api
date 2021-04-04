@@ -43,19 +43,19 @@ abstract class Record
 
     /*
      * Save this record.
-     * @return int - ID of the inserted record
+     * @return numeric ID of the inserted record or false
      */
     public function save()
     {
         $this->filter();
         $this->transform($this->transforms());
 
-        $results = Query::insert(
+        $id = Query::insert(
             $this->table(),
             array_keys($this->fields),
             array_values($this->fields));
 
-        return true;
+        return is_numeric($id);
     }
 
     /*
