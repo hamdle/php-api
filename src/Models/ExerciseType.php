@@ -13,11 +13,14 @@ use Database\Query;
 
 class ExerciseType extends Record
 {
-    public const TABLE_NAME = 'exerciseTypes';
+    public function table()
+    {
+        return 'exerciseTypes';
+    }
 
     public function all()
     {
-        return Query::select(self::TABLE_NAME, "*");
+        return Query::select($this->table(), "*");
     }
 
     public function config()

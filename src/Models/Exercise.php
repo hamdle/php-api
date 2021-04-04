@@ -12,11 +12,9 @@ use Database\Record;
 
 class Exercise extends Record
 {
-    public const TABLE_NAME = 'exercises';
-
-    public function save()
+    public function table()
     {
-        return true;
+        return 'exercises';
     }
 
     public function config()

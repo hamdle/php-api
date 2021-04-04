@@ -14,6 +14,7 @@ abstract class Record
 
     public $attributes = [];
 
+    abstract public function table();
     abstract public function config();
     abstract public function transforms();
 
@@ -38,6 +39,23 @@ abstract class Record
             return $this->attributes[$attr];
         else
             return null;
+    }
+
+    /*
+     * Save this record.
+     * @return int - ID of the inserted record
+     */
+    public function save()
+    {
+        $this->filter();
+        $this->transform($this->transforms());
+
+        $results = Query::insert(
+            $this->table(),
+            array_keys($this->attributes),
+            array_values($this->attributes));
+
+        return true;
     }
 
     /*

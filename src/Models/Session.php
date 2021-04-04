@@ -15,9 +15,12 @@ use Database\Query;
 
 class Session extends Record
 {
-    protected const SESSIONS_TABLE = 'sessions';
-
     const COOKIE_KEY = 'Session-Id';
+
+    public function table()
+    {
+        return 'sessions';
+    }
 
     /*
      * Attempt to load a session using the attributes assigned to this session.
@@ -28,7 +31,7 @@ class Session extends Record
         $this->filter();
         $this->transform($this->transforms());
 
-        $records = Query::select(self::SESSIONS_TABLE, "*", $this->attributes);
+        $records = Query::select($this->table(), "*", $this->attributes);
 
         if (array_key_exists(0, $records))
         {
@@ -47,22 +50,11 @@ class Session extends Record
     }
 
     /*
-     * Save this token to the database.
-     */
-    public function save()
-    {
-        Query::insert(
-            self::SESSIONS_TABLE,
-            ["user_id", "token"],
-            [$this->user_id, $this->token]);
-    }
-
-    /*
      * Delete this token to the database.
      */
     public function delete()
     {
-        Query::delete(self::SESSIONS_TABLE, ['id' => $this->id]);
+        Query::delete($this->table(), ['id' => $this->id]);
     }
 
     /*

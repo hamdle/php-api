@@ -13,7 +13,10 @@ use \Database\Query;
 
 class User extends Record
 {
-    private const USER_TABLE = 'users';
+    public function table()
+    {
+        return 'users';
+    }
 
     /*
      * Load properties from database using attributes.
@@ -21,10 +24,10 @@ class User extends Record
      */
     public function load()
     {
-        $this->filter($this->config());
+        $this->filter();
         $this->transform($this->transforms());
 
-        $results = Query::select(self::USER_TABLE, "*", $this->attributes);
+        $results = Query::select($this->table(), "*", $this->attributes);
 
         // If this select failes it may cause errors TODO
         if (array_key_exists(0, $results))

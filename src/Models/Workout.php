@@ -14,25 +14,9 @@ use \Utils\Date;
 
 class Workout extends Record
 {
-    protected const WORKOUT_TABLE = 'workouts';
-
-    /*
-     * Save a new workout.
-     * @return int - ID of the inserted record
-     */
-    public function save()
+    public function table()
     {
-        $this->filter($this->config());
-
-        // Add workout query parts here TODO
-        /*
-        $results = Query::insert(
-            self::WORKOUT_TABLE,
-            ["user_id", "token"],
-            [$this->user_id, $this->token]);
-         */
-
-        return true;
+        return 'workouts';
     }
 
     public function config()

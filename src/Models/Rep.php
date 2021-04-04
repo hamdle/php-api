@@ -12,16 +12,9 @@ use Database\Record;
 
 class Rep extends Record
 {
-    protected const REPS_TABLE = 'reps';
-
-    public function validate()
+    public function table()
     {
-        return true;
-    }
-
-    public function save()
-    {
-        return true;
+        return 'reps';
     }
 
     public function config()
