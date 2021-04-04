@@ -118,9 +118,9 @@ Add a new workout that a user has completed.
     'end': null,
     'notes': null,
     'feel': null,
-    'entries': [
+    'exercises': [
         {
-            'exercises_id': null,
+            'exercise_type_id': null,
             'sets': null,
             'reps': [
                 {
@@ -133,7 +133,7 @@ Add a new workout that a user has completed.
             'feedback': null
         },
         {
-            'exercises_id': null,
+            'exercise_type_id': null,
             'sets': null,
             'reps': [
                 {
