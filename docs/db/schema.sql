@@ -21,8 +21,8 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 /* This table contains exercise definitions. */
-DROP TABLE IF EXISTS `exerciseTypes`;
-CREATE TABLE `exerciseTypes` (
+DROP TABLE IF EXISTS `exercise_types`;
+CREATE TABLE `exercise_types` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(128),
     `default_sets` INT(1) unsigned DEFAULT 0,
@@ -48,7 +48,7 @@ CREATE TABLE `workouts` (
 DROP TABLE IF EXISTS `exercises`;
 CREATE TABLE `exercises` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-    `exerciseType_id` int(10) unsigned NOT NULL,
+    `exercise_type_id` int(10) unsigned NOT NULL,
     `workout_id` int(10) unsigned NOT NULL,
     `user_id` int(10) unsigned NOT NULL,
     `sets` int(1) unsigned DEFAULT 0,

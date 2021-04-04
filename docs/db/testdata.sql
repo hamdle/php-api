@@ -8,43 +8,43 @@ insert into users (email, password) values ('user1@localhost.co', md5('testpass'
 */
 
 /* exercises */
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Warm Up', 1, 1, 0, 'warm');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Pull Ups', 2, 5, 60, 'pull');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Chin Up', 2, 5, 60, 'pull');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Dips', 3, 5, 60, 'push');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Push Ups', 3, 5, 60, 'push');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Leg Raises', 3, 5, 60, 'core');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Cobras', 3, 40, 30, 'core');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Pistol Squats', 4, 5, 60, 'legs');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Inverted Rows', 4, 5, 60, 'core');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Lunges', 4, 5, 60, 'legs');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Plyo Burpees', 4, 5, 60, 'legs');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Planks', 3, 5, 60, 'core');
-insert into exerciseTypes
+insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Hollow Body', 3, 5, 60, 'core');
 
