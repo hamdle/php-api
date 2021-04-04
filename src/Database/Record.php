@@ -48,7 +48,7 @@ abstract class Record
     public function save()
     {
         $this->filter();
-        $this->transform($this->transforms());
+        $this->transform();
 
         $id = Query::insert(
             $this->table(),
@@ -113,10 +113,9 @@ abstract class Record
      * Run fields through input transforms.
      * @return void
      */
-    public function transform($transforms)
+    public function transform()
     {
-        // use $this->transforms() now that it is required TODO
-        foreach ($transforms as $key => $transform)
+        foreach ($this->transforms() as $key => $transform)
         {
             if (array_key_exists($key, $this->fields))
                 $this->fields[$key] = $transform($this->fields[$key]);
