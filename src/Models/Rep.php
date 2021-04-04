@@ -19,11 +19,25 @@ class Rep extends Record
 
     public function config()
     {
-        return [];
+        return [
+            'exercise_id' => function ($entry) {
+                return is_numeric($entry);
+            },
+            'amount' => function ($entry) {
+                return is_numeric($entry);
+            }
+        ];
     }
 
     public function transforms()
     {
-        return [];
+        return [
+            'exercise_id' => function ($entry) {
+                return (int) $entry;
+            },
+            'amount' => function ($entry) {
+                return (int) $entry;
+            }
+        ];
     }
 }
