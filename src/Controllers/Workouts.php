@@ -36,11 +36,15 @@ class Workouts
         if (!$workout->save())
             return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
 
-        foreach ($workout->entries ?? [] as $exerciseEntry)
+        foreach (Request::complexData()['exercises'] ?? [] as $exerciseEntry)
         {
             $exercise = new Exercise($exerciseEntry);
             $exercise->workout_id = $workout->id;
             $exercise->user_id = $session->user->id;
+            // Saving the exercise will unset `reps` since it's not a field in
+            // the `exercises` table. So we need to get the reps from this
+            // exercise before saving it.
+            $reps = $exerciseEntry['reps'] ?? [];
 
             if (!$exercise->validate())
                 return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $exercise->getMessages());
@@ -48,7 +52,7 @@ class Workouts
             if (!$exercise->save())
                 return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
 
-            foreach ($exerciseEntry['reps'] ?? [] as $repEntry)
+            foreach ($reps as $repEntry)
             {
                 $rep = new Rep($repEntry);
                 $rep->exercise_id = $exercise->id;

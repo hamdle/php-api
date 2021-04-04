@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Models/ExerciseType.php: handle exerciseType data requests
+ * Models/ExerciseType.php: handle exercise type data requests
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -15,7 +15,7 @@ class ExerciseType extends Record
 {
     public function table()
     {
-        return 'exerciseTypes';
+        return 'exercise_types';
     }
 
     public function all()

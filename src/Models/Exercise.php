@@ -20,7 +20,7 @@ class Exercise extends Record
     public function config()
     {
         return [
-            'exerciseType_id' => function ($entry) {
+            'exercise_type_id' => function ($entry) {
                 return is_numeric($entry);
             },
             'workout_id' => function ($entry) {
@@ -41,7 +41,7 @@ class Exercise extends Record
     public function transforms()
     {
         return [
-            'exerciseType_id' => function ($entry) {
+            'exercise_type_id' => function ($entry) {
                 return (int) $entry;
             },
             'workout_id' => function ($entry) {
@@ -54,7 +54,11 @@ class Exercise extends Record
                 return (int) $entry;
             },
             'feedback' => function ($entry) {
-                return trim($entry);
+                // A query function to get a list of enum values for a field
+                // would be nice TODO
+                return in_array(trim($entry), ['up', 'down', 'none'])
+                        ? trim($entry)
+                        : 'none';
             },
         ];
     }
