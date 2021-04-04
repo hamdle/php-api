@@ -48,7 +48,7 @@ CREATE TABLE `workouts` (
 DROP TABLE IF EXISTS `exercises`;
 CREATE TABLE `exercises` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-    `exercises_id` int(10) unsigned NOT NULL,
+    `exerciseType_id` int(10) unsigned NOT NULL,
     `workout_id` int(10) unsigned NOT NULL,
     `user_id` int(10) unsigned NOT NULL,
     `sets` int(1) unsigned DEFAULT 0,
@@ -59,7 +59,7 @@ CREATE TABLE `exercises` (
 DROP TABLE IF EXISTS `reps`;
 CREATE TABLE `reps` (
     `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-    `entries_id` int(10) unsigned NOT NULL,
+    `exercise_id` int(10) unsigned NOT NULL,
     `amount` varchar(8),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
