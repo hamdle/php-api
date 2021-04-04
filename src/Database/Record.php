@@ -43,7 +43,7 @@ abstract class Record
 
     /*
      * Save this record.
-     * @return numeric ID of the inserted record or false
+     * @return numeric ID of the inserted record or null
      */
     public function save()
     {
@@ -55,7 +55,7 @@ abstract class Record
             array_keys($this->fields),
             array_values($this->fields));
 
-        return is_numeric($id);
+        return $this->id = (is_numeric($id) ? $id : null);
     }
 
     /*
