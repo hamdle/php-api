@@ -100,10 +100,10 @@ No extra data needed.
 
 Success code: 200
 
-Body: string with version number
+Body: the current version of the API 
 
 ```
-"1.0"
+{'version': "1.0"}
 ```
 
 ### POST /workouts/new

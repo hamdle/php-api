@@ -12,7 +12,7 @@ use Http\Api;
 use Http\Response;
 
 Api::get('version', function() {
-    return Response::send(\Http\Code::OK_200, $_ENV['VERSION']);
+    return Response::send(\Http\Code::OK_200, ["version" => $_ENV['VERSION']]);
 });
 Api::get('auth', ['\Controllers\Authentication', 'authenticateUser']);
 Api::get('exercises', ['\Controllers\ExerciseTypes', 'getAllExercises']);
