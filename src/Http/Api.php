@@ -45,14 +45,14 @@ class Api
         $controller = Router::requestToController(self::$api);
 
         if (is_callable($controller))
-            return call_user_func($controller);
+            return $controller();
 
         if (is_array($controller) &&
             count($controller) == 2 &&
             ($invokedController = [new $controller[0](), $controller[1]]) &&
             is_callable($invokedController))
         {
-            return call_user_func($invokedController);
+            return $invokedController();
         }
 
         return Response::sendDefault();
