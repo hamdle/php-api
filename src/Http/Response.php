@@ -77,6 +77,6 @@ class Response
      */
     public static function sendDefault()
     {
-        return self::send(\Http\Code::NOT_FOUND_404, "Not found");
+        return self::send(\Http\Code::NOT_FOUND_404);
     }
 }
