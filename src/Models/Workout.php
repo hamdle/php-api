@@ -9,7 +9,6 @@
 namespace Models;
 
 use \Database\Record;
-use \Database\Query;
 use \Utils\Date;
 
 class Workout extends Record

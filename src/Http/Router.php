@@ -1,8 +1,7 @@
 <?php
 
 /*
- * Http/Router.php: match endpoints with the request's
- * uri path
+ * Http/Router.php: match endpoints with the request's uri path
  *
  * Copyright (C) 2021 Eric Marty
  */

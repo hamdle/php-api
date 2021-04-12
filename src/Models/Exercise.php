@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Modules/Exercise.php: handle exercise data requests
+ * Models/Exercise.php: handle exercise data requests
  *
  * Copyright (C) 2021 Eric Marty
  */
