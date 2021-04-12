@@ -14,6 +14,7 @@ use Models\Session;
 use Models\Workout;
 use Models\Rep;
 use Models\Exercise;
+use Models\ExerciseType;
 
 class Workouts
 {
@@ -21,7 +22,7 @@ class Workouts
      * Handle request to save a workout.
      * @return \Http\Response
      */
-    public function saveWorkout()
+    public function save()
     {
         $session = new Session();
         if (!$session->verify())
@@ -66,5 +67,14 @@ class Workouts
         }
 
         return Response::send(\Http\Code::CREATED_201);
+    }
+
+    /*
+     * Handle request to get a list of all available exercie types.
+     * @return \Http\Response
+     */
+    public function exerciseTypes()
+    {
+        return Response::send(\Http\Code::OK_200, (new ExerciseType())->all());
     }
 }

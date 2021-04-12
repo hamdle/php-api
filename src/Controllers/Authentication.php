@@ -35,7 +35,7 @@ class Authentication {
      * authentication cookie automatically.
      * @return \Http\Response
      */
-    public function authenticateUser()
+    public function verifySession()
     {
         if (!(new Session())->verify())
             return Response::send(\Http\Code::UNAUTHORIZED_401);

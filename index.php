@@ -14,9 +14,9 @@ use Http\Response;
 Api::get('version', function() {
     return Response::send(\Http\Code::OK_200, ["version" => $_ENV['VERSION']]);
 });
-Api::get('auth', ['\Controllers\Authentication', 'authenticateUser']);
-Api::get('exercises', ['\Controllers\ExerciseTypes', 'getAllExercises']);
+Api::get('auth', ['\Controllers\Authentication', 'verifySession']);
+Api::get('exercises', ['\Controllers\Workouts', 'exerciseTypes']);
 Api::post('login', ['\Controllers\Authentication', 'login']);
-Api::post('workouts/new', ['\Controllers\Workouts', 'saveWorkout']);
+Api::post('workouts/new', ['\Controllers\Workouts', 'save']);
 
 Api::respond();
