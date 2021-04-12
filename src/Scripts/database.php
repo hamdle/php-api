@@ -77,6 +77,6 @@ function Help()
     echo "schema\t\t- Reload database schema\n";
     echo "data\t\t- Reimport database test data\n";
     echo "reload\t\t- Reload schema and reimport test data\n";
-    echo "export\t\t- Export data\n";
+    echo "export\t\t- Export data here\n";
     echo "\nUsage: php database.php reload\n";
 }

@@ -16,9 +16,6 @@ insert into exercise_types
 ('Pull Ups', 2, 5, 60, 'pull');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
-('Chin Up', 2, 5, 60, 'pull');
-insert into exercise_types
-(title, default_sets, default_reps, wait_time, category) values 
 ('Dips', 3, 5, 60, 'push');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
@@ -28,106 +25,82 @@ insert into exercise_types
 ('Leg Raises', 3, 5, 60, 'core');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
+('Lunges', 4, 5, 60, 'legs');
+insert into exercise_types
+(title, default_sets, default_reps, wait_time, category) values 
 ('Cobras', 3, 40, 30, 'core');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
-('Pistol Squats', 4, 5, 60, 'legs');
+('Planks', 3, 5, 60, 'core');
+/*
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
 ('Inverted Rows', 4, 5, 60, 'core');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
-('Lunges', 4, 5, 60, 'legs');
-insert into exercise_types
-(title, default_sets, default_reps, wait_time, category) values 
 ('Plyo Burpees', 4, 5, 60, 'legs');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
-('Planks', 3, 5, 60, 'core');
+('Hollow Body', 3, 5, 60, 'core');
 insert into exercise_types
 (title, default_sets, default_reps, wait_time, category) values 
-('Hollow Body', 3, 5, 60, 'core');
-
-/* entries */
-/*
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(3, 3, 2, 3, 6, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(1, 3, 2, 3, 6, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(2, 3, 2, 2, 7, 'up');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(4, 3, 2, 2, 5, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(0, 0, 2, 3, 6, 'down');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(2, 0, 2, 4, 5, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(3, 0, 2, 3, 8, 'up');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(0, 0, 0, 3, 6, 'down');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(2, 0, 0, 4, 5, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(3, 0, 0, 3, 8, 'up');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(0, 0, 1, 3, 10, 'down');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(2, 0, 1, 3, 5, 'none');
-insert into entries 
-(exercises_id, workout_id, user_id, sets, reps, feedback) values 
-(1, 0, 1, 3, 12, 'up');
+('Chin Up', 2, 5, 60, 'pull');
+insert into exercise_types
+(title, default_sets, default_reps, wait_time, category) values 
+('Pistol Squats', 4, 5, 60, 'legs');
 */
 
 /* workouts */
-/*
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(2, '2019-01-01 00:00:00', '2019-01-01 00:34:00', 'Com Truise - Persuasion System', 'average');
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(2, '2019-02-11 01:00:00', '2019-02-11 01:36:02', 'Hammerhedd - Essence of Iron', 'average');
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(0, '2019-03-01 12:40:40', '2019-01-01 13:22:03', 'Cate le Bon - Crab Day', 'average');
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(3, '2019-09-09 21:04:44', '2019-09-09 21:34:55', 'Spotify new releases playlist', 'weak');
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(2, '2019-02-14 15:00:00', '2019-02-14 15:34:00', 'Danny Brown uknowwhatimsayin 9/10', 'strong');
-insert into workouts 
-(user_id, start, end, notes, feel) values 
-(3, '2019-11-16 22:13:04', '2019-11-16 22:55:40', '', 'strong');
-*/
+INSERT INTO `workouts` VALUES 
+(1,1,'2021-02-24 21:11:04','2021-02-24 21:55:40','','strong');
+INSERT INTO `exercises` VALUES 
+(1,1,1,1,1,'none'),
+(2,2,1,1,2,'none'),
+(3,4,1,1,3,'none'),
+(4,6,1,1,2,'none'),
+(5,7,1,1,3,'none');
+INSERT INTO `reps` VALUES 
+(1,1,'1'),
+(2,2,'5'),
+(3,2,'5'),
+(4,3,'6'),
+(5,3,'6'),
+(6,3,'6'),
+(7,4,'10'),
+(8,4,'10'),
+(9,5,'30'),
+(10,5,'30'),
+(11,5,'30');
 
-/* reps */
+INSERT INTO `workouts` VALUES 
+(2,1,'2021-03-01 18:27:21','2021-03-01 18:55:01','Com Truise - Persuasion System','average');
+INSERT INTO `exercises` VALUES 
+(6,1,1,1,1,'none'),
+(7,2,1,1,2,'none'),
+(8,4,1,1,3,'none'),
+(9,6,1,1,2,'none'),
+(10,7,1,1,3,'none');
+INSERT INTO `reps` VALUES 
+(12,1,'1'),
+(13,2,'5'),
+(14,2,'5'),
+(15,3,'6'),
+(16,3,'6'),
+(17,3,'6'),
+(18,4,'10'),
+(19,4,'10'),
+(20,5,'30'),
+(21,5,'30'),
+(22,5,'30');
+
 /*
-insert into reps (entries_id, amount) values (1, '6');
-insert into reps (entries_id, amount) values (1, '4+2');
-insert into reps (entries_id, amount) values (1, '6');
-insert into reps (entries_id, amount) values (2, '5');
-insert into reps (entries_id, amount) values (2, '5');
-insert into reps (entries_id, amount) values (3, '7+1');
-insert into reps (entries_id, amount) values (3, '7');
-insert into reps (entries_id, amount) values (4, '6');
-insert into reps (entries_id, amount) values (4, '6');
-insert into reps (entries_id, amount) values (4, '6');
-insert into reps (entries_id, amount) values (6, '11');
-insert into reps (entries_id, amount) values (6, '11');
-insert into reps (entries_id, amount) values (6, '12');
-insert into reps (entries_id, amount) values (7, '10+2');
-insert into reps (entries_id, amount) values (7, '10');
+(1, '2021-03-04 14:42:11', '2019-02-11 01:36:02', 'Hammerhedd - Essence of Iron', 'average');
+(1, '2021-03-08 12:40:40', '2019-01-01 13:22:03', 'Cate le Bon - Crab Day', 'average');
+(1, '2021-03-10 21:04:44', '2019-09-09 21:34:55', 'Spotify new releases playlist', 'weak');
+(1, '2021-03-14 15:00:00', '2019-02-14 15:34:00', 'Danny Brown uknowwhatimsayin 9/10', 'strong');
+(1, '2021-03-16 22:13:04', '2019-11-16 22:55:40', '', 'average');
+(1, '2021-03-19 20:22:44', '2019-11-16 22:55:40', '', 'average');
+(1, '2021-03-22 18:10:24', '2019-11-16 22:55:40', 'History Audiobook', 'average');
+(1, '2021-03-26 17:33:19', '2019-11-16 22:55:40', 'Linux Podcast', 'strong');
+(1, '2021-03-29 09:02:29', '2019-11-16 22:55:40', '', 'weak');
 */
