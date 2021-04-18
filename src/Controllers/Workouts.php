@@ -19,6 +19,11 @@ use Models\ExerciseType;
 class Workouts
 {
     /*
+     * The default limit of workouts to query for a user. See allWorkouts().
+     */
+    const ALL_WORKOUTS_LIMIT = 20;
+
+    /*
      * Handle request to save a workout.
      * @return \Http\Response
      */
@@ -76,5 +81,51 @@ class Workouts
     public function exerciseTypes()
     {
         return Response::send(\Http\Code::OK_200, (new ExerciseType())->all());
+    }
+
+    /*
+     * Handle request to a get a list of all workouts for a user.
+     * @return \Http\Response
+     */
+    public function allWorkouts($limit = self::ALL_WORKOUTS_LIMIT)
+    {
+        $session = new Session();
+        if (!$session->verify())
+            return Response::send(\Http\Code::UNAUTHORIZED_401);
+
+        $workouts = \Database\Query::run("
+            select *
+            from workouts
+            where workouts.user_id = {$session->user->id}
+            limit " . $limit
+        );
+        $exercises = \Database\Query::run("
+            select *
+            from exercises
+            where exercises.workout_id in
+            (".implode(", ", array_column($workouts, 'id')).")"
+        );
+        $reps = \Database\Query::run("
+            select *
+            from reps
+            where reps.exercise_id in
+            (".implode(", ", array_column($exercises, 'id')).")"
+        );
+
+        $data = [];
+        foreach ($workouts as $workout)
+        {
+            $data[$workout['id']] = $workout;
+        }
+        foreach ($exercises as $exercise)
+        {
+            $data[$exercise['workout_id']]['exercises'][$exercise['id']] = $exercise;
+        }
+        foreach ($reps as $rep)
+        {
+            $data[$exercise['workout_id']]['exercises'][$rep['exercise_id']]['reps'][$rep['id']] = $rep;
+        }
+
+        return Response::send(\Http\Code::OK_200, $data);
     }
 }

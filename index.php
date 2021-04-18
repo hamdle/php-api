@@ -16,6 +16,7 @@ Api::get('version', function() {
 });
 Api::get('auth', ['\Controllers\Authentication', 'verifySession']);
 Api::get('exercises', ['\Controllers\Workouts', 'exerciseTypes']);
+Api::get('workouts', ['\Controllers\Workouts', 'allWorkouts']);
 Api::post('login', ['\Controllers\Authentication', 'login']);
 Api::post('workouts/new', ['\Controllers\Workouts', 'save']);
 
