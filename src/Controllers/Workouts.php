@@ -120,10 +120,14 @@ class Workouts
         foreach ($exercises as $exercise)
         {
             $data[$exercise['workout_id']]['exercises'][$exercise['id']] = $exercise;
-        }
-        foreach ($reps as $rep)
-        {
-            $data[$exercise['workout_id']]['exercises'][$rep['exercise_id']]['reps'][$rep['id']] = $rep;
+            foreach ($reps as $rep)
+            {
+                if ($rep['exercise_id'] == $exercise['id'])
+                {
+                    $data[$exercise['workout_id']]['exercises'][$exercise['id']]['reps'][$rep['id']] = $rep;
+                    unset($reps[$rep['id']]);
+                }
+            }
         }
 
         return Response::send(\Http\Code::OK_200, $data);
