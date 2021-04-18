@@ -93,6 +93,15 @@ class Workouts
         if (!$session->verify())
             return Response::send(\Http\Code::UNAUTHORIZED_401);
 
+        $exerciseTypes = \Database\Query::run("
+            select *
+            from exercise_types
+        ");
+        $exerciseTypesByKey = [];
+        foreach ($exerciseTypes as $exerciseType)
+        {
+            $exerciseTypesByKey[$exerciseType['id']] = $exerciseType;
+        }
         $workouts = \Database\Query::run("
             select *
             from workouts
@@ -103,14 +112,14 @@ class Workouts
             select *
             from exercises
             where exercises.workout_id in
-            (".implode(", ", array_column($workouts, 'id')).")"
-        );
+            (".implode(", ", array_column($workouts, 'id')).")
+        ");
         $reps = \Database\Query::run("
             select *
             from reps
             where reps.exercise_id in
-            (".implode(", ", array_column($exercises, 'id')).")"
-        );
+            (".implode(", ", array_column($exercises, 'id')).")
+        ");
 
         $data = [];
         foreach ($workouts as $workout)
@@ -120,6 +129,7 @@ class Workouts
         foreach ($exercises as $exercise)
         {
             $data[$exercise['workout_id']]['exercises'][$exercise['id']] = $exercise;
+            $data[$exercise['workout_id']]['exercises'][$exercise['id']]['exercise_type'] = $exerciseTypesByKey[$exercise['exercise_type_id']];
             foreach ($reps as $rep)
             {
                 if ($rep['exercise_id'] == $exercise['id'])
