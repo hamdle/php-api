@@ -21,6 +21,7 @@ class Code
     const UNAUTHORIZED_401 = 401;
     const FORBIDDEN_403 = 403;
     const NOT_FOUND_404 = 404;
+    const IM_A_TEAPOT_418 = 418;
     const UNPROCESSABLE_ENTITY_422 = 422;
     const INTERNAL_SERVER_ERROR_500 = 500;
 }
