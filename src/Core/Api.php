@@ -46,15 +46,7 @@ class Api
         $controller = self::route(Request::path(), self::$api);
 
         if (is_null($controller))
-        {
-            return Response::send
-            (
-                Code::NOT_FOUND_404,
-                [
-                    "message" => "404 not found",
-                ]
-            );
-        }
+            return Response::sendDefaultNotFound();
 
         $namespace = self::$CONTROLLER_ROOT.$controller[0];
         $function = $controller[1];
@@ -63,7 +55,7 @@ class Api
             if ($instantiatedController = [new $namespace, $function])
                 return $instantiatedController();
 
-            return Response::sendDefault();
+            return Response::sendDefaultNotFound();
         }
         catch (\Throwable $e)
         {

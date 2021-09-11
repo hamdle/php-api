@@ -3,6 +3,8 @@
 /*
  * Core/Database/Record.php: a record from the database
  *
+ * Models should extend this class and define these abstract functions.
+ *
  * Copyright (C) 2021 Eric Marty
  */
 
@@ -14,6 +16,7 @@ abstract class Record
 
     public $fields = [];
 
+    // Define these functions in the model
     abstract public function table();
     abstract public function config();
     abstract public function transforms();
@@ -41,10 +44,7 @@ abstract class Record
             return null;
     }
 
-    /*
-     * Save this record.
-     * @return numeric ID of the inserted record or null
-     */
+    // return = Id of inserted record | null
     public function save()
     {
         $this->filter();
@@ -58,10 +58,8 @@ abstract class Record
         return $this->id = (is_numeric($id) ? $id : null);
     }
 
-    /*
-     * Run the validation and return error messages.
-     * @return bool - false if one or many validatons failed
-     */
+    // Run validation using defined config() and return error messages.
+    //return bool = true | false with messages set
     public function validate()
     {
         if (($results = $this->validation($this->config())) !== true)
@@ -73,14 +71,12 @@ abstract class Record
         return true;
     }
 
-    /*
-     * Run fields through the config validation functions.
-     * TODO revise this return to include messages
-     * @return bool - false if one or many validatons failed
-     */
+    // Run fields through the config() validation functions.
+    // TODO revise this return to include messages
+    // return bool = true | false with messages set
     public function validation($config)
     {
-        // Can this function call $this->config() directly? TODO
+        // TODO Can this function call $this->config() directly?
         if (!isset($this->fields))
             return false;
 
@@ -97,10 +93,7 @@ abstract class Record
         return empty($messages) ? true : $messages;
     }
 
-    /*
-     * Filter out fields that are not in the config.
-     * @return void
-     */
+    // Filter out fields that are not in the config.
     public function filter()
     {
         foreach ($this->fields as $key => $field)
@@ -110,10 +103,7 @@ abstract class Record
         }
     }
 
-    /*
-     * Run fields through input transforms.
-     * @return void
-     */
+    // Run fields through input transforms.
     public function transform()
     {
         foreach ($this->transforms() as $key => $transform)

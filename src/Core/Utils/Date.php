@@ -10,10 +10,7 @@ namespace Core\Utils;
 
 class Date
 {
-    /*
-     * Format timestamp to datetime.
-     * @return string
-     */
+    // Format timestamp to datetime.
     public static function timestampToDatetime($timestamp)
     {
         return date("Y-m-d H:i:s", $timestamp);

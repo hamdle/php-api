@@ -12,10 +12,7 @@ use Exception;
 
 class Env
 {
-    /*
-     * Load .env file.
-     * @return void
-     */
+    // Load .env file at root of the Api.
     public static function load($path = null)
     {
         try {

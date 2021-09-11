@@ -3,6 +3,8 @@
 /*
  * Controllers/Authentication.php: handle user authentication requests
  *
+ * This controller should verify cookies and handle user login details.
+ *
  * Copyright (C) 2021 Eric Marty
  */
 
@@ -15,10 +17,7 @@ use Models\User;
 use Models\Session;
 
 class Authentication {
-    /*
-     * Handle login request. Vaildate the form and attempt to log the user in.
-     * @return \Http\Response
-     */
+    // return = \Http\Response
     public function login()
     {
         $user = new User(Request::post());
@@ -31,11 +30,8 @@ class Authentication {
         return Response::send(Code::UNAUTHORIZED_401);
     }
 
-    /*
-     * Handle authentication request. Users that have logged in will send a
-     * authentication cookie automatically.
-     * @return \Http\Response
-     */
+    // The browser will send the cookie used to verify the session automatically.
+    // return = \Http\Response
     public static function verifySession()
     {
         $session = new Session();

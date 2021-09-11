@@ -11,21 +11,15 @@ require_once __DIR__."/Core/Utils/Env.php";
 use Core\Utils\Env;
 
 class Autoload {
-    /*
-     * Load .env and register custom autoloader.
-     * @return void
-     */
     public static function register()
     {
         Env::load();
         spl_autoload_register("Autoload::loadFile");
     }
 
-    /*
-     * Custom autoload algorithm.
-     * @param $class - string
-     * @return bool
-     */
+    // a custom autoloader
+    // $class = string
+    // return = bool
     public static function loadFile($class)
     {
         $file = __DIR__.DIRECTORY_SEPARATOR.

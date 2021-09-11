@@ -22,10 +22,8 @@ class Session extends Record
         return "sessions";
     }
 
-    /*
-     * Attempt to load a session using the fields assigned to this session.
-     * @return bool - a message will be set if the session fails to load
-     */
+    // Attempt to load a session using the fields assigned to this session.
+    // return = true | false and a message will be set if the session fails to load
     public function load()
     {
         $this->filter();
@@ -49,18 +47,12 @@ class Session extends Record
         return true;
     }
 
-    /*
-     * Delete this token to the database.
-     */
     public function delete()
     {
         Query::delete($this->table(), ["id" => $this->id]);
     }
 
-    /*
-     * Create a new cookie for a user.
-     * @param \Models\User
-     */
+    // $user = \Models\User
     public function createNewCookie($user)
     {
         $token = bin2hex(random_bytes(128));
@@ -75,20 +67,16 @@ class Session extends Record
         $this->cookie = $cookie;
     }
 
-    /*
-     * Add cookie to response that's attached to this session object.
-     */
+    // Add cookie to the global Response
     public function addCookie()
     {
         Response::addCookie([self::COOKIE_KEY => $this->cookie]);
     }
 
-    /*
-     * Verify that a cookie sent from the client is valid. If the cookie is
-     * valid, the verified user (of type \Models\User) will be added to the
-     * session's fields.
-     * @return bool
-     */
+    // Verify that a cookie sent from the client is valid. If the cookie is
+    // valid, the verified user (of type \Models\User) will be added to the
+    // session's fields.
+    // return = bool
     public function verify()
     {
         foreach (Request::cookie() as $key => $value) {
@@ -124,14 +112,11 @@ class Session extends Record
         return false;
     }
 
-    /*
-     * Delete a cookie on the client by setting it as expired.
-     */
+    // Delete a cookie on the client by setting it as expired.
     public function setExpiredCookie()
     {
         Response::addExpiredCookie([self::COOKIE_KEY => $this->cookie]);
     }
-
 
     public function config()
     {

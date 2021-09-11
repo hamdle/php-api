@@ -13,16 +13,9 @@ use \Core\Utils\Log;
 
 class Query
 {
-    /*
-     * Static connection to MySQL database.
-     * @var mysqli connection object
-     */
+    // a mysqli connection object
     protected static $mysql = null;
 
-    /*
-     * Get or create connection to MySQL database.
-     * @return mysqli connection object
-     */
     public static function connection()
     {
         if (is_null(self::$mysql))
@@ -44,21 +37,50 @@ class Query
         return self::$mysql;
     }
 
-    /*
-     * Close MySQL connection.
-     * @return void
-     */
     public static function close()
     {
         if (!is_null(self::$mysql))
             self::$mysql->close();
     }
 
-    /*
-     * Run an insert query.
-     * @param $query - a complete SQL query
-     * @return see Database\Query::run()
-     */
+    // Run a sql query using OO version of mysqli.
+    // $query = a complete SQL query
+    // return = array | id | false | null
+    public static function run($query)
+    {
+        $db = self::connection();
+        $rows = [];
+
+        if ($results = $db->query($query))
+        {
+            // TODO maybe check if $results == false
+            // see = "Returns false on failure." at https://www.php.net/manual/en/mysqli.query.php
+            if (is_bool($results))
+            {
+                if ($results)
+                    return $db->insert_id;
+
+                return null;
+            }
+            if ($db->error)
+            {
+                // TODO this should throw an error
+                Log::error($db->error, "A database error has occured.");
+                // TODO and probably no need to return
+                return null;
+            }
+            while ($row = $results->fetch_assoc())
+            {
+                $rows[] = $row;
+            }
+
+            $results->free();
+        }
+
+        return $rows;
+    }
+
+    // return = id | null
     public static function insert($table, $fields, $values)
     {
         $query = "insert into ".$table;
@@ -90,10 +112,6 @@ class Query
         return self::run($query);
     }
 
-    /*
-     * Run a delete query.
-     * @return see Database\Query::run()
-     */
     public static function delete($table, $where = null)
     {
         $query = "delete from ".$table;
@@ -118,10 +136,7 @@ class Query
         return self::run($query);
     }
 
-    /*
-     * Run a select query.
-     * @return see Database\Query::run()
-     */
+    // return = array | false
     public static function select($table, $selects, $where = null)
     {
         $query = "select ";
@@ -151,40 +166,5 @@ class Query
         }
 
         return self::run($query);
-    }
-
-    /*
-     * Run a sql query using OO version of mysqli.
-     * @param $query - a complete SQL query
-     * @return $rows[] | $id | null
-     */
-    public static function run($query)
-    {
-        $db = self::connection();
-        $rows = [];
-
-        if ($results = $db->query($query))
-        {
-            if (is_bool($results))
-            {
-                if ($results)
-                    return $db->insert_id;
-
-                return null;
-            }
-            if ($db->error)
-            {
-                Log::error($db->error, "A database error has occured.");
-                return null;
-            }
-            while ($row = $results->fetch_assoc())
-            {
-                $rows[] = $row;
-            }
-
-            $results->free();
-        }
-
-        return $rows;
     }
 }

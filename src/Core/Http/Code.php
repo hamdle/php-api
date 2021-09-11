@@ -10,10 +10,6 @@ namespace Core\Http;
 
 class Code
 {
-    /*
-     * Http status codes.
-     * @vars int
-     */
     const OK_200 = 200;
     const CREATED_201 = 201;
     const DELETED_204 = 204;

@@ -3,6 +3,9 @@
 /*
  * Controllers/Workouts.php: handle workout requests
  *
+ * This controller should handle all request pertaining to reading or writing
+ * workout details.
+ *
  * Copyright (C) 2021 Eric Marty
  */
 
@@ -20,15 +23,10 @@ use Models\ExerciseType;
 
 class Workouts
 {
-    /*
-     * The default limit of workouts to query for a user. See allWorkouts().
-     */
+    // The default number of past workouts to query for a user.
     const ALL_WORKOUTS_LIMIT = 20;
 
-    /*
-     * Handle request to save a workout.
-     * @return \Http\Response
-     */
+    // return = \Http\Response
     public function save()
     {
         $session = new Session();
@@ -77,10 +75,7 @@ class Workouts
         return Response::send(Code::CREATED_201);
     }
 
-    /*
-     * Handle request to get a list of all available exercie types.
-     * @return \Http\Response
-     */
+    // return = \Http\Response
     public function exerciseTypes()
     {
         $exerciseTypes = new ExerciseType();
@@ -88,13 +83,12 @@ class Workouts
         return Response::send(Code::OK_200, $exerciseTypes->all());
     }
 
-    /*
-     * Handle request to a get a list of all workouts for a user.
-     * @return \Http\Response
-     */
+    // Return list of workouts from most recent to ALL_WORKOUTS_LIMIT.
+    // return = \Http\Response
     public function allWorkouts($limit = self::ALL_WORKOUTS_LIMIT)
     {
         $session = new Session();
+
         if (!$session->verify())
             return Response::send(Code::UNAUTHORIZED_401);
 
@@ -104,6 +98,7 @@ class Workouts
         ");
 
         $exerciseTypesByKey = [];
+
         foreach ($exerciseTypes as $exerciseType)
         {
             $exerciseTypesByKey[$exerciseType["id"]] = $exerciseType;
@@ -129,6 +124,7 @@ class Workouts
         ");
 
         $data = [];
+
         foreach ($workouts as $workout)
         {
             $data[$workout["id"]] = $workout;
@@ -138,6 +134,7 @@ class Workouts
         {
             $data[$exercise["workout_id"]]["exercises"][$exercise["id"]] = $exercise;
             $data[$exercise["workout_id"]]["exercises"][$exercise["id"]]["exercise_type"] = $exerciseTypesByKey[$exercise["exercise_type_id"]];
+
             foreach ($reps as $rep)
             {
                 if ($rep["exercise_id"] == $exercise["id"])

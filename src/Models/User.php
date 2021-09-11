@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Models/User.php: a workout app user
+ * Models/User.php: a person that needs to authenticate
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -21,12 +21,9 @@ class User extends Record
         return "users";
     }
 
-    /*
-     * Load properties from database using fields.
-     * @return bool
-     */
     // TODO this should be an abstract method defined by Record, and move this
     // down with the others
+    // return = bool
     public function load()
     {
         $this->filter();
@@ -34,10 +31,10 @@ class User extends Record
 
         $results = Query::select($this->table(), "*", $this->fields);
 
-        // If this select failes it may cause errors TODO
+        // TODO If this select failes it may cause errors
         if (array_key_exists(0, $results))
         {
-            // Add to fields
+            // Save each properties to fields
             foreach ($results[0] as $key => $value)
             {
                 $this->fields[$key] = $value;
@@ -52,11 +49,9 @@ class User extends Record
         return true;
     }
 
-    /*
-     * Login user by verifying user and creating cookie. This funciton will
-     * add the cookie to the Response.
-     * @return bool
-     */
+    // Login user by verifying user via POST data and add an authentication
+    // cookie to the Response.
+    // return = bool
     public function login()
     {
         if ($this->load())
@@ -68,10 +63,8 @@ class User extends Record
         return false;
     }
 
-    /*
-     * Return the users cookie his function assumes the user has been loaded
-     * @return string - cookie
-     */
+    // This function assumes the user has been loaded.
+    // return = string (the cookie)
     public function createNewSession()
     {
         $cookie = new Session(["user_id" => $this->id]);

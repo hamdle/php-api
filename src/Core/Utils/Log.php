@@ -9,23 +9,10 @@
 namespace Core\Utils;
 
 class Log {
-    /*
-     * Print message to error log.
-     * @return null
-     */
+    // Sends an error message to the web server's error log or to a file. 
     public static function error($value = null, $tag = "")
     {
         error_log("__".($tag ?? "START")."__< ".print_r($value, true)." >__".
             ($tag ?? "END")."__");
-    }
-
-    /*
-     * Print message to error log and exit program.
-     * @return null
-     */
-    public static function errorAndExit($value = null, $tag = "")
-    {
-        self::error($value, $tag);
-        exit;
     }
 }
