@@ -45,15 +45,15 @@ class Workouts
         if (!$workout->save())
             return Response::send(Code::INTERNAL_SERVER_ERROR_500);
 
-        foreach (Request::complexData()['exercises'] ?? [] as $exerciseEntry)
+        foreach (Request::complexData()["exercises"] ?? [] as $exerciseEntry)
         {
             $exercise = new Exercise($exerciseEntry);
             $exercise->workout_id = $workout->id;
             $exercise->user_id = $session->user->id;
-            // Saving the exercise will unset `reps` since it's not a field in
+            // Saving the exercise will unset `reps` since it"s not a field in
             // the `exercises` table. So we need to get the reps from this
             // exercise before saving it.
-            $reps = $exerciseEntry['reps'] ?? [];
+            $reps = $exerciseEntry["reps"] ?? [];
 
             if (!$exercise->validate())
                 return Response::send(Code::UNPROCESSABLE_ENTITY_422, $exercise->getMessages());
@@ -106,7 +106,7 @@ class Workouts
         $exerciseTypesByKey = [];
         foreach ($exerciseTypes as $exerciseType)
         {
-            $exerciseTypesByKey[$exerciseType['id']] = $exerciseType;
+            $exerciseTypesByKey[$exerciseType["id"]] = $exerciseType;
         }
 
         $workouts = Query::run("
@@ -119,31 +119,31 @@ class Workouts
             select *
             from exercises
             where exercises.workout_id in
-            (".implode(", ", array_column($workouts, 'id')).")
+            (".implode(", ", array_column($workouts, "id")).")
         ");
         $reps = Query::run("
             select *
             from reps
             where reps.exercise_id in
-            (".implode(", ", array_column($exercises, 'id')).")
+            (".implode(", ", array_column($exercises, "id")).")
         ");
 
         $data = [];
         foreach ($workouts as $workout)
         {
-            $data[$workout['id']] = $workout;
+            $data[$workout["id"]] = $workout;
         }
 
         foreach ($exercises as $exercise)
         {
-            $data[$exercise['workout_id']]['exercises'][$exercise['id']] = $exercise;
-            $data[$exercise['workout_id']]['exercises'][$exercise['id']]['exercise_type'] = $exerciseTypesByKey[$exercise['exercise_type_id']];
+            $data[$exercise["workout_id"]]["exercises"][$exercise["id"]] = $exercise;
+            $data[$exercise["workout_id"]]["exercises"][$exercise["id"]]["exercise_type"] = $exerciseTypesByKey[$exercise["exercise_type_id"]];
             foreach ($reps as $rep)
             {
-                if ($rep['exercise_id'] == $exercise['id'])
+                if ($rep["exercise_id"] == $exercise["id"])
                 {
-                    $data[$exercise['workout_id']]['exercises'][$exercise['id']]['reps'][$rep['id']] = $rep;
-                    unset($reps[$rep['id']]);
+                    $data[$exercise["workout_id"]]["exercises"][$exercise["id"]]["reps"][$rep["id"]] = $rep;
+                    unset($reps[$rep["id"]]);
                 }
             }
         }

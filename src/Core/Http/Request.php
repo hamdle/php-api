@@ -16,7 +16,7 @@ class Request
      */
     public static function uri()
     {
-        return $_SERVER['REQUEST_URI'];
+        return $_SERVER["REQUEST_URI"];
     }
 
     /*
@@ -26,10 +26,10 @@ class Request
     public static function path()
     {
         $parts = array_filter(
-            explode('/', self::uri()),
+            explode("/", self::uri()),
             function($part)
             {
-                if (empty(trim($part)) || $part == 'api')
+                if (empty(trim($part)) || $part == "api")
                     return 0;
                 return 1;
             }
@@ -44,7 +44,7 @@ class Request
      */
     public static function method()
     {
-        return strtolower($_SERVER['REQUEST_METHOD']);
+        return strtolower($_SERVER["REQUEST_METHOD"]);
     }
 
     /*
@@ -53,7 +53,7 @@ class Request
      */
     public static function complexData()
     {
-        return json_decode(file_get_contents('php://input'), true);
+        return json_decode(file_get_contents("php://input"), true);
     }
 
     /*

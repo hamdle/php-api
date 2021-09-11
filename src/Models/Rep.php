@@ -14,16 +14,16 @@ class Rep extends Record
 {
     public function table()
     {
-        return 'reps';
+        return "reps";
     }
 
     public function config()
     {
         return [
-            'exercise_id' => function ($entry) {
+            "exercise_id" => function ($entry) {
                 return is_numeric($entry);
             },
-            'amount' => function ($entry) {
+            "amount" => function ($entry) {
                 return is_numeric($entry);
             }
         ];
@@ -32,10 +32,10 @@ class Rep extends Record
     public function transforms()
     {
         return [
-            'exercise_id' => function ($entry) {
+            "exercise_id" => function ($entry) {
                 return (int) $entry;
             },
-            'amount' => function ($entry) {
+            "amount" => function ($entry) {
                 return (int) $entry;
             }
         ];

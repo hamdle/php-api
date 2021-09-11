@@ -14,11 +14,11 @@ use \Core\Database\Query;
 class User extends Record
 {
     // TODO should this be used instead?
-    //const table = 'users';
+    //const table = "users";
 
     public function table()
     {
-        return 'users';
+        return "users";
     }
 
     /*
@@ -74,14 +74,14 @@ class User extends Record
      */
     public function createNewSession()
     {
-        $cookie = new Session(['user_id' => $this->id]);
+        $cookie = new Session(["user_id" => $this->id]);
         if ($cookie->load())
         {
             $cookie->setExpiredCookie();
             $cookie->delete();
         }
 
-        $newCookie = new Session(['user_id' => $this->id]);
+        $newCookie = new Session(["user_id" => $this->id]);
         $newCookie->createNewCookie($this);
         $newCookie->addCookie();
     }
@@ -89,12 +89,12 @@ class User extends Record
     public function config()
     {
         return [
-            'email' => function ($entry) {
+            "email" => function ($entry) {
                 if (empty($entry))
                     return "Email address should not be empty.";
                 return true;
             },
-            'password' => function ($entry) {
+            "password" => function ($entry) {
                 if (empty($entry))
                     return "Password should not be empty.";
                 return true;
@@ -105,10 +105,10 @@ class User extends Record
     public function transforms()
     {
         return [
-            'email' => function ($entry) {
+            "email" => function ($entry) {
                 return $entry;
             },
-            'password' => function ($entry) {
+            "password" => function ($entry) {
                 return empty($entry) ? null : md5($entry);
             },
         ];

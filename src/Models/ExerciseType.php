@@ -15,7 +15,7 @@ class ExerciseType extends Record
 {
     public function table()
     {
-        return 'exercise_types';
+        return "exercise_types";
     }
 
     public function all()

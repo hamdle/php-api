@@ -15,17 +15,17 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-require __DIR__.'/src/autoload.php';
+require __DIR__."/src/autoload.php";
 
 use Core\Api;
 
-Api::get('auth', 'Authentication', 'verifySession');
-Api::get('exercises', 'Workouts', 'exerciseTypes');
-Api::get('workouts', 'Workouts', 'allWorkouts');
-Api::get('version', 'AppInfo', 'version');
-Api::get('coffee', 'AppInfo', 'teapot');
+Api::get("auth", "Authentication", "verifySession");
+Api::get("exercises", "Workouts", "exerciseTypes");
+Api::get("workouts", "Workouts", "allWorkouts");
+Api::get("version", "AppInfo", "version");
+Api::get("coffee", "AppInfo", "teapot");
 
-Api::post('login', 'Authentication', 'login');
-Api::post('workouts/new', 'Workouts', 'save');
+Api::post("login", "Authentication", "login");
+Api::post("workouts/new", "Workouts", "save");
 
 return Api::respond();

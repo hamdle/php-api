@@ -15,11 +15,11 @@ use Core\Database\Query;
 
 class Session extends Record
 {
-    const COOKIE_KEY = 'Session-Id';
+    const COOKIE_KEY = "Session-Id";
 
     public function table()
     {
-        return 'sessions';
+        return "sessions";
     }
 
     /*
@@ -54,7 +54,7 @@ class Session extends Record
      */
     public function delete()
     {
-        Query::delete($this->table(), ['id' => $this->id]);
+        Query::delete($this->table(), ["id" => $this->id]);
     }
 
     /*
@@ -65,7 +65,7 @@ class Session extends Record
     {
         $token = bin2hex(random_bytes(128));
         $cookie = $user->email.":".$token;
-        $mac = hash_hmac('sha256', $cookie, $_ENV['COOKIE_KEY']);
+        $mac = hash_hmac("sha256", $cookie, $_ENV["COOKIE_KEY"]);
         $cookie .= ":".$mac;
 
         $this->user_id = $user->id;
@@ -99,7 +99,7 @@ class Session extends Record
             if (count($parts) !== 3)
                 return false;
 
-            $user = new User(['email' => $parts[0]]);
+            $user = new User(["email" => $parts[0]]);
             if (!$user->load())
                 return false;
 
@@ -115,7 +115,7 @@ class Session extends Record
             // Where the email and token combine with a key from the .env to
             // create the mac.
             $this->cookie = $user->email.":".$this->token;
-            $mac = hash_hmac('sha256', $this->cookie, $_ENV['COOKIE_KEY']);
+            $mac = hash_hmac("sha256", $this->cookie, $_ENV["COOKIE_KEY"]);
 
             if (hash_equals($mac, $parts[2]))
                 return true;
@@ -136,12 +136,12 @@ class Session extends Record
     public function config()
     {
         return [
-            'user_id' => function ($entry) {
+            "user_id" => function ($entry) {
                 if (empty($entry))
                     return "User ID should not be empty.";
                 return true;
             },
-            'token' => function ($entry) {
+            "token" => function ($entry) {
                 if (empty($entry))
                     return "Token should not be empty.";
                 return true;
@@ -152,10 +152,10 @@ class Session extends Record
     public function transforms()
     {
         return [
-            'user_id' => function ($entry) {
+            "user_id" => function ($entry) {
                 return $entry;
             },
-            'token' => function ($entry) {
+            "token" => function ($entry) {
                 return $entry;
             },
         ];

@@ -28,16 +28,16 @@ class Query
         if (is_null(self::$mysql))
         {
             self::$mysql = new mysqli(
-                $_ENV['DB_HOST'],
-                $_ENV['DB_USER'],
-                $_ENV['DB_PASS'],
-                $_ENV['DB_NAME']
+                $_ENV["DB_HOST"],
+                $_ENV["DB_USER"],
+                $_ENV["DB_PASS"],
+                $_ENV["DB_NAME"]
             );
 
             if (self::$mysql->connect_errno)
             {
-                print 'Database connection failed.';
-                exit;
+                // TODO this should throw an error instead
+                exit("Database connection failed.");
             }
         }
 
@@ -174,7 +174,7 @@ class Query
             }
             if ($db->error)
             {
-                Log::error($db->error, 'A database error has occured.');
+                Log::error($db->error, "A database error has occured.");
                 return null;
             }
             while ($row = $results->fetch_assoc())

@@ -14,10 +14,10 @@ class Response
      * Content type.
      * @var string
      */
-    const JSON_CONTENT_TYPE = 'Content-Type: application/json; charset=utf-8';
+    const JSON_CONTENT_TYPE = "Content-Type: application/json; charset=utf-8";
 
     /*
-     * You can't explicitly delete cookies so just set them as expired. But
+     * You can"t explicitly delete cookies so just set them as expired. But
      * gnerally, this would be triggered because the client-side cookie had
      * expired and has already been deleted by the browser.
      * @param map - key => value pair to map to the cookie.
@@ -26,7 +26,7 @@ class Response
     {
         foreach ($map as $key => $value)
         {
-            setcookie($key, $value, strtotime('-30 days'), "/");
+            setcookie($key, $value, strtotime("-30 days"), "/");
         }
     }
 
@@ -38,7 +38,7 @@ class Response
     {
         foreach ($map as $key => $value)
         {
-            setcookie($key, $value, strtotime('+30 days'), "/");
+            setcookie($key, $value, strtotime("+30 days"), "/");
         }
     }
 
@@ -54,7 +54,7 @@ class Response
          * Currenly, CORS policy is set in the Nginx config. To set policy in
          * PHP, you can set it here using:
          *
-         * header("Access-Control-Allow-Origin: " . $_ENV['ORIGIN']);
+         * header("Access-Control-Allow-Origin: " . $_ENV["ORIGIN"]);
          */
         http_response_code($code);
         if (!is_null($data))
