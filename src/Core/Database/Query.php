@@ -1,14 +1,15 @@
 <?php
 
 /*
- * Database/Query.php: run database queries
+ * Core/Database/Query.php: run database queries
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Database;
+namespace Core\Database;
 
 use mysqli;
+use \Core\Utils\Log;
 
 class Query
 {
@@ -173,7 +174,7 @@ class Query
             }
             if ($db->error)
             {
-                \Utils\Logger::error($db->error, 'A database error has occured.');
+                Log::error($db->error, 'A database error has occured.');
                 return null;
             }
             while ($row = $results->fetch_assoc())

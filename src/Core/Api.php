@@ -1,14 +1,15 @@
 <?php
 
 /*
- * Http/Api.php: holder of the ring
+ * Core/Http/Api.php: holder of the ring
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http;
+namespace Core;
 
-use \Http\Router;
+use \Core\Http\Response;
+use \Core\Http\Router;
 
 class Api
 {

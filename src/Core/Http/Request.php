@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Http/Request.php: http request information
+ * Core/Http/Request.php: http request information
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http;
+namespace Core\Http;
 
 class Request
 {

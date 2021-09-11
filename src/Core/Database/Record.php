@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Database/Record.php: a record from the database
+ * Core/Database/Record.php: a record from the database
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Database;
+namespace Core\Database;
 
 abstract class Record
 {
-    use \Traits\Messages;
+    use \Core\Traits\Messages;
 
     public $fields = [];
 
@@ -75,6 +75,7 @@ abstract class Record
 
     /*
      * Run fields through the config validation functions.
+     * TODO revise this return to include messages
      * @return bool - false if one or many validatons failed
      */
     public function validation($config)

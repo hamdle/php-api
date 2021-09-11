@@ -8,8 +8,8 @@
 
 namespace Models;
 
-use Database\Record;
-use Database\Query;
+use Core\Database\Record;
+use Core\Database\Query;
 
 class ExerciseType extends Record
 {

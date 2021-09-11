@@ -8,11 +8,14 @@
 
 namespace Models;
 
-use \Database\Record;
-use \Database\Query;
+use \Core\Database\Record;
+use \Core\Database\Query;
 
 class User extends Record
 {
+    // TODO should this be used instead?
+    //const table = 'users';
+
     public function table()
     {
         return 'users';
@@ -22,6 +25,8 @@ class User extends Record
      * Load properties from database using fields.
      * @return bool
      */
+    // TODO this should be an abstract method defined by Record, and move this
+    // down with the others
     public function load()
     {
         $this->filter();

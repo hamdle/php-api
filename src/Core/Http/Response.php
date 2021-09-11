@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Http/Response.php: define and send http responses
+ * Core/Http/Response.php: define and send http responses
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http;
+namespace Core\Http;
 
 class Response
 {
@@ -77,6 +77,6 @@ class Response
      */
     public static function sendDefault()
     {
-        return self::send(\Http\Code::NOT_FOUND_404);
+        return self::send(Code::NOT_FOUND_404);
     }
 }

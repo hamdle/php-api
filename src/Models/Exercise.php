@@ -8,7 +8,7 @@
 
 namespace Models;
 
-use Database\Record;
+use Core\Database\Record;
 
 class Exercise extends Record
 {

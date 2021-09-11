@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Traits/Messages.php: add messages
+ * Core/Traits/Messages.php: add messages
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Traits;
+namespace Core\Traits;
 
 trait Messages
 {

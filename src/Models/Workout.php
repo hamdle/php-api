@@ -8,8 +8,8 @@
 
 namespace Models;
 
-use \Database\Record;
-use \Utils\Date;
+use \Core\Database\Record;
+use \Core\Utils\Date;
 
 class Workout extends Record
 {

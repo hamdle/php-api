@@ -6,9 +6,9 @@
  * Copyright (C) 2021 Eric Marty
  */
 
-require_once __DIR__.'/Utils/Env.php';
+require_once __DIR__.'/Core/Utils/Env.php';
 
-use Utils\Env;
+use Core\Utils\Env;
 
 class Autoload {
     /*

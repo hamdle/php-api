@@ -8,8 +8,9 @@
 
 namespace Controllers;
 
-use Http\Request;
-use Http\Response;
+use Core\Http\Request;
+use Core\Http\Response;
+use Core\Http\Code;
 use Models\User;
 use Models\Session;
 
@@ -22,12 +23,12 @@ class Authentication {
     {
         $user = new User(Request::post());
         if (!$user->validate())
-            return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $user->getMessages());
+            return Response::send(Code::UNPROCESSABLE_ENTITY_422, $user->getMessages());
 
-        if (!$user->login())
-            return Response::send(\Http\Code::UNAUTHORIZED_401);
+        if ($user->login())
+            return Response::send(Code::CREATED_201);
 
-        return Response::send(\Http\Code::CREATED_201);
+        return Response::send(Code::UNAUTHORIZED_401);
     }
 
     /*
@@ -35,11 +36,12 @@ class Authentication {
      * authentication cookie automatically.
      * @return \Http\Response
      */
-    public function verifySession()
+    public static function verifySession()
     {
-        if (!(new Session())->verify())
-            return Response::send(\Http\Code::UNAUTHORIZED_401);
+        $session = new Session();
+        if ($session->verify())
+            return Response::send(Code::OK_200);
 
-        return Response::send(\Http\Code::OK_200);
+        return Response::send(Code::UNAUTHORIZED_401);
     }
 }

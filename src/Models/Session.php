@@ -8,10 +8,10 @@
 
 namespace Models;
 
-use Http\Request;
-use Http\Response;
-use Database\Record;
-use Database\Query;
+use Core\Http\Request;
+use Core\Http\Response;
+use Core\Database\Record;
+use Core\Database\Query;
 
 class Session extends Record
 {

@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Utils/Log.php: print messages to the PHP's error log
+ * Core/Utils/Log.php: print messages to the PHP's error log
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Utils;
+namespace Core\Utils;
 
 class Log {
     /*

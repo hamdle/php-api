@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Http/Router.php: match endpoints with the request's uri path
+ * Core/Http/Router.php: match endpoints with the request's uri path
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http;
+namespace Core\Http;
 
 class Router
 {
@@ -16,8 +16,10 @@ class Router
      */
     public static function requestToController($api)
     {
+        // TODO should the request information be a function argument
         $pathParts = Request::path();
 
+        // TODO can you reduce the complexity of this?
         foreach ($api[Request::method()] ?? [] as $route)
         {
             foreach ($route as $uri => $controller)

@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Utils/Env.php: read .env, make global $_ENV
+ * Core/Utils/Env.php: read .env, make global $_ENV
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Utils;
+namespace Core\Utils;
 
 use Exception;
 
@@ -36,6 +36,9 @@ class Env
         foreach ($fileContent as $line)
         {
             $lineNumber++;
+            if ($line[0] == '#')
+                continue;
+
             $keyVal = explode('=', $line);
 
             if (isset($keyVal[0]) && isset($keyVal[1]))

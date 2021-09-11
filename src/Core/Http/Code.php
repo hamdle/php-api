@@ -1,18 +1,18 @@
 <?php
 
 /*
- * Http/Code.php: http response codes
+ * Core/Http/Code.php: http response codes
  *
  * Copyright (C) 2021 Eric Marty
  */
 
-namespace Http;
+namespace Core\Http;
 
 class Code
 {
     /*
      * Http status codes.
-     * @vars numeric
+     * @vars int
      */
     const OK_200 = 200;
     const CREATED_201 = 201;

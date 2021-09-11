@@ -8,8 +8,10 @@
 
 namespace Controllers;
 
-use Http\Response;
-use Http\Request;
+use Core\Http\Response;
+use Core\Http\Request;
+use Core\Http\Code;
+use Core\Database\Query;
 use Models\Session;
 use Models\Workout;
 use Models\Rep;
@@ -30,17 +32,18 @@ class Workouts
     public function save()
     {
         $session = new Session();
+
         if (!$session->verify())
-            return Response::send(\Http\Code::UNAUTHORIZED_401);
+            return Response::send(Code::UNAUTHORIZED_401);
 
         $workout = new Workout(Request::complexData());
         $workout->user_id = $session->user->id;
 
         if (!$workout->validate())
-            return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $workout->getMessages());
+            return Response::send(Code::UNPROCESSABLE_ENTITY_422, $workout->getMessages());
 
         if (!$workout->save())
-            return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
+            return Response::send(Code::INTERNAL_SERVER_ERROR_500);
 
         foreach (Request::complexData()['exercises'] ?? [] as $exerciseEntry)
         {
@@ -53,10 +56,10 @@ class Workouts
             $reps = $exerciseEntry['reps'] ?? [];
 
             if (!$exercise->validate())
-                return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $exercise->getMessages());
+                return Response::send(Code::UNPROCESSABLE_ENTITY_422, $exercise->getMessages());
 
             if (!$exercise->save())
-                return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
+                return Response::send(Code::INTERNAL_SERVER_ERROR_500);
 
             foreach ($reps as $repEntry)
             {
@@ -64,14 +67,14 @@ class Workouts
                 $rep->exercise_id = $exercise->id;
 
                 if (!$rep->validate())
-                    return Response::send(\Http\Code::UNPROCESSABLE_ENTITY_422, $rep->getMessages());
+                    return Response::send(Code::UNPROCESSABLE_ENTITY_422, $rep->getMessages());
 
                 if (!$rep->save())
-                    return Response::send(\Http\Code::INTERNAL_SERVER_ERROR_500);
+                    return Response::send(Code::INTERNAL_SERVER_ERROR_500);
             }
         }
 
-        return Response::send(\Http\Code::CREATED_201);
+        return Response::send(Code::CREATED_201);
     }
 
     /*
@@ -80,7 +83,9 @@ class Workouts
      */
     public function exerciseTypes()
     {
-        return Response::send(\Http\Code::OK_200, (new ExerciseType())->all());
+        $exerciseTypes = new ExerciseType();
+        // TODO should we send a different response if the database fails
+        return Response::send(Code::OK_200, $exerciseTypes->all());
     }
 
     /*
@@ -91,30 +96,32 @@ class Workouts
     {
         $session = new Session();
         if (!$session->verify())
-            return Response::send(\Http\Code::UNAUTHORIZED_401);
+            return Response::send(Code::UNAUTHORIZED_401);
 
-        $exerciseTypes = \Database\Query::run("
+        $exerciseTypes = Query::run("
             select *
             from exercise_types
         ");
+
         $exerciseTypesByKey = [];
         foreach ($exerciseTypes as $exerciseType)
         {
             $exerciseTypesByKey[$exerciseType['id']] = $exerciseType;
         }
-        $workouts = \Database\Query::run("
+
+        $workouts = Query::run("
             select *
             from workouts
             where workouts.user_id = {$session->user->id}
             limit " . $limit
         );
-        $exercises = \Database\Query::run("
+        $exercises = Query::run("
             select *
             from exercises
             where exercises.workout_id in
             (".implode(", ", array_column($workouts, 'id')).")
         ");
-        $reps = \Database\Query::run("
+        $reps = Query::run("
             select *
             from reps
             where reps.exercise_id in
@@ -126,6 +133,7 @@ class Workouts
         {
             $data[$workout['id']] = $workout;
         }
+
         foreach ($exercises as $exercise)
         {
             $data[$exercise['workout_id']]['exercises'][$exercise['id']] = $exercise;
@@ -140,6 +148,6 @@ class Workouts
             }
         }
 
-        return Response::send(\Http\Code::OK_200, $data);
+        return Response::send(Code::OK_200, $data);
     }
 }
