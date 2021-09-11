@@ -30,6 +30,7 @@ Api::get("exercises", "Workouts", "exerciseTypes");
 Api::get("workouts", "Workouts", "allWorkouts");
 Api::get("version", "AppInfo", "version");
 Api::get("coffee", "AppInfo", "teapot");
+Api::get("roll", "Dice", "d20");
 
 Api::post("login", "Authentication", "login");
 Api::post("workouts/new", "Workouts", "save");
