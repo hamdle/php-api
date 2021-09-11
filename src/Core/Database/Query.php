@@ -53,8 +53,13 @@ class Query
 
         if ($results = $db->query($query))
         {
-            // TODO maybe check if $results == false
-            // see = "Returns false on failure." at https://www.php.net/manual/en/mysqli.query.php
+            if ($results === false)
+            {
+                if ($db->error)
+                    Log::error($db->error, "DATABASE");
+
+                return null;
+            }
             if (is_bool($results))
             {
                 if ($results)
@@ -64,11 +69,10 @@ class Query
             }
             if ($db->error)
             {
-                // TODO this should throw an error
-                Log::error($db->error, "A database error has occured.");
-                // TODO and probably no need to return
+                Log::error($db->error, "DATABASE");
                 return null;
             }
+
             while ($row = $results->fetch_assoc())
             {
                 $rows[] = $row;
