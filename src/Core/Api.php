@@ -15,6 +15,7 @@ namespace Core;
 use \Core\Http\Response;
 use \Core\Http\Request;
 use \Core\Http\Code;
+use \Core\Utils\Log;
 
 class Api
 {
@@ -60,11 +61,13 @@ class Api
         }
         catch (\Throwable $e)
         {
+            Log::error($e->getMessage()." in ".$e->getFile()." on line ".$e->getLine(), "Api::respond");
             return Response::send
             (
                 Code::INTERNAL_SERVER_ERROR_500,
                 [
-                    "error" => $e->getMessage(),
+                    "error" => true,
+                    "message" => "An unexpected error has occurred",
                 ]
             );
         }
