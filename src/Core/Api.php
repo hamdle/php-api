@@ -24,9 +24,9 @@ class Api
     // Change this to put the controllers in a different directory.
     private static $CONTROLLER_ROOT = "\\Controllers\\";
 
-    /*
-     * Public methods
-     */
+    //
+    // Public methods
+    //
 
     public static function get($endpoint, $controller, $function)
     {
@@ -43,17 +43,18 @@ class Api
     // return = \Core\Http\Response
     public static function respond()
     {
-        $controller = self::route(Request::path(), self::$api);
-
-        if (is_null($controller))
-            return Response::sendDefaultNotFound();
-
-        $namespace = self::$CONTROLLER_ROOT.$controller[0];
-        $function = $controller[1];
-
         try {
-            if ($instantiatedController = [new $namespace, $function])
-                return $instantiatedController();
+            // If found, this will be a tuple in the form [controller, function]
+            $controllerParts = self::route(Request::path(), self::$api);
+
+            if (is_null($controllerParts))
+                return Response::sendDefaultNotFound();
+
+            $namespace = self::$CONTROLLER_ROOT.$controllerParts[0];
+            $function = $controllerParts[1];
+
+            if ($controller = [new $namespace, $function])
+                return $controller();
 
             return Response::sendDefaultNotFound();
         }
@@ -69,12 +70,12 @@ class Api
         }
     }
 
-    /*
-     * Priate methods
-     */
+    //
+    // Priate methods
+    //
 
-    // Given [$endpoint => $controller] match the $endpoint to the request and
-    // return = $controller or null
+    // Given [$endpoint => $value] match the $endpoint to the request and
+    // return = $value or null
     private static function route($path, $api)
     {
         // TODO can you reduce the complexity of this?
