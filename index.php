@@ -19,19 +19,13 @@ require __DIR__.'/src/autoload.php';
 
 use Core\Api;
 
-Api::get('version', 'Cats', 'verifySession');
 Api::get('auth', 'Authentication', 'verifySession');
 Api::get('exercises', 'Workouts', 'exerciseTypes');
 Api::get('workouts', 'Workouts', 'allWorkouts');
+Api::get('version', 'AppInfo', 'version');
+Api::get('coffee', 'AppInfo', 'teapot');
+
 Api::post('login', 'Authentication', 'login');
 Api::post('workouts/new', 'Workouts', 'save');
-/*
-Api::get('version', function() {
-    return Response::send(Code::OK_200, ["version" => $_ENV['VERSION']]);
-});
-Api::get('coffee', function() {
-    return Response::send(Code::IM_A_TEAPOT_418, ["message" => "418 I'm a teapot"]);
-});
- */
 
 return Api::respond();
