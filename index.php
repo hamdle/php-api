@@ -3,14 +3,20 @@
 /*
  * index.php: define the Api here
  *
- * This framework uses a simple mental model and works like so:
+ * This framework uses an easy to understand framework that works like so:
  *
- * Endpoints map to functions that handle them in the root Controllers
- * directory. The Api responds by matching the request to an endpoint and
- * calling the endpoint's controller function. Use Models, located in the root
- * Models directory, to interact with the database. Support functions, like
- * date and debug helpers, can be found in \Core\Utils. And that's about it.
- * For more details check out the individual file(s) you're interested in.
+ * Use the Api to map endpoints to controller functions by request type. When
+ * the Api responds it will route the request to the Api-defined function in
+ * the controller. The Controllers use Models to read and write data and return
+ * a Response. The Core contains general classes for handling data and Http
+ * requests along with helper functions in Utils.
+ *
+ * Which leads to a simple file structure like this:
+ *
+ * src/
+ *   Controllers/   - Put functions that use data to respond to requests here
+ *   Modules/       - Database related classes go here, typically one per table
+ *   Core/          - General functions along with Utils and Http helpers
  *
  * Copyright (C) 2021 Eric Marty
  */
