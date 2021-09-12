@@ -13,7 +13,6 @@ namespace Controllers;
 
 use Core\Http\Response;
 use Core\Http\Code;
-use Core\Utils\Random;
 
 class Dice {
     public function d20()
@@ -23,7 +22,7 @@ class Dice {
             Code::OK_200,
             [
                 "die" => "d20",
-                "result" => (Random::number() % 20) + 1,
+                "result" => (rand() % 20) + 1,
             ]
         );
     }
