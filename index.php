@@ -3,20 +3,17 @@
 /*
  * index.php: define the Api here
  *
- * This framework uses an easy to understand framework that works like so:
+ * Use the Api to map endpoints to controller functions by request type, as
+ * done in this file. The Api will respond by routing the request to an
+ * Api-defined function in a controller. Controllers return a Response and use
+ * Models to read and write data. The Core contains general classes for
+ * handling requests along with helper functions in Utils.
  *
- * Use the Api to map endpoints to controller functions by request type. When
- * the Api responds it will route the request to the Api-defined function in
- * the controller. The Controllers use Models to read and write data and return
- * a Response. The Core contains general classes for handling data and Http
- * requests along with helper functions in Utils.
- *
- * Which leads to a simple file structure like this:
- *
- * src/
- *   Controllers/   - Put functions that use data to respond to requests here
- *   Modules/       - Database related classes go here, typically one per table
- *   Core/          - General functions along with Utils and Http helpers
+ * index.php          - this file, the starting point
+ *   src/
+ *     Controllers/   - Put functions here that use data to respond to requests
+ *     Modules/       - Database related classes go here, typically one per table
+ *     Core/          - General functionality and helper classes
  *
  * Copyright (C) 2021 Eric Marty
  */
