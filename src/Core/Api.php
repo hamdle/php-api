@@ -47,7 +47,7 @@ class Api
     {
         try {
             // If found, this will be a tuple in the form [controller, function]
-            $controllerParts = self::route(Request::path(), self::$api);
+            $controllerParts = self::route();
 
             if (is_null($controllerParts))
                 return Response::sendDefaultNotFound();
@@ -78,12 +78,13 @@ class Api
     // Private methods
     //
 
-    // Given [$endpoint => $value] match the $endpoint to the request path and
+    // Given [$endpoint => $value], match the $endpoint to the request path and
     // return = $value or null
-    private static function route($path, $api)
+    private static function route()
     {
+        $path = Request::path();
         // TODO can you reduce the complexity of this?
-        foreach ($api[Request::method()] ?? [] as $route)
+        foreach (self::$api[Request::method()] ?? [] as $route)
         {
             foreach ($route as $uri => $controller)
             {
