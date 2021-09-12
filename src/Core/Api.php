@@ -40,8 +40,7 @@ class Api
         self::$api["post"][] = [$endpoint => [$controller, $function]];
     }
 
-    // Invoke a controller using the request and Api. This is the surface,
-    // uncaught exceptions can bubble up to here.
+    // This is the surface, uncaught exceptions can bubble up to here.
     // return = \Core\Http\Response
     public static function respond()
     {

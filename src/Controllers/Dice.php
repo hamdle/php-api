@@ -17,8 +17,7 @@ use Core\Http\Code;
 class Dice {
     public function d20()
     {
-        return Response::send
-        (
+        return Response::send(
             Code::OK_200,
             [
                 "die" => "d20",
