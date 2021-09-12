@@ -3,9 +3,10 @@
 /*
  * Core/Api.php: holder of the ring
  *
- * The one class to control them all. The Api maintains an internal $api array
- * that maps endpoints to controller functions. The Api responds to a request.
- * And the Api knows how to route a request to an ($api) endpoint.
+ * One class to run them all. The Api maintains an internal array ($api) that
+ * maps endpoints to functions in Controllers. The Api matches the request to
+ * an endpoint and calls the appropriate Controller function. If no match is
+ * found or an error occurs the Api will return an appropriate response.
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -74,10 +75,10 @@ class Api
     }
 
     //
-    // Priate methods
+    // Private methods
     //
 
-    // Given [$endpoint => $value] match the $endpoint to the request and
+    // Given [$endpoint => $value] match the $endpoint to the request path and
     // return = $value or null
     private static function route($path, $api)
     {
