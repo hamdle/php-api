@@ -21,7 +21,7 @@ class AppInfo {
         (
             Code::OK_200,
             [
-                "version" => $_ENV['VERSION'],
+                "version" => $_ENV["VERSION"],
             ]
         );
     }
