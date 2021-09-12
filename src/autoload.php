@@ -4,9 +4,9 @@
  * autoload.php: autoload files
  *
  * Autoload files based on their location in the src folder. To use a namespace
- * of \Core\Html create a directory called Core and put a directory called
- * Html inside of it. To use \Core\Html\Request, add file Request.php into the
- * Html directory and define the Request class in it.
+ * of \Core\Html\Request create a directory called Core and put a directory
+ * called Html inside of it. Add file Request.php into the Html directory and
+ * define the Request class in it.
  *
  * Copyright (C) 2021 Eric Marty
  */
@@ -22,7 +22,6 @@ class Autoload {
         spl_autoload_register("Autoload::loadFile");
     }
 
-    // The custom autoloader
     // $class = string (like "Core\Html\Request")
     // return = true if found | false if not
     public static function loadFile($class)
