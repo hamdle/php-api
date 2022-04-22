@@ -37,6 +37,12 @@ class Response
     // $date = string
     public static function send($code, $data = null)
     {
+        if (is_null($data)) {
+            $data = [
+                "code" => intval($code),
+            ];
+        }
+
         header(self::JSON_CONTENT_TYPE);
 
         // Currenly, CORS policy is set in the Nginx config. To set policy in
@@ -55,7 +61,8 @@ class Response
         (
             Code::NOT_FOUND_404,
             [
-                "message" => "404 not found",
+                "message" => "Not found",
+                "code" => 404,
             ]
         );
     }

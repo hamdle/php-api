@@ -80,7 +80,12 @@ class Workouts
     {
         $exerciseTypes = new ExerciseType();
         // TODO should we send a different response if the database fails
-        return Response::send(Code::OK_200, $exerciseTypes->all());
+        $data = [];
+        foreach ($exerciseTypes->all() as $exercise) {
+            $data["exercises"][] = $exercise;
+        }
+        $data["code"] = 200;
+        return Response::send(Code::OK_200, $data);
     }
 
     // Return list of workouts from most recent to ALL_WORKOUTS_LIMIT.
@@ -144,6 +149,8 @@ class Workouts
                 }
             }
         }
+
+        $data["code"] = 200;
 
         return Response::send(Code::OK_200, $data);
     }

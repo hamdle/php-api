@@ -22,6 +22,7 @@ class Dice {
             [
                 "die" => "d20",
                 "result" => (rand() % 20) + 1,
+                "code" => 200,
             ]
         );
     }

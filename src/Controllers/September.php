@@ -30,6 +30,7 @@ class September {
                 "september" => date('M-d-y', $timestampSept),
                 "days" => $days,
                 "months" => $months,
+                "code" => 200,
             ]
         );
     }

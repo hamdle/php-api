@@ -22,6 +22,7 @@ class AppInfo {
             Code::OK_200,
             [
                 "version" => $_ENV["VERSION"],
+                "code" => 200,
             ]
         );
     }
@@ -32,7 +33,8 @@ class AppInfo {
         (
             Code::IM_A_TEAPOT_418,
             [
-                "message" => "418 I'm a teapot",
+                "message" => "I'm a teapot",
+                "code" => 418,
             ]
         );
     }
